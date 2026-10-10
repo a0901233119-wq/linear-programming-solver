@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>線性規劃線上求解器</title>
+  <!-- 引入 LP Solver 函式庫 -->
+  <script src="https://unpkg.com/javascript-lp-solver/prod/solver.js"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #333;
+      line-height: 1.5;
+    }
+    .card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    h2, h3 { margin-top: 0; }
+    .form-group { margin-bottom: 16px; }
+    label { font-weight: 600; display: inline-block; margin-bottom: 6px; }
+    input, select, button {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+    .btn-del {
+      background: #ff4d4f;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-add {
+      background: #f0f0f0;
+      border: 1px dashed #999;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 8px;
+    }
+    .btn-solve {
+      background: #1890ff;
+      color: white;
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 10px 24px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .result-box {
+      background: #fafafa;
+      border: 1px solid #d9d9d9;
+      border-radius: 6px;
+      padding: 16px;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>基本線性規劃求解器 (Linear Programming)</h1>
+
+  <div class="card">
+    <div class="form-group">
+      <label>1. 目標類型：</label>
+      <select id="opType">
+        <option value="max">極大化 (Maximize)</option>
+        <option value="min">極小化 (Minimize)</option>
+      </select>
+    </div>
+
+    <!-- 變數區 -->
+    <div class="form-group">
+      <label>2. 決策變數與目標係數 (例如：Z = c1*x1 + c2*x2)：</label>
+      <div id="varContainer">
+        <div class="row">
+          <input type="text" placeholder="變數名 (如 x)" value="x" class="var-name">
+          <span>目標係數：</span>
+          <input type="number" placeholder="係數" value="30" class="var-weight">
+          <button class="btn-del" onclick="removeRow(this)">刪除</button>
+        </div>
+        <div class="row">
+          <input type="text" placeholder="變數名 (如 y)" value="y" class="var-name">
+          <span>目標係數：</span>
+          <input type="number" placeholder="係數" value="20" class="var-weight">
+          <button class="btn-del" onclick="removeRow(this)">刪除</button>
+        </div>
+      </div>
+      <button class="btn-add" onclick="addVariable()">+ 新增變數</button>
+    </div>
+
+    <!-- 限制式區 -->
+    <div class="form-group">
+      <label>3. 限制條件 (格式範例：輸入 2, 1 且 <= 100 代表 2x + 1y <= 100)：</label>
+      <div id="constraintContainer">
+        <div class="row constraint-row">
+          <input type="text" placeholder="限制名稱" value="工時限制" class="c-name">
+          <input type="text" placeholder="變數係數(逗號分隔)" value="2, 1" class="c-weights">
+          <select class="c-type">
+            <option value="max">&le;</option>
+            <option value="min">&ge;</option>
+            <option value="equal">=</option>
+          </select>
+          <input type="number" placeholder="右邊常數" value="100" class="c-rhs">
+          <button class="btn-del" onclick="removeRow(this)">刪除</button>
+        </div>
+        <div class="row constraint-row">
+          <input type="text" placeholder="限制名稱" value="原料限制" class="c-name">
+          <input type="text" placeholder="變數係數(逗號分隔)" value="1, 1" class="c-weights">
+          <select class="c-type">
+            <option value="max">&le;</option>
+            <option value="min">&ge;</option>
+            <option value="equal">=</option>
+          </select>
+          <input type="number" placeholder="右邊常數" value="80" class="c-rhs">
+          <button class="btn-del" onclick="removeRow(this)">刪除</button>
+        </div>
+      </div>
+      <button class="btn-add" onclick="addConstraint()">+ 新增限制條件</button>
+    </div>
+
+    <button class="btn-solve" onclick="runSolver()">立即求解</button>
+  </div>
+
+  <div class="card">
+    <h3>求解結果</h3>
+    <div id="resultOutput" class="result-box">尚未求解。點擊上方按鈕開始計算。</div>
+  </div>
+
+  <script>
+    function removeRow(btn) {
+      btn.parentElement.remove();
+    }
+
+    function addVariable() {
+      const container = document.getElementById('varContainer');
+      const div = document.createElement('div');
+      div.className = 'row';
+      div.innerHTML = `
+        <input type="text" placeholder="變數名" class="var-name">
+        <span>目標係數：</span>
+        <input type="number" placeholder="係數" value="1" class="var-weight">
+        <button class="btn-del" onclick="removeRow(this)">刪除</button>
+      `;
+      container.appendChild(div);
+    }
+
+    function addConstraint() {
+      const container = document.getElementById('constraintContainer');
+      const div = document.createElement('div');
+      div.className = 'row constraint-row';
+      div.innerHTML = `
+        <input type="text" placeholder="限制名稱" class="c-name">
+        <input type="text" placeholder="變數係數(逗號分隔)" class="c-weights">
+        <select class="c-type">
+          <option value="max">&le;</option>
+          <option value="min">&ge;</option>
+          <option value="equal">=</option>
+        </select>
+        <input type="number" placeholder="右邊常數" class="c-rhs">
+        <button class="btn-del" onclick="removeRow(this)">刪除</button>
+      `;
+      container.appendChild(div);
+    }
+
+    function runSolver() {
+      // 1. 抓取變數定義
+      const varRows = document.querySelectorAll('#varContainer .row');
+      const varNames = [];
+      const varWeights = {};
+
+      varRows.forEach(row => {
+        const name = row.querySelector('.var-name').value.trim();
+        const weight = parseFloat(row.querySelector('.var-weight').value) || 0;
+        if (name) {
+          varNames.push(name);
+          varWeights[name] = weight;
+        }
+      });
+
+      if (varNames.length === 0) {
+        alert('請至少提供一個決策變數');
+        return;
+      }
+
+      // 2. 抓取限制式
+      const constraintRows = document.querySelectorAll('.constraint-row');
+      const constraints = {};
+      const matrixMap = {}; // 記錄各限制式中各變數的係數
+
+      varNames.forEach(v => { matrixMap[v] = {}; });
+
+      constraintRows.forEach((row, idx) => {
+        const cName = row.querySelector('.c-name').value.trim() || `c_${idx}`;
+        const weights = row.querySelector('.c-weights').value.split(',').map(s => parseFloat(s.trim()) || 0);
+        const type = row.querySelector('.c-type').value;
+        const rhs = parseFloat(row.querySelector('.c-rhs').value) || 0;
+
+        constraints[cName] = { [type]: rhs };
+
+        varNames.forEach((v, vIdx) => {
+          matrixMap[v][cName] = weights[vIdx] || 0;
+        });
+      });
+
+      // 3. 組合 variables 結構
+      const variables = {};
+      varNames.forEach(v => {
+        variables[v] = {
+          target: varWeights[v],
+          ...matrixMap[v]
+        };
+      });
+
+      // 4. 構建完整模型
+      const model = {
+        optimize: "target",
+        opType: document.getElementById('opType').value,
+        constraints: constraints,
+        variables: variables
+      };
+
+      // 5. 執行求解並輸出
+      const results = solver.Solve(model);
+      const outputElem = document.getElementById('resultOutput');
+
+      if (!results.feasible) {
+        outputElem.textContent = "此模型【無可行解】(Infeasible)！請檢查限制式是否相互衝突。";
+        return;
+      }
+
+      let report = `求解狀態: ${results.feasible ? '成功找到最佳解' : '失敗'}\n`;
+      report += `最佳目標值 (Optimal Value): ${results.result}\n\n`;
+      report += `決策變數配置:\n`;
+      
+      varNames.forEach(v => {
+        report += `  - ${v} = ${results[v] || 0}\n`;
+      });
+
+      outputElem.textContent = report;
+    }
+  </script>
+</body>
+</html>
