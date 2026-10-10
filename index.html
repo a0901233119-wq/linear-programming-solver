@@ -2,9 +2,9 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>線性規劃線上求解器</title>
-  <!-- 引入 LP Solver 函式庫 -->
-  <script src="https://unpkg.com/javascript-lp-solver/prod/solver.js"></script>
+  <title>基本線性規劃求解器</title>
+  <!-- 改用穩定的 jsDelivr CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/javascript-lp-solver/prod/solver.js"></script>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -21,9 +21,9 @@
       margin-bottom: 24px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
-    h2, h3 { margin-top: 0; }
-    .form-group { margin-bottom: 16px; }
-    label { font-weight: 600; display: inline-block; margin-bottom: 6px; }
+    h1 { font-size: 24px; margin-bottom: 20px; }
+    .form-group { margin-bottom: 20px; }
+    label { font-weight: 600; display: block; margin-bottom: 8px; }
     input, select, button {
       padding: 8px 12px;
       font-size: 14px;
@@ -43,6 +43,7 @@
       cursor: pointer;
       width: 100%;
       margin-top: 8px;
+      padding: 10px;
     }
     .btn-solve {
       background: #1890ff;
@@ -50,18 +51,24 @@
       border: none;
       font-size: 16px;
       font-weight: bold;
-      padding: 10px 24px;
+      padding: 12px 24px;
       cursor: pointer;
       width: 100%;
+      border-radius: 6px;
     }
+    .btn-solve:hover { background: #40a9ff; }
     .result-box {
       background: #fafafa;
       border: 1px solid #d9d9d9;
       border-radius: 6px;
       padding: 16px;
       white-space: pre-wrap;
-      font-family: monospace;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 14px;
+      min-height: 80px;
     }
+    .error-text { color: #cf1322; background: #fff1f0; border-color: #ffa39e; }
+    .success-text { color: #092b00; background: #f6ffed; border-color: #b7eb8f; }
   </style>
 </head>
 <body>
@@ -79,16 +86,16 @@
 
     <!-- 變數區 -->
     <div class="form-group">
-      <label>2. 決策變數與目標係數 (例如：Z = c1*x1 + c2*x2)：</label>
+      <label>2. 決策變數與目標係數 (例如：Z = 30x + 20y)：</label>
       <div id="varContainer">
         <div class="row">
-          <input type="text" placeholder="變數名 (如 x)" value="x" class="var-name">
+          <input type="text" placeholder="變數名" value="x" class="var-name">
           <span>目標係數：</span>
           <input type="number" placeholder="係數" value="30" class="var-weight">
           <button class="btn-del" onclick="removeRow(this)">刪除</button>
         </div>
         <div class="row">
-          <input type="text" placeholder="變數名 (如 y)" value="y" class="var-name">
+          <input type="text" placeholder="變數名" value="y" class="var-name">
           <span>目標係數：</span>
           <input type="number" placeholder="係數" value="20" class="var-weight">
           <button class="btn-del" onclick="removeRow(this)">刪除</button>
@@ -99,28 +106,28 @@
 
     <!-- 限制式區 -->
     <div class="form-group">
-      <label>3. 限制條件 (格式範例：輸入 2, 1 且 <= 100 代表 2x + 1y <= 100)：</label>
+      <label>3. 限制條件 (係數以逗號分隔，依序對應各變數)：</label>
       <div id="constraintContainer">
         <div class="row constraint-row">
           <input type="text" placeholder="限制名稱" value="工時限制" class="c-name">
-          <input type="text" placeholder="變數係數(逗號分隔)" value="2, 1" class="c-weights">
+          <input type="text" placeholder="係數 (如 2, 1)" value="2, 1" class="c-weights">
           <select class="c-type">
             <option value="max">&le;</option>
             <option value="min">&ge;</option>
             <option value="equal">=</option>
           </select>
-          <input type="number" placeholder="右邊常數" value="100" class="c-rhs">
+          <input type="number" placeholder="常數" value="100" class="c-rhs">
           <button class="btn-del" onclick="removeRow(this)">刪除</button>
         </div>
         <div class="row constraint-row">
           <input type="text" placeholder="限制名稱" value="原料限制" class="c-name">
-          <input type="text" placeholder="變數係數(逗號分隔)" value="1, 1" class="c-weights">
+          <input type="text" placeholder="係數 (如 1, 1)" value="1, 1" class="c-weights">
           <select class="c-type">
             <option value="max">&le;</option>
             <option value="min">&ge;</option>
             <option value="equal">=</option>
           </select>
-          <input type="number" placeholder="右邊常數" value="80" class="c-rhs">
+          <input type="number" placeholder="常數" value="80" class="c-rhs">
           <button class="btn-del" onclick="removeRow(this)">刪除</button>
         </div>
       </div>
@@ -131,11 +138,20 @@
   </div>
 
   <div class="card">
-    <h3>求解結果</h3>
+    <label>求解結果：</label>
     <div id="resultOutput" class="result-box">尚未求解。點擊上方按鈕開始計算。</div>
   </div>
 
   <script>
+    // 檢查外部函式庫是否成功載入
+    window.addEventListener('DOMContentLoaded', () => {
+      const outputElem = document.getElementById('resultOutput');
+      if (typeof solver === 'undefined') {
+        outputElem.className = 'result-box error-text';
+        outputElem.textContent = '【警告】：未能成功載入求解器核心（solver.js）！\n請確認網路是否正常，或更換 CDN 來源。';
+      }
+    });
+
     function removeRow(btn) {
       btn.parentElement.remove();
     }
@@ -159,93 +175,122 @@
       div.className = 'row constraint-row';
       div.innerHTML = `
         <input type="text" placeholder="限制名稱" class="c-name">
-        <input type="text" placeholder="變數係數(逗號分隔)" class="c-weights">
+        <input type="text" placeholder="係數 (逗號分隔)" class="c-weights">
         <select class="c-type">
           <option value="max">&le;</option>
           <option value="min">&ge;</option>
           <option value="equal">=</option>
         </select>
-        <input type="number" placeholder="右邊常數" class="c-rhs">
+        <input type="number" placeholder="常數" value="0" class="c-rhs">
         <button class="btn-del" onclick="removeRow(this)">刪除</button>
       `;
       container.appendChild(div);
     }
 
     function runSolver() {
-      // 1. 抓取變數定義
-      const varRows = document.querySelectorAll('#varContainer .row');
-      const varNames = [];
-      const varWeights = {};
-
-      varRows.forEach(row => {
-        const name = row.querySelector('.var-name').value.trim();
-        const weight = parseFloat(row.querySelector('.var-weight').value) || 0;
-        if (name) {
-          varNames.push(name);
-          varWeights[name] = weight;
-        }
-      });
-
-      if (varNames.length === 0) {
-        alert('請至少提供一個決策變數');
-        return;
-      }
-
-      // 2. 抓取限制式
-      const constraintRows = document.querySelectorAll('.constraint-row');
-      const constraints = {};
-      const matrixMap = {}; // 記錄各限制式中各變數的係數
-
-      varNames.forEach(v => { matrixMap[v] = {}; });
-
-      constraintRows.forEach((row, idx) => {
-        const cName = row.querySelector('.c-name').value.trim() || `c_${idx}`;
-        const weights = row.querySelector('.c-weights').value.split(',').map(s => parseFloat(s.trim()) || 0);
-        const type = row.querySelector('.c-type').value;
-        const rhs = parseFloat(row.querySelector('.c-rhs').value) || 0;
-
-        constraints[cName] = { [type]: rhs };
-
-        varNames.forEach((v, vIdx) => {
-          matrixMap[v][cName] = weights[vIdx] || 0;
-        });
-      });
-
-      // 3. 組合 variables 結構
-      const variables = {};
-      varNames.forEach(v => {
-        variables[v] = {
-          target: varWeights[v],
-          ...matrixMap[v]
-        };
-      });
-
-      // 4. 構建完整模型
-      const model = {
-        optimize: "target",
-        opType: document.getElementById('opType').value,
-        constraints: constraints,
-        variables: variables
-      };
-
-      // 5. 執行求解並輸出
-      const results = solver.Solve(model);
       const outputElem = document.getElementById('resultOutput');
+      outputElem.className = 'result-box';
 
-      if (!results.feasible) {
-        outputElem.textContent = "此模型【無可行解】(Infeasible)！請檢查限制式是否相互衝突。";
+      if (typeof solver === 'undefined') {
+        outputElem.className = 'result-box error-text';
+        outputElem.textContent = '【錯誤】：求解器 (solver) 尚未載入完成，無法運算。請檢查網路連線。';
         return;
       }
 
-      let report = `求解狀態: ${results.feasible ? '成功找到最佳解' : '失敗'}\n`;
-      report += `最佳目標值 (Optimal Value): ${results.result}\n\n`;
-      report += `決策變數配置:\n`;
-      
-      varNames.forEach(v => {
-        report += `  - ${v} = ${results[v] || 0}\n`;
-      });
+      try {
+        // 1. 讀取變數
+        const varRows = document.querySelectorAll('#varContainer .row');
+        const varList = []; // 存儲 { originalName, safeKey, weight }
 
-      outputElem.textContent = report;
+        varRows.forEach((row, i) => {
+          const name = row.querySelector('.var-name').value.trim() || `x${i + 1}`;
+          const weight = parseFloat(row.querySelector('.var-weight').value) || 0;
+          varList.push({
+            originalName: name,
+            safeKey: `var_${i}`, // 使用安全鍵名避開特殊字元問題
+            weight: weight
+          });
+        });
+
+        if (varList.length === 0) {
+          outputElem.className = 'result-box error-text';
+          outputElem.textContent = '【錯誤】：請至少填寫一個決策變數！';
+          return;
+        }
+
+        // 2. 讀取限制式
+        const constraintRows = document.querySelectorAll('.constraint-row');
+        const constraints = {};
+        const matrixMap = {};
+
+        varList.forEach(v => { matrixMap[v.safeKey] = {}; });
+
+        constraintRows.forEach((row, idx) => {
+          const safeCName = `con_${idx}`;
+          const rawWeights = row.querySelector('.c-weights').value.replace(/，/g, ',');
+          const weights = rawWeights.split(',').map(s => {
+            const val = parseFloat(s.trim());
+            return isNaN(val) ? 0 : val;
+          });
+
+          const type = row.querySelector('.c-type').value;
+          const rhs = parseFloat(row.querySelector('.c-rhs').value) || 0;
+
+          constraints[safeCName] = { [type]: rhs };
+
+          varList.forEach((v, vIdx) => {
+            matrixMap[v.safeKey][safeCName] = weights[vIdx] !== undefined ? weights[vIdx] : 0;
+          });
+        });
+
+        // 3. 組合模型
+        const variables = {};
+        varList.forEach(v => {
+          variables[v.safeKey] = {
+            target: v.weight,
+            ...matrixMap[v.safeKey]
+          };
+        });
+
+        const model = {
+          optimize: "target",
+          opType: document.getElementById('opType').value,
+          constraints: constraints,
+          variables: variables
+        };
+
+        // 4. 執行計算
+        const results = solver.Solve(model);
+
+        // 5. 輸出防呆與結果呈現
+        if (!results || !results.feasible) {
+          outputElem.className = 'result-box error-text';
+          outputElem.textContent = '【無可行解 (Infeasible)】：限制條件互相衝突，無滿足所有條件的解。';
+          return;
+        }
+
+        if (results.bounded === false) {
+          outputElem.className = 'result-box error-text';
+          outputElem.textContent = '【無界解 (Unbounded)】：目標值可無限增大/縮小，請增加邊界限制。';
+          return;
+        }
+
+        outputElem.className = 'result-box success-text';
+        let report = `狀態: 成功找到最佳解\n`;
+        report += `最佳目標值 (Z): ${results.result}\n\n`;
+        report += `決策變數最佳解:\n`;
+
+        varList.forEach(v => {
+          const val = results[v.safeKey] ? Number(results[v.safeKey].toFixed(4)) : 0;
+          report += `  ${v.originalName} = ${val}\n`;
+        });
+
+        outputElem.textContent = report;
+
+      } catch (err) {
+        outputElem.className = 'result-box error-text';
+        outputElem.textContent = `【計算失敗】：\n${err.message || err}`;
+      }
     }
   </script>
 </body>
