@@ -3,21 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>行銷預算分配小幫手｜4 步驟找出最佳廣告組合</title>
+  <title>行銷預算決策戰情室｜4 步驟最佳化與 AI 策略診斷</title>
   <style>
     :root {
-      --bg: #f6f8fb;
+      --bg: #f4f7fb;
       --card: #ffffff;
       --primary: #2563eb;
       --primary-hover: #1d4ed8;
       --primary-light: #eff6ff;
+      --ai-primary: #6366f1;
+      --ai-secondary: #8b5cf6;
+      --ai-bg: #f5f3ff;
       --accent: #10b981;
       --accent-light: #ecfdf5;
       --warning: #f59e0b;
       --warning-light: #fffbeb;
       --danger: #ef4444;
       --danger-light: #fef2f2;
-      --text-main: #1e293b;
+      --text-main: #0f172a;
       --text-sub: #64748b;
       --border: #e2e8f0;
       --radius: 16px;
@@ -35,30 +38,31 @@
       background-color: var(--bg);
       color: var(--text-main);
       line-height: 1.6;
-      padding: 24px 16px 64px;
+      padding: 24px 16px 72px;
     }
 
     .container {
-      max-width: 860px;
+      max-width: 920px;
       margin: 0 auto;
     }
 
     /* Header */
     header {
       text-align: center;
-      margin-bottom: 28px;
+      margin-bottom: 26px;
     }
 
     header h1 {
-      font-size: 1.75rem;
+      font-size: 1.8rem;
       font-weight: 800;
       color: #0f172a;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
     }
 
     header p {
       color: var(--text-sub);
-      font-size: 1rem;
+      font-size: 0.98rem;
     }
 
     /* Stepper */
@@ -66,14 +70,14 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
 
     .step-item {
       background: var(--card);
       border: 2px solid var(--border);
       border-radius: 12px;
-      padding: 12px 10px;
+      padding: 11px 10px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -93,13 +97,13 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 26px;
-      height: 26px;
+      width: 25px;
+      height: 25px;
       border-radius: 50%;
       background: var(--border);
       color: var(--text-sub);
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       margin-bottom: 4px;
     }
 
@@ -135,14 +139,14 @@
     }
 
     .card-header h2 {
-      font-size: 1.3rem;
-      font-weight: 700;
+      font-size: 1.32rem;
+      font-weight: 800;
       margin-bottom: 4px;
     }
 
     .card-header p {
       color: var(--text-sub);
-      font-size: 0.95rem;
+      font-size: 0.94rem;
     }
 
     /* Preset Banner */
@@ -155,7 +159,7 @@
     }
 
     .preset-label {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
       color: var(--text-sub);
       margin-bottom: 10px;
@@ -173,7 +177,7 @@
       border: 1px solid #cbd5e1;
       border-radius: 999px;
       padding: 6px 14px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 600;
       color: var(--text-main);
       cursor: pointer;
@@ -191,7 +195,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
 
     .goal-card {
@@ -214,7 +218,7 @@
 
     .goal-icon {
       font-size: 1.6rem;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       display: block;
     }
 
@@ -224,15 +228,21 @@
     }
 
     .goal-card p {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: var(--text-sub);
     }
 
-    /* Budget Control */
+    /* Budget & AOV Control */
+    .finance-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 16px;
+    }
+
     .budget-box {
       background: #f8fafc;
       border-radius: 14px;
-      padding: 20px;
+      padding: 18px 20px;
       border: 1px solid var(--border);
     }
 
@@ -242,7 +252,7 @@
       align-items: center;
       margin-bottom: 12px;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
     }
 
     .budget-input-wrap {
@@ -252,20 +262,21 @@
       background: #fff;
       border: 2px solid var(--primary);
       border-radius: 10px;
-      padding: 6px 12px;
+      padding: 5px 12px;
     }
 
     .budget-input-wrap span {
       font-weight: 700;
       color: var(--primary);
+      font-size: 0.9rem;
     }
 
     .budget-input-wrap input {
       border: none;
       outline: none;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 800;
-      width: 130px;
+      width: 115px;
       color: var(--text-main);
       text-align: right;
     }
@@ -280,7 +291,7 @@
     /* Channel Selection Grid */
     .channel-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 14px;
     }
 
@@ -327,13 +338,46 @@
     }
 
     .channel-pick h3 {
-      font-size: 1.02rem;
+      font-size: 1rem;
       margin: 6px 0 4px;
     }
 
     .channel-pick p {
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       color: var(--text-sub);
+    }
+
+    .role-pill {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    /* Custom Channel Adder */
+    .custom-channel-box {
+      margin-top: 18px;
+      padding: 14px 16px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .custom-channel-box input,
+    .custom-channel-box select {
+      padding: 8px 12px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      background: #fff;
     }
 
     /* Step 3 Param Cards */
@@ -350,7 +394,7 @@
     }
 
     .param-toolbar span {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: #1e40af;
       font-weight: 600;
     }
@@ -365,9 +409,9 @@
 
     .param-card-title {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       font-weight: 700;
       margin-bottom: 14px;
       padding-bottom: 10px;
@@ -382,15 +426,15 @@
 
     .field-group label {
       display: block;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .field-group .hint {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--text-sub);
       margin-bottom: 6px;
     }
@@ -408,6 +452,31 @@
     .field-group input:focus {
       outline: none;
       border-color: var(--primary);
+    }
+
+    /* Collapsible Advanced Options */
+    details.adv-box {
+      margin-top: 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #f8fafc;
+      padding: 14px 18px;
+    }
+
+    details.adv-box summary {
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      font-size: 0.92rem;
+    }
+
+    .adv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
     }
 
     /* Alert Box */
@@ -429,19 +498,22 @@
       color: #991b1b;
     }
 
-    .alert-warning {
-      background: var(--warning-light);
-      border: 1px solid #fde68a;
-      color: #92400e;
-    }
-
-    /* Step 4 Results */
+    /* Step 4 Hero Summary */
     .hero-summary {
       background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
       color: #fff;
       border-radius: 16px;
       padding: 24px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
+    }
+
+    .hero-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
     }
 
     .hero-summary .tag {
@@ -451,135 +523,427 @@
       border-radius: 999px;
       font-size: 0.82rem;
       font-weight: 700;
-      margin-bottom: 10px;
     }
 
     .hero-summary h3 {
-      font-size: 1.35rem;
+      font-size: 1.32rem;
       line-height: 1.45;
       margin-bottom: 16px;
     }
 
     .kpi-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
     }
 
     .kpi-box {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.13);
       border-radius: 12px;
-      padding: 12px 14px;
+      padding: 12px;
     }
 
     .kpi-box .kpi-label {
-      font-size: 0.8rem;
-      opacity: 0.85;
+      font-size: 0.78rem;
+      opacity: 0.88;
       display: block;
+      margin-bottom: 2px;
     }
 
     .kpi-box .kpi-val {
-      font-size: 1.25rem;
+      font-size: 1.18rem;
       font-weight: 800;
     }
 
-    /* Visual Bar Chart */
-    .alloc-list {
-      margin-top: 14px;
+    /* Chart + Allocation Split */
+    .visual-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    .donut-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .donut-wrap {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 12px;
+    }
+
+    .donut-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .donut-center small {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+    }
+
+    .donut-center strong {
+      font-size: 1.02rem;
+      color: var(--text-main);
     }
 
     .alloc-item {
-      margin-bottom: 16px;
-      padding: 14px;
+      margin-bottom: 12px;
+      padding: 13px 15px;
       border: 1px solid var(--border);
       border-radius: 12px;
-      background: #fafafa;
+      background: #fff;
     }
 
     .alloc-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
       flex-wrap: wrap;
       gap: 6px;
     }
 
     .alloc-name {
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.98rem;
     }
 
     .alloc-money {
       font-weight: 800;
       color: var(--primary);
-      font-size: 1.05rem;
+      font-size: 1.02rem;
     }
 
     .bar-track {
       width: 100%;
-      height: 12px;
+      height: 10px;
       background: #e2e8f0;
       border-radius: 999px;
       overflow: hidden;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
     }
 
     .bar-fill {
       height: 100%;
       border-radius: 999px;
-      transition: width 0.4s ease;
+      transition: width 0.35s ease;
     }
 
     .alloc-sub {
       display: flex;
       justify-content: space-between;
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       color: var(--text-sub);
+      flex-wrap: wrap;
+      gap: 4px;
     }
 
-    /* Advice Box */
-    .advice-card {
-      background: var(--accent-light);
-      border: 1px solid #a7f3d0;
+    /* =========================================
+       AI Strategy Consultant Section
+    ========================================= */
+    .ai-advisor-panel {
+      background: linear-gradient(180deg, #f8f7ff 0%, #ffffff 100%);
+      border: 2px solid #c7d2fe;
+      border-radius: 18px;
+      padding: 22px;
+      margin-top: 24px;
+      position: relative;
+    }
+
+    .ai-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #e0e7ff;
+      margin-bottom: 16px;
+    }
+
+    .ai-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ai-badge {
+      background: linear-gradient(135deg, var(--ai-primary), var(--ai-secondary));
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.03em;
+    }
+
+    .ai-header h3 {
+      font-size: 1.18rem;
+      color: #1e1b4b;
+    }
+
+    .health-score-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid #c7d2fe;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #312e81;
+    }
+
+    .score-num {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--ai-primary);
+    }
+
+    .ai-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .ai-metric-card {
+      background: #fff;
+      border: 1px solid #e0e7ff;
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .ai-metric-card .m-title {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      font-weight: 700;
+      display: block;
+    }
+
+    .ai-metric-card .m-status {
+      font-size: 0.98rem;
+      font-weight: 800;
+      margin: 3px 0;
+      display: block;
+    }
+
+    .ai-metric-card .m-desc {
+      font-size: 0.8rem;
+      color: #475569;
+    }
+
+    .ai-narrative {
+      background: #fff;
       border-radius: 14px;
-      padding: 18px 20px;
-      margin-top: 20px;
+      padding: 18px;
+      border: 1px solid #e0e7ff;
+      margin-bottom: 16px;
     }
 
-    .advice-card h4 {
-      color: #065f46;
-      font-size: 1.05rem;
+    .ai-narrative h4 {
+      font-size: 0.98rem;
+      color: #312e81;
       margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    .advice-card ul {
-      padding-left: 20px;
-      color: #064e3b;
+    .ai-narrative p,
+    .ai-narrative li {
       font-size: 0.92rem;
+      color: #334155;
+      line-height: 1.65;
     }
 
-    .advice-card li {
+    .ai-narrative ul {
+      padding-left: 20px;
+      margin-top: 6px;
+    }
+
+    .ai-narrative li {
       margin-bottom: 6px;
+    }
+
+    /* 4-Week Execution Roadmap */
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .roadmap-step {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .roadmap-step .week-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--ai-primary);
+      background: #eef2ff;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-bottom: 5px;
+    }
+
+    .roadmap-step h5 {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .roadmap-step p {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      line-height: 1.45;
+    }
+
+    /* Interactive AI Q&A Prompts */
+    .ai-qa-box {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed #c7d2fe;
+    }
+
+    .ai-qa-label {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #312e81;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .ai-prompt-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .ai-chip {
+      background: #fff;
+      border: 1.5px solid #c7d2fe;
+      color: #3730a3;
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .ai-chip:hover,
+    .ai-chip.active {
+      background: var(--ai-primary);
+      border-color: var(--ai-primary);
+      color: #fff;
+    }
+
+    .ai-answer-bubble {
+      background: #eef2ff;
+      border-left: 4px solid var(--ai-primary);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 0.92rem;
+      color: #1e1b4b;
+      display: none;
+      line-height: 1.65;
+    }
+
+    .ai-answer-bubble.show {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scenario Comparison Section */
+    .compare-panel {
+      margin-top: 22px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .compare-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .compare-table th {
+      background: #f1f5f9;
+      font-weight: 700;
+      color: var(--text-sub);
+    }
+
+    /* Export Bar */
+    .export-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
     }
 
     /* Collapsible Math Details */
     details.math-details {
-      margin-top: 22px;
+      margin-top: 18px;
       border: 1px solid var(--border);
       border-radius: 12px;
       background: #f8fafc;
-      padding: 14px 18px;
+      padding: 13px 16px;
     }
 
     details.math-details summary {
       font-weight: 700;
       color: var(--text-sub);
       cursor: pointer;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
     }
 
     .math-content {
@@ -587,7 +951,7 @@
       padding-top: 12px;
       border-top: 1px solid var(--border);
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       color: #334155;
       white-space: pre-wrap;
       line-height: 1.6;
@@ -603,9 +967,9 @@
     }
 
     .btn {
-      padding: 12px 22px;
+      padding: 11px 20px;
       border-radius: 12px;
-      font-size: 0.98rem;
+      font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
       border: none;
@@ -634,9 +998,18 @@
       background: #f1f5f9;
     }
 
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-accent:hover {
+      background: #059669;
+    }
+
     .btn-sm {
-      padding: 7px 14px;
-      font-size: 0.85rem;
+      padding: 7px 13px;
+      font-size: 0.84rem;
       border-radius: 8px;
     }
 
@@ -644,13 +1017,39 @@
       display: none !important;
     }
 
-    @media (max-width: 680px) {
-      .stepper {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      z-index: 999;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.25s;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 740px) {
+      .stepper { grid-template-columns: repeat(2, 1fr); }
       .goal-grid,
+      .finance-grid,
       .param-fields,
-      .kpi-row {
+      .adv-grid,
+      .kpi-row,
+      .visual-grid,
+      .ai-metrics-grid,
+      .roadmap-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -659,15 +1058,15 @@
 <body>
   <div class="container">
     <header>
-      <h1>🎯 行銷預算分配小幫手</h1>
-      <p>不用懂數學公式，只要跟著 4 個步驟填寫，系統自動幫您算出最划算的廣告配比</p>
+      <h1>🎯 行銷預算決策戰情室</h1>
+      <p>4 步驟輕鬆分配廣告預算，內建財務 ROAS 試算、多方案比較與 AI 策略顧問診斷</p>
     </header>
 
     <!-- 進度條 -->
     <div class="stepper" id="stepper">
       <div class="step-item active" onclick="goToStep(1)">
         <span class="step-num">1</span>
-        <span class="step-title">目標與總預算</span>
+        <span class="step-title">目標與財務設定</span>
       </div>
       <div class="step-item" onclick="goToStep(2)">
         <span class="step-num">2</span>
@@ -675,11 +1074,11 @@
       </div>
       <div class="step-item" onclick="goToStep(3)">
         <span class="step-num">3</span>
-        <span class="step-title">填預估成效</span>
+        <span class="step-title">預估成效與條件</span>
       </div>
       <div class="step-item" onclick="goToStep(4)">
         <span class="step-num">4</span>
-        <span class="step-title">查看最佳建議</span>
+        <span class="step-title">戰情報告與 AI 診斷</span>
       </div>
     </div>
 
@@ -687,15 +1086,15 @@
     <section class="card" id="step-1">
       <div class="card-header">
         <h2>第 1 步：這次行銷活動最想達成什麼？</h2>
-        <p>先選擇您的主要目標與手邊總預算，或直接點選下方情境範本快速體驗。</p>
+        <p>選擇主要目標、設定總預算與平均客單價，或直接套用下方商業情境快速體驗。</p>
       </div>
 
       <div class="preset-box">
         <span class="preset-label">💡 第一次使用？點選常見商業情境一鍵套用範例：</span>
         <div class="preset-btns">
-          <button class="preset-btn" onclick="applyPreset('ecommerce')">🛍️ 網拍服飾促銷（預算 10 萬）</button>
-          <button class="preset-btn" onclick="applyPreset('newstore')">🏪 新店開幕造勢（預算 6 萬）</button>
-          <button class="preset-btn" onclick="applyPreset('course')">🎓 線上課程招生（預算 15 萬）</button>
+          <button class="preset-btn" onclick="applyPreset('ecommerce')">🛍️ 網拍服飾促銷（預算 10 萬 / 客單 1,500）</button>
+          <button class="preset-btn" onclick="applyPreset('newstore')">🏪 新店開幕造勢（預算 6 萬 / 客單 600）</button>
+          <button class="preset-btn" onclick="applyPreset('course')">🎓 線上課程招生（預算 15 萬 / 客單 3,600）</button>
         </div>
       </div>
 
@@ -712,18 +1111,36 @@
         </div>
       </div>
 
-      <div class="budget-box">
-        <div class="budget-top">
-          <div>
-            <strong>💰 這次準備投入的總廣告預算</strong>
-            <div style="font-size:0.84rem;color:var(--text-sub);">可拖曳滑桿或直接輸入金額</div>
+      <div class="finance-grid">
+        <div class="budget-box">
+          <div class="budget-top">
+            <div>
+              <strong>💰 這次準備投入的總廣告預算</strong>
+              <div style="font-size:0.82rem;color:var(--text-sub);">可拖曳滑桿或直接輸入金額</div>
+            </div>
+            <div class="budget-input-wrap">
+              <span>NT$</span>
+              <input type="number" id="total-budget-input" value="100000" min="5000" max="10000000" step="1000" oninput="syncBudgetFromInput()" />
+            </div>
           </div>
-          <div class="budget-input-wrap">
-            <span>NT$</span>
-            <input type="number" id="total-budget-input" value="100000" min="5000" max="5000000" step="1000" oninput="syncBudgetFromInput()" />
+          <input type="range" id="total-budget-slider" min="10000" max="500000" step="5000" value="100000" oninput="syncBudgetFromSlider()" />
+        </div>
+
+        <div class="budget-box">
+          <div class="budget-top">
+            <div>
+              <strong>🏷️ 平均客單價 (AOV)</strong>
+              <div style="font-size:0.82rem;color:var(--text-sub);">用於換算預估營業額與 ROAS</div>
+            </div>
+            <div class="budget-input-wrap">
+              <span>NT$</span>
+              <input type="number" id="aov-input" value="1500" min="50" max="1000000" step="50" oninput="syncAov()" />
+            </div>
+          </div>
+          <div style="font-size:0.8rem;color:var(--text-sub);margin-top:6px;">
+            💡 若主要衝曝光，可保留預設值作轉換參考
           </div>
         </div>
-        <input type="range" id="total-budget-slider" min="10000" max="500000" step="5000" value="100000" oninput="syncBudgetFromSlider()" />
       </div>
 
       <div class="nav-bar">
@@ -736,12 +1153,24 @@
     <section class="card hidden" id="step-2">
       <div class="card-header">
         <h2>第 2 步：打算使用哪些廣告管道？</h2>
-        <p>像點餐一樣勾選您考慮投放的工具（至少選 2 個，沒勾選的不會出現干擾畫面）。</p>
+        <p>勾選您考慮投放的工具（至少選 2 個），也可以在下方自行新增其他廣告管道。</p>
       </div>
 
       <div class="alert alert-danger" id="step2-alert">請至少勾選 2 個廣告管道，系統才能幫您做預算分配比較喔！</div>
 
       <div class="channel-grid" id="channel-grid"></div>
+
+      <!-- 自訂管道區塊 -->
+      <div class="custom-channel-box">
+        <strong style="font-size:0.88rem;color:var(--text-main);">➕ 想投其他管道？</strong>
+        <input type="text" id="custom-ch-name" placeholder="例如：YouTube 廣告、實體傳單" style="flex:1;min-width:180px;" />
+        <select id="custom-ch-role">
+          <option value="awareness">偏重「曝光擴散 / 種草」</option>
+          <option value="capture">偏重「精準收割 / 成交」</option>
+          <option value="balanced">兩者兼具（均衡型）</option>
+        </select>
+        <button class="btn btn-secondary btn-sm" onclick="addCustomChannel()">新增管道</button>
+      </div>
 
       <div class="nav-bar">
         <button class="btn btn-secondary" onclick="goToStep(1)">← 上一步</button>
@@ -765,22 +1194,43 @@
 
       <div id="param-list"></div>
 
+      <!-- 進階商業條件（選填折疊） -->
+      <details class="adv-box">
+        <summary>⚙️ 進階策略條件（選填：設定風險分散比例或雙重目標保底）</summary>
+        <div class="adv-grid">
+          <div class="field-group">
+            <label>單一管道最高預算佔比 (%)</label>
+            <span class="hint">避免雞蛋全放同一個籃子，100% 代表不限制</span>
+            <input type="number" id="max-share-input" value="100" min="20" max="100" step="5" />
+          </div>
+          <div class="field-group">
+            <label id="secondary-goal-label">保底最低總曝光次數 (次)</label>
+            <span class="hint">在追求主目標同時，額外確保達成的最低門檻（0 代表不設限）</span>
+            <input type="number" id="secondary-min-input" value="0" min="0" step="1000" />
+          </div>
+        </div>
+      </details>
+
       <div class="nav-bar">
         <button class="btn btn-secondary" onclick="goToStep(2)">← 上一步</button>
-        <button class="btn btn-primary" onclick="calculateAndShowResult()">🚀 幫我算出最佳分配方案</button>
+        <button class="btn btn-primary" onclick="calculateAndShowResult()">🚀 生成戰情報告與 AI 診斷</button>
       </div>
     </section>
 
     <!-- STEP 4 -->
     <section class="card hidden" id="step-4">
       <div class="card-header">
-        <h2>第 4 步：您的最佳行銷預算分配報告</h2>
-        <p>系統已根據您的目標與限制條件，精算出效益最大化的分配方式。</p>
+        <h2>第 4 步：行銷預算決策戰情室</h2>
+        <p>除了最佳分配金額，您還可以即時微調預算、儲存多組方案比較，並查看 AI 顧問的深度診斷。</p>
       </div>
 
+      <!-- 頂部核心戰果摘要 -->
       <div class="hero-summary">
-        <span class="tag" id="res-goal-tag">目標：衝高訂單轉換</span>
-        <h3 id="res-headline">建議將預算集中配置在效益最高的管道，預計可帶來 0 筆訂單！</h3>
+        <div class="hero-top-row">
+          <span class="tag" id="res-goal-tag">目標：衝高訂單轉換</span>
+          <span class="tag" id="res-roas-badge">預估 ROAS：0.0x</span>
+        </div>
+        <h3 id="res-headline">建議將預算集中配置在效益最高的管道！</h3>
         <div class="kpi-row">
           <div class="kpi-box">
             <span class="kpi-label">預計投入總預算</span>
@@ -791,29 +1241,112 @@
             <span class="kpi-val" id="res-outcome">0 筆</span>
           </div>
           <div class="kpi-box">
+            <span class="kpi-label">預估總營業額</span>
+            <span class="kpi-val" id="res-revenue">NT$ 0</span>
+          </div>
+          <div class="kpi-box">
             <span class="kpi-label" id="res-unit-cost-label">平均每筆訂單成本</span>
             <span class="kpi-val" id="res-unit-cost">NT$ 0</span>
           </div>
         </div>
       </div>
 
-      <!-- 即時試算微調滑桿 -->
-      <div class="budget-box" style="margin-bottom: 20px;">
+      <!-- 即時模擬滑桿 + 方案鎖定按鈕 -->
+      <div class="budget-box" style="margin-bottom: 22px;">
         <div class="budget-top">
-          <strong>🎛️ 試算看看：如果總預算增減，分配會怎麼變？</strong>
-          <span style="font-weight:800;color:var(--primary);" id="sim-budget-text">NT$ 100,000</span>
+          <div>
+            <strong>🎛️ 即時預算沙盤推演：拖動滑桿觀察分配變化</strong>
+            <div style="font-size:0.82rem;color:var(--text-sub);">系統會即時重新計算最佳配比與 AI 建議</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <span style="font-weight:800;color:var(--primary);font-size:1.08rem;" id="sim-budget-text">NT$ 100,000</span>
+            <button class="btn btn-accent btn-sm" onclick="saveCurrentScenario()">📌 儲存為對比方案</button>
+          </div>
         </div>
         <input type="range" id="sim-budget-slider" min="10000" max="500000" step="5000" value="100000" oninput="simulateNewBudget(this.value)" />
       </div>
 
-      <h3 style="font-size:1.1rem;margin-bottom:4px;">📊 各管道建議分配金額</h3>
-      <div class="alloc-list" id="alloc-list"></div>
+      <!-- 視覺化佔比環形圖 + 各管道明細 -->
+      <div class="visual-grid">
+        <div class="donut-card">
+          <div class="donut-wrap">
+            <svg id="donut-svg" viewBox="0 0 180 180" width="180" height="180"></svg>
+            <div class="donut-center">
+              <small>總配置預算</small>
+              <strong id="donut-total-text">NT$ 0</strong>
+            </div>
+          </div>
+          <div style="font-size:0.82rem;color:var(--text-sub);">預算佔比結構圖</div>
+        </div>
 
-      <div class="advice-card">
-        <h4>💡 給老闆與行銷人員的加碼決策建議</h4>
-        <ul id="advice-list"></ul>
+        <div>
+          <h3 style="font-size:1.08rem;margin-bottom:10px;">📊 各管道建議投放金額與預期產出</h3>
+          <div id="alloc-list"></div>
+        </div>
       </div>
 
+      <!-- =========================================
+           AI 行銷策略顧問深度診斷模組
+      ========================================= -->
+      <div class="ai-advisor-panel" id="ai-advisor-panel">
+        <div class="ai-header">
+          <div class="ai-title-wrap">
+            <span class="ai-badge">✨ AI 策略顧問</span>
+            <h3>組合健康度與商業深度診斷</h3>
+          </div>
+          <div class="health-score-pill">
+            <span>組合健康度評分</span>
+            <span class="score-num" id="ai-score">88</span>
+            <span>/ 100</span>
+          </div>
+        </div>
+
+        <!-- 三大維度雷達指標 -->
+        <div class="ai-metrics-grid" id="ai-metrics-grid"></div>
+
+        <!-- AI 深度文字診斷與邊際建議 -->
+        <div class="ai-narrative">
+          <h4>🧠 AI 顧問深度分析與加碼決策建議</h4>
+          <ul id="ai-diagnosis-list"></ul>
+        </div>
+
+        <!-- 4 週實戰執行節奏 -->
+        <div class="ai-narrative" style="margin-bottom:0;">
+          <h4>🗓️ 建議 4 週落地執行節奏（避免一上線就燒光預算）</h4>
+          <div class="roadmap-grid" id="ai-roadmap-grid"></div>
+
+          <!-- 互動式 AI 追問 -->
+          <div class="ai-qa-box">
+            <span class="ai-qa-label">💬 點擊下方問題，讓 AI 顧問針對您這組數據做進一步解答：</span>
+            <div class="ai-prompt-chips">
+              <button class="ai-chip" onclick="askAiQuestion('why_not_all', this)">🤔 為什麼不把錢全投給最便宜的管道？</button>
+              <button class="ai-chip" onclick="askAiQuestion('cost_up_20', this)">📉 如果下個月廣告漲價 20% 還賺錢嗎？</button>
+              <button class="ai-chip" onclick="askAiQuestion('boss_pitch', this)">👔 幫我寫一段向老闆／合夥人報告的提案說帖</button>
+              <button class="ai-chip" onclick="askAiQuestion('optimize_first', this)">⚡ 哪個管道最該優先優化廣告素材？</button>
+            </div>
+            <div class="ai-answer-bubble" id="ai-answer-bubble"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 多方案並排比較區（有儲存方案時顯示） -->
+      <div class="compare-panel hidden" id="compare-panel">
+        <div class="compare-header">
+          <h3 style="font-size:1.05rem;">⚖️ 已儲存方案並排比較（最多 3 組）</h3>
+          <button class="btn btn-secondary btn-sm" onclick="clearScenarios()">清空方案</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="compare-table" id="compare-table"></table>
+        </div>
+      </div>
+
+      <!-- 匯出與分享工具列 -->
+      <div class="export-bar">
+        <button class="btn btn-secondary btn-sm" onclick="copyReportText()">📋 一鍵複製完整提案報告</button>
+        <button class="btn btn-secondary btn-sm" onclick="downloadCsv()">📥 下載 Excel (CSV) 明細表</button>
+      </div>
+
+      <!-- 背後數學模型（折疊） -->
       <details class="math-details">
         <summary>🤓 查看背後的線性規劃（Linear Programming）數學模型與原理</summary>
         <div class="math-content" id="math-model-text"></div>
@@ -826,14 +1359,18 @@
     </section>
   </div>
 
+  <div class="toast" id="toast">已複製到剪貼簿！</div>
+
   <script>
-    // 預設廣告管道資料庫
+    // 預設廣告管道資料庫（加入漏斗角色標籤 role: 'capture' | 'awareness' | 'balanced'）
     const CHANNELS = [
       {
         id: 'meta',
         icon: '📱',
         name: 'Meta 廣告 (FB / IG)',
         desc: '適合視覺商品、零售服飾、餐飲與大眾消費品推廣',
+        role: 'balanced',
+        roleLabel: '種草＋轉換均衡型',
         color: '#2563eb',
         defaultCpa: 450,
         defaultCpm: 140,
@@ -844,7 +1381,9 @@
         id: 'google',
         icon: '🔍',
         name: 'Google 關鍵字搜尋',
-        desc: '攔截主動搜尋需求的精準客人，轉換意圖高',
+        desc: '攔截主動搜尋需求的精準客人，轉換意圖最高',
+        role: 'capture',
+        roleLabel: '精準需求收割型',
         color: '#10b981',
         defaultCpa: 380,
         defaultCpm: 260,
@@ -856,6 +1395,8 @@
         icon: '🎵',
         name: '短影音廣告 (TikTok / Reels)',
         desc: '觸及年輕族群與快速擴散聲量，曝光成本極低',
+        role: 'awareness',
+        roleLabel: '低成本高曝光型',
         color: '#8b5cf6',
         defaultCpa: 520,
         defaultCpm: 95,
@@ -867,6 +1408,8 @@
         icon: '🌟',
         name: 'KOL 網紅 / 團購主業配',
         desc: '透過口碑推薦建立信任感，適合新品開箱與團購',
+        role: 'awareness',
+        roleLabel: '口碑信任擴散型',
         color: '#f59e0b',
         defaultCpa: 600,
         defaultCpm: 210,
@@ -878,6 +1421,8 @@
         icon: '💬',
         name: 'LINE 官方帳號 / 推播廣告',
         desc: '適合熟客回購、在地商圈導客與活動優惠通知',
+        role: 'capture',
+        roleLabel: '熟客回購收割型',
         color: '#059669',
         defaultCpa: 320,
         defaultCpm: 180,
@@ -886,16 +1431,21 @@
       }
     ];
 
-    // 狀態管理
+    const EXTRA_COLORS = ['#ec4899', '#06b6d4', '#f97316', '#6366f1', '#14b8a6'];
+
     let state = {
       step: 1,
-      goal: 'conversions', // 'conversions' | 'reach'
+      goal: 'conversions',
       totalBudget: 100000,
+      aov: 1500,
       selectedIds: ['meta', 'google', 'tiktok', 'line'],
-      params: {}
+      params: {},
+      maxSharePct: 100,
+      secondaryMin: 0,
+      lastResult: null,
+      savedScenarios: []
     };
 
-    // 初始化參數
     CHANNELS.forEach(ch => {
       state.params[ch.id] = {
         cpa: ch.defaultCpa,
@@ -904,6 +1454,13 @@
         max: ch.defaultMax
       };
     });
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2600);
+    }
 
     function formatMoney(num) {
       return 'NT$ ' + Math.round(num).toLocaleString('zh-TW');
@@ -931,10 +1488,17 @@
       }
     }
 
+    function syncAov() {
+      let val = Number(document.getElementById('aov-input').value);
+      if (isNaN(val) || val < 1) val = 1000;
+      state.aov = val;
+    }
+
     function applyPreset(type) {
       if (type === 'ecommerce') {
         selectGoal('conversions');
         state.totalBudget = 100000;
+        state.aov = 1500;
         state.selectedIds = ['meta', 'google', 'tiktok', 'line'];
         state.params.meta = { cpa: 420, cpm: 140, min: 15000, max: 50000 };
         state.params.google = { cpa: 360, cpm: 250, min: 15000, max: 40000 };
@@ -943,6 +1507,7 @@
       } else if (type === 'newstore') {
         selectGoal('reach');
         state.totalBudget = 60000;
+        state.aov = 600;
         state.selectedIds = ['meta', 'tiktok', 'kol', 'line'];
         state.params.meta = { cpa: 480, cpm: 120, min: 10000, max: 30000 };
         state.params.tiktok = { cpa: 550, cpm: 80, min: 10000, max: 30000 };
@@ -951,6 +1516,7 @@
       } else if (type === 'course') {
         selectGoal('conversions');
         state.totalBudget = 150000;
+        state.aov = 3600;
         state.selectedIds = ['meta', 'google', 'kol'];
         state.params.meta = { cpa: 650, cpm: 160, min: 20000, max: 70000 };
         state.params.google = { cpa: 520, cpm: 280, min: 30000, max: 65000 };
@@ -958,6 +1524,7 @@
       }
       document.getElementById('total-budget-input').value = state.totalBudget;
       document.getElementById('total-budget-slider').value = Math.min(500000, state.totalBudget);
+      document.getElementById('aov-input').value = state.aov;
       renderChannelGrid();
       goToStep(2);
     }
@@ -969,9 +1536,10 @@
         return `
           <div class="channel-pick ${isSelected ? 'selected' : ''}" onclick="toggleChannel('${ch.id}')">
             <span class="check-badge">✓</span>
-            <div style="font-size:1.6rem;">${ch.icon}</div>
+            <div style="font-size:1.55rem;">${ch.icon}</div>
             <h3>${ch.name}</h3>
             <p>${ch.desc}</p>
+            <span class="role-pill">${ch.roleLabel}</span>
           </div>
         `;
       }).join('');
@@ -988,6 +1556,42 @@
       renderChannelGrid();
     }
 
+    function addCustomChannel() {
+      const nameInput = document.getElementById('custom-ch-name');
+      const roleSelect = document.getElementById('custom-ch-role');
+      const name = nameInput.value.trim();
+      if (!name) {
+        showToast('請先輸入自訂管道名稱！');
+        return;
+      }
+      const id = 'custom_' + Date.now();
+      const role = roleSelect.value;
+      const roleMap = {
+        awareness: '低成本高曝光型',
+        capture: '精準需求收割型',
+        balanced: '種草＋轉換均衡型'
+      };
+      const color = EXTRA_COLORS[CHANNELS.length % EXTRA_COLORS.length];
+      CHANNELS.push({
+        id,
+        icon: '📣',
+        name,
+        desc: '使用者自訂廣告投放管道',
+        role,
+        roleLabel: roleMap[role],
+        color,
+        defaultCpa: 450,
+        defaultCpm: 150,
+        defaultMin: 5000,
+        defaultMax: 40000
+      });
+      state.params[id] = { cpa: 450, cpm: 150, min: 5000, max: 40000 };
+      state.selectedIds.push(id);
+      nameInput.value = '';
+      renderChannelGrid();
+      showToast(`已新增並勾選「${name}」`);
+    }
+
     function validateAndGoStep3() {
       if (state.selectedIds.length < 2) {
         document.getElementById('step2-alert').classList.add('show');
@@ -1002,6 +1606,10 @@
         ? '請填寫每個管道「獲得 1 筆訂單大約要花多少廣告費」，以及您願意投入的最低與最高金額。'
         : '請填寫每個管道「讓 1,000 人看到廣告大約要花多少錢」，以及您願意投入的最低與最高金額。';
 
+      document.getElementById('secondary-goal-label').textContent = isConv
+        ? '保底最低總曝光次數 (次)'
+        : '保底最低總訂單數 (筆)';
+
       const list = document.getElementById('param-list');
       list.innerHTML = state.selectedIds.map(id => {
         const ch = CHANNELS.find(c => c.id === id);
@@ -1012,7 +1620,10 @@
 
         return `
           <div class="param-card">
-            <div class="param-card-title">${ch.icon} ${ch.name}</div>
+            <div class="param-card-title">
+              <span>${ch.icon} ${ch.name}</span>
+              <span class="role-pill">${ch.roleLabel}</span>
+            </div>
             <div class="param-fields">
               <div class="field-group">
                 <label>${costLabel}</label>
@@ -1056,6 +1667,7 @@
       });
       renderParamList();
       document.getElementById('step3-alert').classList.remove('show');
+      showToast('已套用台灣市場平均參考值');
     }
 
     function goToStep(stepNum) {
@@ -1080,23 +1692,36 @@
     }
 
     // ==========================================
-    // 雙階段單形法 (Two-Phase Simplex) 線性規劃求解器
+    // 雙階段單形法 (Two-Phase Simplex) 求解器
+    // 支援：總預算上限、各管道上下限、單一管道最大佔比、次要目標保底限制
     // ==========================================
-    function solveMarketingLP(budget, items, goal) {
+    function solveMarketingLP(budget, items, goal, maxSharePct = 100, secondaryMin = 0) {
       const n = items.length;
-      const alertBox = document.getElementById('step3-alert');
+      const effectiveItems = items.map(it => {
+        const shareCap = maxSharePct < 100 ? Math.floor(budget * (maxSharePct / 100)) : Infinity;
+        return {
+          ...it,
+          effectiveMax: Math.min(it.max, shareCap)
+        };
+      });
 
-      // 前置可行性檢查（白話錯誤提示）
       let sumMin = 0;
-      for (const item of items) {
+      for (const item of effectiveItems) {
         if (item.cost <= 0) {
           return { feasible: false, message: `「${item.name}」的預估花費必須大於 0 元喔！` };
         }
-        if (item.min > item.max) {
-          return {
-            feasible: false,
-            message: `「${item.name}」的最少預算（${formatMoney(item.min)}）不能大於最多預算（${formatMoney(item.max)}），請修正後再試！`
-          };
+        if (item.min > item.effectiveMax) {
+          if (item.max < item.min) {
+            return {
+              feasible: false,
+              message: `「${item.name}」的最少預算（${formatMoney(item.min)}）不能大於最多預算（${formatMoney(item.max)}）！`
+            };
+          } else {
+            return {
+              feasible: false,
+              message: `「${item.name}」的最少預算（${formatMoney(item.min)}）超過了您設定的「單一管道最高佔比 ${maxSharePct}%（${formatMoney(item.effectiveMax)}）」，請調高佔比上限或調低該管道最低預算。`
+            };
+          }
         }
         sumMin += item.min;
       }
@@ -1104,26 +1729,24 @@
       if (sumMin > budget) {
         return {
           feasible: false,
-          message: `目前所有管道的「最少預算」加起來已經高達 ${formatMoney(sumMin)}，超過您的總預算 ${formatMoney(budget)}！請調低部分管道的最少預算，或增加總預算。`
+          message: `目前所有管道的「最少預算」加起來高達 ${formatMoney(sumMin)}，超過您的總預算 ${formatMoney(budget)}！請調低部分管道的最少預算，或增加總預算。`
         };
       }
 
-      // 目標係數 c_i：每投入 1 元可獲得的訂單數或曝光數
-      const c = items.map(it => (goal === 'conversions' ? 1 / it.cost : 1000 / it.cost));
+      // 目標函數係數 c_i（主目標每 1 元產出）
+      const c = effectiveItems.map(it => (goal === 'conversions' ? 1 / it.cpa : 1000 / it.cpm));
+      // 次要保底係數 d_i（若設定保底曝光或保底訂單）
+      const d = effectiveItems.map(it => (goal === 'conversions' ? 1000 / it.cpm : 1 / it.cpa));
 
-      // 建立標準型限制式：
-      // Row 0: sum(x_i) + s_0 = budget
-      // Row 1..n: x_i + s_i = max_i
-      // Row n+1..n+k: x_i - e_r + a_r = min_i (僅針對 min_i > 0)
-      const minRows = items.map((it, idx) => ({ idx, min: it.min })).filter(r => r.min > 0);
-      const k = minRows.length;
-      const m = 1 + n + k; // 總限制式列數
+      const minRows = effectiveItems.map((it, idx) => ({ idx, min: it.min })).filter(r => r.min > 0);
+      const hasSecondary = secondaryMin > 0;
+      const k = minRows.length + (hasSecondary ? 1 : 0);
+      const m = 1 + n + k;
       const numSlacks = 1 + n;
       const numSurplus = k;
       const numArt = k;
-      const totalCols = n + numSlacks + numSurplus + numArt; // 不含 RHS
+      const totalCols = n + numSlacks + numSurplus + numArt;
 
-      // 初始化 Tableau: (m + 1) x (totalCols + 1)
       const T = Array.from({ length: m + 1 }, () => Array(totalCols + 1).fill(0));
       const basis = Array(m).fill(-1);
 
@@ -1133,17 +1756,17 @@
       T[0][totalCols] = budget;
       basis[0] = n;
 
-      // Row 1..n: x_i + s_i = max_i
+      // Row 1..n: x_i + s_i = effectiveMax_i
       for (let i = 0; i < n; i++) {
         const r = 1 + i;
         T[r][i] = 1;
         T[r][n + 1 + i] = 1;
-        T[r][totalCols] = items[i].max;
+        T[r][totalCols] = effectiveItems[i].effectiveMax;
         basis[r] = n + 1 + i;
       }
 
-      // Row n+1..n+k: x_i - e_r + a_r = min_i
-      for (let idx = 0; idx < k; idx++) {
+      // Row n+1 .. n+minRows.length: x_i - e_r + a_r = min_i
+      for (let idx = 0; idx < minRows.length; idx++) {
         const r = 1 + n + idx;
         const varIdx = minRows[idx].idx;
         const surpCol = n + numSlacks + idx;
@@ -1152,6 +1775,19 @@
         T[r][surpCol] = -1;
         T[r][artCol] = 1;
         T[r][totalCols] = minRows[idx].min;
+        basis[r] = artCol;
+      }
+
+      // Optional Secondary Constraint Row: sum(d_j * x_j) - e_sec + a_sec = secondaryMin
+      if (hasSecondary) {
+        const idx = minRows.length;
+        const r = 1 + n + idx;
+        const surpCol = n + numSlacks + idx;
+        const artCol = n + numSlacks + numSurplus + idx;
+        for (let j = 0; j < n; j++) T[r][j] = d[j];
+        T[r][surpCol] = -1;
+        T[r][artCol] = 1;
+        T[r][totalCols] = secondaryMin;
         basis[r] = artCol;
       }
 
@@ -1172,8 +1808,7 @@
       }
 
       function runSimplex(maxColExclusive) {
-        for (let iter = 0; iter < 500; iter++) {
-          // Bland's Rule: 選第一個 reduced cost < -EPS 的欄位進入基底
+        for (let iter = 0; iter < 600; iter++) {
           let enterCol = -1;
           for (let j = 0; j < maxColExclusive; j++) {
             if (T[m][j] < -EPS) {
@@ -1181,7 +1816,7 @@
               break;
             }
           }
-          if (enterCol === -1) break; // 已達最佳解
+          if (enterCol === -1) break;
 
           let leaveRow = -1;
           let minRatio = Infinity;
@@ -1199,7 +1834,7 @@
         }
       }
 
-      // Phase 1: 若有人工變數，先消除人工變數
+      // Phase 1
       if (k > 0) {
         const artStart = n + numSlacks + numSurplus;
         for (let idx = 0; idx < k; idx++) {
@@ -1213,7 +1848,13 @@
         }
         runSimplex(totalCols);
 
-        // 若人工變數仍在基底中（退化情況），將其移出基底
+        if (T[m][totalCols] < -1e-3) {
+          return {
+            feasible: false,
+            message: '在目前的預算與上限條件下，無法同時達到您設定的「保底最低總曝光 / 總訂單」門檻！建議調低保底門檻或增加總預算。'
+          };
+        }
+
         for (let i = 0; i < m; i++) {
           if (basis[i] >= artStart) {
             for (let j = 0; j < artStart; j++) {
@@ -1226,7 +1867,7 @@
         }
       }
 
-      // Phase 2: 設定真正目標函數 Maximize sum(c_j * x_j)
+      // Phase 2
       for (let j = 0; j <= totalCols; j++) T[m][j] = 0;
       for (let j = 0; j < n; j++) T[m][j] = -c[j];
       for (let i = 0; i < m; i++) {
@@ -1242,7 +1883,6 @@
       const validCols = n + numSlacks + numSurplus;
       runSimplex(validCols);
 
-      // 讀取結果
       const allocations = Array(n).fill(0);
       for (let i = 0; i < m; i++) {
         if (basis[i] >= 0 && basis[i] < n) {
@@ -1251,15 +1891,19 @@
       }
 
       const totalSpent = allocations.reduce((a, b) => a + b, 0);
-      const totalOutcome = allocations.reduce((sum, val, i) => sum + val * c[i], 0);
-      const budgetShadowPrice = Math.max(0, T[m][n]); // 總預算每多 1 元帶來的邊際效益
-      const maxShadowPrices = items.map((_, i) => Math.max(0, T[m][n + 1 + i]));
+      const totalConversions = allocations.reduce((sum, val, i) => sum + val / effectiveItems[i].cpa, 0);
+      const totalReach = allocations.reduce((sum, val, i) => sum + (val / effectiveItems[i].cpm) * 1000, 0);
+      const budgetShadowPrice = Math.max(0, T[m][n]);
+      const maxShadowPrices = effectiveItems.map((_, i) => Math.max(0, T[m][n + 1 + i]));
 
       return {
         feasible: true,
+        budget,
+        items: effectiveItems,
         allocations,
         totalSpent,
-        totalOutcome,
+        totalConversions,
+        totalReach,
         budgetShadowPrice,
         maxShadowPrices
       };
@@ -1275,6 +1919,10 @@
           name: ch.name,
           icon: ch.icon,
           color: ch.color,
+          role: ch.role,
+          roleLabel: ch.roleLabel,
+          cpa: p.cpa,
+          cpm: p.cpm,
           cost: isConv ? p.cpa : p.cpm,
           min: p.min,
           max: p.max
@@ -1283,8 +1931,11 @@
     }
 
     function calculateAndShowResult() {
+      state.maxSharePct = Math.min(100, Math.max(20, Number(document.getElementById('max-share-input').value) || 100));
+      state.secondaryMin = Math.max(0, Number(document.getElementById('secondary-min-input').value) || 0);
+
       const items = getActiveItems();
-      const res = solveMarketingLP(state.totalBudget, items, state.goal);
+      const res = solveMarketingLP(state.totalBudget, items, state.goal, state.maxSharePct, state.secondaryMin);
       const alertBox = document.getElementById('step3-alert');
 
       if (!res.feasible) {
@@ -1299,7 +1950,8 @@
       simSlider.value = state.totalBudget;
       document.getElementById('sim-budget-text').textContent = formatMoney(state.totalBudget);
 
-      renderReport(state.totalBudget, items, res);
+      state.lastResult = res;
+      renderReport(res);
       goToStep(4);
     }
 
@@ -1307,48 +1959,93 @@
       const b = Number(newVal);
       document.getElementById('sim-budget-text').textContent = formatMoney(b);
       const items = getActiveItems();
-      const res = solveMarketingLP(b, items, state.goal);
+      const res = solveMarketingLP(b, items, state.goal, state.maxSharePct, state.secondaryMin);
       if (res.feasible) {
-        renderReport(b, items, res);
+        state.lastResult = res;
+        renderReport(res);
       }
     }
 
-    function renderReport(budget, items, res) {
+    function renderDonutChart(items, allocations, totalSpent) {
+      const svg = document.getElementById('donut-svg');
+      const radius = 68;
+      const circumference = 2 * Math.PI * radius;
+      let offset = 0;
+
+      if (totalSpent <= 0) {
+        svg.innerHTML = `<circle cx="90" cy="90" r="${radius}" fill="none" stroke="#e2e8f0" stroke-width="22"/>`;
+        return;
+      }
+
+      const circles = items.map((it, i) => {
+        const pct = allocations[i] / totalSpent;
+        const dash = pct * circumference;
+        const seg = `<circle cx="90" cy="90" r="${radius}" fill="none" stroke="${it.color}" stroke-width="22"
+          stroke-dasharray="${dash} ${circumference - dash}"
+          stroke-dashoffset="${-offset}"
+          transform="rotate(-90 90 90)" />`;
+        offset += dash;
+        return seg;
+      }).join('');
+
+      svg.innerHTML = circles;
+      document.getElementById('donut-total-text').textContent = formatMoney(totalSpent);
+    }
+
+    function renderReport(res) {
       const isConv = state.goal === 'conversions';
+      const items = res.items;
+
       document.getElementById('res-goal-tag').textContent = isConv
         ? '目標：衝高訂單 / 預約名單'
         : '目標：衝高品牌曝光 / 知名度';
 
-      const outcomeText = isConv
-        ? `${Math.round(res.totalOutcome).toLocaleString('zh-TW')} 筆訂單`
-        : `${Math.round(res.totalOutcome).toLocaleString('zh-TW')} 次曝光`;
+      const estOrders = Math.round(res.totalConversions);
+      const estReach = Math.round(res.totalReach);
+      const estRevenue = estOrders * state.aov;
+      const roas = res.totalSpent > 0 ? (estRevenue / res.totalSpent) : 0;
 
-      const unitCost = res.totalOutcome > 0 ? res.totalSpent / (isConv ? res.totalOutcome : res.totalOutcome / 1000) : 0;
+      document.getElementById('res-roas-badge').textContent = `預估 ROAS：${roas.toFixed(2)}x`;
 
-      // 找出分配最多的管道
+      const primaryOutcomeText = isConv
+        ? `${estOrders.toLocaleString('zh-TW')} 筆訂單`
+        : `${estReach.toLocaleString('zh-TW')} 次曝光`;
+
+      const unitCost = isConv
+        ? (res.totalConversions > 0 ? res.totalSpent / res.totalConversions : 0)
+        : (res.totalReach > 0 ? res.totalSpent / (res.totalReach / 1000) : 0);
+
       let topIdx = 0;
       res.allocations.forEach((v, idx) => {
         if (v > res.allocations[topIdx]) topIdx = idx;
       });
 
       document.getElementById('res-headline').textContent =
-        `建議主力放在「${items[topIdx].name}」，預計總共可換回 ${outcomeText}！`;
+        `建議主力配置在「${items[topIdx].name}」，預計可換回 ${primaryOutcomeText}（預估營業額 ${formatMoney(estRevenue)}）！`;
 
       document.getElementById('res-spent').textContent = formatMoney(res.totalSpent);
       document.getElementById('res-outcome-label').textContent = isConv ? '預估總訂單數' : '預估總曝光次數';
-      document.getElementById('res-outcome').textContent = outcomeText;
+      document.getElementById('res-outcome').textContent = primaryOutcomeText;
+      document.getElementById('res-revenue').textContent = formatMoney(estRevenue);
       document.getElementById('res-unit-cost-label').textContent = isConv ? '平均每筆訂單成本' : '平均每千次曝光成本';
       document.getElementById('res-unit-cost').textContent = formatMoney(unitCost);
 
-      // 渲染長條圖清單
+      // 繪製環形圖
+      renderDonutChart(items, res.allocations, res.totalSpent);
+
+      // 渲染各管道明細卡片
       const allocList = document.getElementById('alloc-list');
       allocList.innerHTML = items.map((item, i) => {
         const money = res.allocations[i];
         const pct = res.totalSpent > 0 ? ((money / res.totalSpent) * 100).toFixed(1) : '0.0';
-        const est = isConv ? Math.round(money / item.cost) : Math.round((money / item.cost) * 1000);
-        const estStr = isConv ? `約 ${est.toLocaleString('zh-TW')} 筆訂單` : `約 ${est.toLocaleString('zh-TW')} 次曝光`;
+        const subOrders = Math.round(money / item.cpa);
+        const subReach = Math.round((money / item.cpm) * 1000);
+        const estStr = isConv
+          ? `約 ${subOrders.toLocaleString('zh-TW')} 筆訂單（附帶 ${subReach.toLocaleString('zh-TW')} 次曝光）`
+          : `約 ${subReach.toLocaleString('zh-TW')} 次曝光（附帶 ${subOrders.toLocaleString('zh-TW')} 筆訂單）`;
+
         const statusTag =
-          Math.abs(money - item.max) < 1
+          Math.abs(money - item.effectiveMax) < 1
             ? '🔥 已投滿上限'
             : Math.abs(money - item.min) < 1 && item.min > 0
             ? '📌 維持最低門檻'
@@ -1364,52 +2061,22 @@
               <div class="bar-fill" style="width:${pct}%;background:${item.color};"></div>
             </div>
             <div class="alloc-sub">
-              <span>預估貢獻：<strong>${estStr}</strong></span>
+              <span>預期貢獻：<strong>${estStr}</strong></span>
               <span>${statusTag}</span>
             </div>
           </div>
         `;
       }).join('');
 
-      // 翻譯影子價格為白話加碼建議
-      const adviceList = document.getElementById('advice-list');
-      const advices = [];
-
-      if (res.budgetShadowPrice > 1e-6) {
-        const extra10k = res.budgetShadowPrice * 10000;
-        advices.push(
-          `<strong>總預算還有加碼空間：</strong>目前效益最好的管道還沒投滿，如果您多增加 <strong>NT$ 10,000</strong> 總預算，預計可額外多賺回 <strong>${Math.round(extra10k).toLocaleString('zh-TW')} ${isConv ? '筆訂單' : '次曝光'}</strong>。`
-        );
-      } else {
-        const unused = budget - res.totalSpent;
-        if (unused > 10) {
-          advices.push(
-            `<strong>已達所有管道的投放上限：</strong>您設定的各管道上限總和為 ${formatMoney(res.totalSpent)}，還有 <strong>${formatMoney(unused)}</strong> 預算尚未用完，可考慮放寬高成效管道的上限或新增其他廣告管道。`
-          );
-        }
-      }
-
-      items.forEach((item, i) => {
-        const sp = res.maxShadowPrices[i];
-        if (sp > 1e-6) {
-          const gain10k = sp * 10000;
-          advices.push(
-            `<strong>「${item.name}」表現最亮眼但已觸頂：</strong>它已經吃滿了 ${formatMoney(item.max)} 的上限；若能放寬它的上限並撥給它 1 萬元，淨效益可再多增加 <strong>${Math.round(gain10k).toLocaleString('zh-TW')} ${isConv ? '筆訂單' : '次曝光'}</strong>。`
-          );
-        }
-      });
-
-      if (advices.length === 0) {
-        advices.push('目前各管道的上下限設定非常均衡，已達成現有條件下的最佳配置！');
-      }
-      adviceList.innerHTML = advices.map(a => `<li>${a}</li>`).join('');
+      // 觸發 AI 顧問深度分析
+      renderAiAdvisor(res, roas, estOrders, estReach, estRevenue);
 
       // 渲染數學模型（預設折疊）
       const objTerms = items
-        .map((it, i) => `${(isConv ? 1 / it.cost : 1000 / it.cost).toFixed(4)}·x${i + 1}`)
+        .map((it, i) => `${(isConv ? 1 / it.cpa : 1000 / it.cpm).toFixed(4)}·x${i + 1}`)
         .join(' + ');
       const varNames = items.map((it, i) => `  x${i + 1} = ${it.name} 的分配預算（最佳解：${formatMoney(res.allocations[i])}）`).join('\n');
-      const boundLines = items.map((it, i) => `  ${it.min} ≤ x${i + 1} ≤ ${it.max}`).join('\n');
+      const boundLines = items.map((it, i) => `  ${it.min} ≤ x${i + 1} ≤ ${it.effectiveMax}`).join('\n');
 
       document.getElementById('math-model-text').textContent =
 `【決策變數】
@@ -1419,9 +2086,317 @@ ${varNames}
   Maximize Z = ${objTerms}
 
 【限制條件】
-  1. 總預算上限：${items.map((_, i) => `x${i + 1}`).join(' + ')} ≤ ${budget}
+  1. 總預算上限：${items.map((_, i) => `x${i + 1}`).join(' + ')} ≤ ${res.budget}
   2. 各管道上下限：
 ${boundLines}`;
+    }
+
+    // ==========================================
+    // AI 行銷策略顧問引擎
+    // ==========================================
+    function renderAiAdvisor(res, roas, estOrders, estReach, estRevenue) {
+      const isConv = state.goal === 'conversions';
+      const items = res.items;
+      const shares = res.allocations.map(a => (res.totalSpent > 0 ? a / res.totalSpent : 0));
+      const maxShare = Math.max(...shares);
+
+      // 1. 計算健康度分數 (0 - 100)
+      let score = 70;
+      if (roas >= 3.0) score += 15;
+      else if (roas >= 1.8) score += 8;
+      else if (roas < 1.2) score -= 10;
+
+      if (maxShare <= 0.55) score += 10; // 分散度良好
+      else if (maxShare > 0.75) score -= 8; // 過度集中單一管道
+
+      const hasCapture = items.some((it, i) => it.role === 'capture' && res.allocations[i] > 0);
+      const hasAwareness = items.some((it, i) => (it.role === 'awareness' || it.role === 'balanced') && res.allocations[i] > 0);
+      if (hasCapture && hasAwareness) score += 7; // 漏斗上下游互補
+
+      score = Math.min(98, Math.max(45, Math.round(score)));
+      document.getElementById('ai-score').textContent = score;
+
+      // 2. 三大維度雷達指標
+      const riskLabel = maxShare > 0.65 ? '⚠️ 集中度偏高' : '✅ 風險分散穩健';
+      const riskDesc = maxShare > 0.65
+        ? `單一管道佔比達 ${(maxShare * 100).toFixed(0)}%，易受單一平台演算法波動影響`
+        : `最高單一管道佔比 ${(maxShare * 100).toFixed(0)}%，資金配置均衡安全`;
+
+      const funnelLabel = hasCapture && hasAwareness ? '✅ 漏斗上下游互補' : '⚡ 偏重單一階段';
+      const funnelDesc = hasCapture && hasAwareness
+        ? '兼具「曝光種草」與「精準收割」管道，流量轉換結構完整'
+        : hasCapture
+        ? '偏重主動搜尋收割，建議後續適度補充影音或社群擴大新客池'
+        : '偏重廣泛曝光聲量，建議搭配 LINE 或搜尋廣告承接轉換';
+
+      const roasLabel = roas >= 2.5 ? '🔥 獲利動能強勁' : roas >= 1.5 ? '⚖️ 穩健回本區間' : '🚨 需優化轉換效率';
+      const roasDesc = `每投入 1 元廣告費約帶回 ${roas.toFixed(2)} 元營業額（客單價 ${formatMoney(state.aov)}）`;
+
+      document.getElementById('ai-metrics-grid').innerHTML = `
+        <div class="ai-metric-card">
+          <span class="m-title">投資報酬表現 (ROAS)</span>
+          <span class="m-status">${roasLabel}</span>
+          <span class="m-desc">${roasDesc}</span>
+        </div>
+        <div class="ai-metric-card">
+          <span class="m-title">流量漏斗完整度</span>
+          <span class="m-status">${funnelLabel}</span>
+          <span class="m-desc">${funnelDesc}</span>
+        </div>
+        <div class="ai-metric-card">
+          <span class="m-title">資金集中度風險</span>
+          <span class="m-status">${riskLabel}</span>
+          <span class="m-desc">${riskDesc}</span>
+        </div>
+      `;
+
+      // 3. 深度診斷與邊際效益白話建議
+      const diagList = [];
+
+      // 影子價格建議（瓶頸管道）
+      const bottleneckChannels = items
+        .map((it, i) => ({ it, sp: res.maxShadowPrices[i], alloc: res.allocations[i] }))
+        .filter(x => x.sp > 1e-6);
+
+      if (bottleneckChannels.length > 0) {
+        bottleneckChannels.sort((a, b) => b.sp - a.sp);
+        const topB = bottleneckChannels[0];
+        const gain10k = Math.round(topB.sp * 10000);
+        diagList.push(
+          `<strong>最大獲利瓶頸在「${topB.it.name}」：</strong>這個管道投資報酬率最高，已經吃滿 ${formatMoney(topB.it.effectiveMax)} 的上限。如果能透過擴充受眾或增加素材來放寬它的上限，每多撥 <strong>NT$ 10,000</strong> 給它，淨效益可額外多賺 <strong>${gain10k.toLocaleString('zh-TW')} ${isConv ? '筆訂單' : '次曝光'}</strong>。`
+        );
+      }
+
+      if (res.budgetShadowPrice > 1e-6) {
+        const extra10k = Math.round(res.budgetShadowPrice * 10000);
+        diagList.push(
+          `<strong>總預算加碼紅利：</strong>目前主力管道還沒達到天花板，若您將總預算再往上加 <strong>NT$ 10,000</strong>，預計可額外換回 <strong>${extra10k.toLocaleString('zh-TW')} ${isConv ? '筆訂單' : '次曝光'}</strong>（預估多帶來 ${formatMoney(extra10k * state.aov)} 營收）。`
+        );
+      } else if (res.budget - res.totalSpent > 50) {
+        diagList.push(
+          `<strong>出現閒置預算（${formatMoney(res.budget - res.totalSpent)}）：</strong>所有已選管道都已達到您設定的最高上限，因此多出來的預算沒有地方花。建議放寬優質管道上限，或新增其他廣告工具。`
+        );
+      }
+
+      // 找出只拿最低門檻的「低效牽制管道」
+      const floorChannels = items.filter((it, i) => it.min > 0 && Math.abs(res.allocations[i] - it.min) < 1 && it.min < it.effectiveMax);
+      if (floorChannels.length > 0) {
+        const names = floorChannels.map(c => `「${c.name}」`).join('、');
+        diagList.push(
+          `<strong>成本較高、僅維持最低門檻的管道：</strong>${names} 的單位成本相對較高，系統只幫它保留了您規定的最低預算。實戰上建議先用小額測試素材，若成效未改善可考慮將最低門檻調降為 0，把錢釋放給主力管道。`
+        );
+      }
+
+      if (diagList.length === 0) {
+        diagList.push('目前各管道的成本結構與上下限設定非常協調，已達到現有條件下的理論最佳分配！');
+      }
+
+      document.getElementById('ai-diagnosis-list').innerHTML = diagList.map(d => `<li>${d}</li>`).join('');
+
+      // 4. 4 週實戰執行路線圖
+      let topIdx = 0;
+      res.allocations.forEach((v, idx) => { if (v > res.allocations[topIdx]) topIdx = idx; });
+      const mainChannelName = items[topIdx].name;
+
+      document.getElementById('ai-roadmap-grid').innerHTML = `
+        <div class="roadmap-step">
+          <span class="week-tag">第 1 週｜測試校準期</span>
+          <h5>投入 25% 預算驗證數據</h5>
+          <p>先撥出約 ${formatMoney(res.totalSpent * 0.25)} 同步啟動各管道，觀察實際每次成交成本是否貼近您預估的數字。</p>
+        </div>
+        <div class="roadmap-step">
+          <span class="week-tag">第 2–3 週｜主力放量期</span>
+          <h5>重兵集結「${mainChannelName}」</h5>
+          <p>確認數據達標後，依本報告比例全速投放，並針對點擊率較差的素材進行 A/B 替換。</p>
+        </div>
+        <div class="roadmap-step">
+          <span class="week-tag">第 4 週｜再行銷收割期</span>
+          <h5>鎖定猶豫客群衝刺成交</h5>
+          <p>將前 3 週點擊過廣告卻未結帳的受眾，透過 LINE 推播或再行銷廣告發送限時優惠完成收割。</p>
+        </div>
+      `;
+
+      // 重置追問氣泡
+      document.getElementById('ai-answer-bubble').classList.remove('show');
+      document.querySelectorAll('.ai-chip').forEach(c => c.classList.remove('active'));
+    }
+
+    // 互動式 AI 追問解答引擎
+    function askAiQuestion(type, btnEl) {
+      if (!state.lastResult) return;
+      document.querySelectorAll('.ai-chip').forEach(c => c.classList.remove('active'));
+      btnEl.classList.add('active');
+
+      const res = state.lastResult;
+      const items = res.items;
+      const isConv = state.goal === 'conversions';
+      const bubble = document.getElementById('ai-answer-bubble');
+
+      let sorted = items.map((it, i) => ({ ...it, alloc: res.allocations[i] })).sort((a, b) => a.cost - b.cost);
+      const cheapest = sorted[0];
+
+      let html = '';
+      if (type === 'why_not_all') {
+        html = `<strong>💡 為什麼不把 ${formatMoney(res.totalSpent)} 全部投給最便宜的「${cheapest.name}」？</strong><br><br>
+        在真實商業環境中，任何單一廣告管道都有<strong>「受眾天花板」</strong>與<strong>「邊際報酬遞減」</strong>效應（投越多、精準客人越少、廣告費越貴）。<br>
+        因此您為「${cheapest.name}」設定了 <strong>${formatMoney(cheapest.effectiveMax)}</strong> 的投放上限，再加上其他管道有最低保底預算，系統才會精算出在「不超過受眾極限」的前提下，第二划算、第三划算的管道各自該補多少錢。`;
+      } else if (type === 'cost_up_20') {
+        // 即時進行成本 +20% 壓力測試
+        const stressedOrders = Math.round(res.totalConversions / 1.2);
+        const stressedRevenue = stressedOrders * state.aov;
+        const stressedRoas = res.totalSpent > 0 ? stressedRevenue / res.totalSpent : 0;
+        const statusVerdict = stressedRoas >= 1.5
+          ? '✅ <strong>抗壓性過關！</strong>即使廣告費上漲 20%，依然維持正向獲利空間。'
+          : '⚠️ <strong>風險警告！</strong>一旦廣告費漲價 20%，ROAS 將掉到 1.5 以下，建議現在就要提高客單價（例如設計組合包）來拉高安全邊際。';
+
+        html = `<strong>📉 壓力測試結果：假設下個月所有管道廣告費都漲價 20%</strong><br><br>
+        • 在相同總預算 <strong>${formatMoney(res.totalSpent)}</strong> 下，預估訂單會從 ${Math.round(res.totalConversions)} 筆降至 <strong>${stressedOrders} 筆</strong>。<br>
+        • 預估總營業額將變為 <strong>${formatMoney(stressedRevenue)}</strong>，ROAS 會從 ${(res.totalConversions * state.aov / res.totalSpent).toFixed(2)}x 下降至 <strong>${stressedRoas.toFixed(2)}x</strong>。<br>
+        • ${statusVerdict}`;
+      } else if (type === 'boss_pitch') {
+        const estOrders = Math.round(res.totalConversions);
+        const estRev = estOrders * state.aov;
+        const roas = res.totalSpent > 0 ? (estRev / res.totalSpent).toFixed(2) : '0.00';
+        const breakdown = items
+          .filter((_, i) => res.allocations[i] > 0)
+          .map((it, i) => `${it.name} ${formatMoney(res.allocations[i])}`)
+          .join('、');
+
+        html = `<strong>👔 建議簡報／提案說帖（可直接複製使用）：</strong><br><br>
+        「本次行銷活動總預算規劃為 <strong>${formatMoney(res.totalSpent)}</strong>，透過線性規劃模型評估各管道獲客成本與受眾上限後，我們將主力資金集中於高轉換效率管道（配置為：${breakdown}）。在此最佳組合下，預計可創造 <strong>${estOrders.toLocaleString('zh-TW')} 筆訂單</strong>與 <strong>${formatMoney(estRev)} 營業額</strong>，預估整體 <strong>ROAS 達 ${roas}x</strong>，並已保留風險分散與再行銷收割機制。」`;
+      } else if (type === 'optimize_first') {
+        // 找出花最多錢且成本不是最低的管道
+        const bySpend = items.map((it, i) => ({ ...it, alloc: res.allocations[i] })).sort((a, b) => b.alloc - a.alloc);
+        const target = bySpend[0];
+        const savedIf10Pct = Math.round((target.alloc / target.cost) * 0.1 * (isConv ? state.aov : 1));
+        html = `<strong>⚡ 最具槓桿效益的優化目標：「${target.name}」</strong><br><br>
+        因為這個管道佔了您最大筆的預算（<strong>${formatMoney(target.alloc)}</strong>），只要透過優化廣告圖片、標題或落地頁，讓它的單位花費降低 <strong>10%</strong>，就能直接為整場活動多帶來約 <strong>${isConv ? savedIf10Pct + ' 元額外營收' : savedIf10Pct.toLocaleString('zh-TW') + ' 次額外曝光'}</strong>，投資報酬率遠高於優化小預算管道！`;
+      }
+
+      bubble.innerHTML = html;
+      bubble.classList.add('show');
+    }
+
+    // ==========================================
+    // 多方案並排比較 (Scenario Comparison)
+    // ==========================================
+    function saveCurrentScenario() {
+      if (!state.lastResult) return;
+      if (state.savedScenarios.length >= 3) {
+        showToast('最多可同時比較 3 組方案，請先清空或直接覆蓋！');
+        state.savedScenarios.shift();
+      }
+      const res = state.lastResult;
+      const label = '方案 ' + String.fromCharCode(65 + state.savedScenarios.length);
+      const estOrders = Math.round(res.totalConversions);
+      const estRev = estOrders * state.aov;
+      const roas = res.totalSpent > 0 ? (estRev / res.totalSpent).toFixed(2) : '0.00';
+
+      state.savedScenarios.push({
+        label,
+        budget: res.totalSpent,
+        orders: estOrders,
+        reach: Math.round(res.totalReach),
+        revenue: estRev,
+        roas,
+        detail: res.items.map((it, i) => `${it.name.split(' ')[0]}: ${formatMoney(res.allocations[i])}`).join(' / ')
+      });
+
+      renderCompareTable();
+      showToast(`已儲存為【${label}】，可繼續調整滑桿產生下一組對比！`);
+    }
+
+    function clearScenarios() {
+      state.savedScenarios = [];
+      document.getElementById('compare-panel').classList.add('hidden');
+    }
+
+    function renderCompareTable() {
+      const panel = document.getElementById('compare-panel');
+      const table = document.getElementById('compare-table');
+      if (state.savedScenarios.length === 0) {
+        panel.classList.add('hidden');
+        return;
+      }
+      panel.classList.remove('hidden');
+
+      const rows = [
+        { name: '投入總預算', key: s => formatMoney(s.budget) },
+        { name: '預估總訂單數', key: s => s.orders.toLocaleString('zh-TW') + ' 筆' },
+        { name: '預估總曝光數', key: s => s.reach.toLocaleString('zh-TW') + ' 次' },
+        { name: '預估總營業額', key: s => formatMoney(s.revenue) },
+        { name: '預估 ROAS', key: s => s.roas + 'x' },
+        { name: '各管道配置明細', key: s => `<small>${s.detail}</small>` }
+      ];
+
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>比較指標</th>
+            ${state.savedScenarios.map(s => `<th>${s.label}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map(r => `
+            <tr>
+              <td><strong>${r.name}</strong></td>
+              ${state.savedScenarios.map(s => `<td>${r.key(s)}</td>`).join('')}
+            </tr>
+          `).join('')}
+        </tbody>
+      `;
+    }
+
+    // ==========================================
+    // 匯出報告與 CSV
+    // ==========================================
+    function copyReportText() {
+      if (!state.lastResult) return;
+      const res = state.lastResult;
+      const estOrders = Math.round(res.totalConversions);
+      const estRev = estOrders * state.aov;
+      const roas = res.totalSpent > 0 ? (estRev / res.totalSpent).toFixed(2) : '0.00';
+
+      const lines = [
+        '【行銷預算最佳化決策報告】',
+        `• 總投入預算：${formatMoney(res.totalSpent)}`,
+        `• 預估總訂單：${estOrders.toLocaleString('zh-TW')} 筆（客單價 ${formatMoney(state.aov)}）`,
+        `• 預估總營業額：${formatMoney(estRev)}（預估 ROAS：${roas}x）`,
+        `• 預估總曝光：${Math.round(res.totalReach).toLocaleString('zh-TW')} 次`,
+        '',
+        '【各廣告管道建議分配】',
+        ...res.items.map((it, i) => {
+          const pct = res.totalSpent > 0 ? ((res.allocations[i] / res.totalSpent) * 100).toFixed(1) : '0.0';
+          return `- ${it.name}：${formatMoney(res.allocations[i])}（佔比 ${pct}%）`;
+        })
+      ];
+
+      navigator.clipboard.writeText(lines.join('\n')).then(() => {
+        showToast('已複製完整提案報告，可直接貼到 LINE 或 Notion！');
+      });
+    }
+
+    function downloadCsv() {
+      if (!state.lastResult) return;
+      const res = state.lastResult;
+      const headers = ['廣告管道', '角色定位', '建議預算(元)', '預算佔比(%)', '預估訂單數', '預估曝光次數', '最低限制', '最高限制'];
+      const rows = res.items.map((it, i) => {
+        const money = Math.round(res.allocations[i]);
+        const pct = res.totalSpent > 0 ? ((money / res.totalSpent) * 100).toFixed(1) : '0';
+        const orders = Math.round(money / it.cpa);
+        const reach = Math.round((money / it.cpm) * 1000);
+        return [it.name, it.roleLabel, money, pct + '%', orders, reach, it.min, it.effectiveMax];
+      });
+
+      const csvContent = '\uFEFF' + [headers, ...rows].map(r => r.join(',')).join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = '行銷預算分配戰情表.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('已開始下載 Excel (CSV) 明細表！');
     }
 
     // 啟動初始化
@@ -1429,5 +2404,3 @@ ${boundLines}`;
   </script>
 </body>
 </html>
-
-    
