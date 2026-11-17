@@ -3,855 +3,1222 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MediaMix LP — 行銷預算分配與媒體組合最佳化系統</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Chart.js for Interactive Analytics -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <!-- Google Fonts: Inter & Noto Sans TC -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'Noto Sans TC', 'system-ui', 'sans-serif'],
-            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
-          }
-        }
-      }
-    };
-  </script>
+  <title>行銷預算分配小幫手｜4 步驟找出最佳廣告組合</title>
   <style>
-    /* Custom subtle scrollbar & range slider styling */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --accent: #10b981;
+      --accent-light: #ecfdf5;
+      --warning: #f59e0b;
+      --warning-light: #fffbeb;
+      --danger: #ef4444;
+      --danger-light: #fef2f2;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+      --border: #e2e8f0;
+      --radius: 16px;
+      --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
     }
-    ::-webkit-scrollbar-track {
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 24px 16px 64px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: var(--text-sub);
+      font-size: 1rem;
+    }
+
+    /* Stepper */
+    .stepper {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .step-item {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .step-item.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .step-item.done {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--text-sub);
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+
+    .step-item.active .step-num {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .step-item.done .step-num {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .step-title {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Card */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .card-header {
+      margin-bottom: 20px;
+    }
+
+    .card-header h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .card-header p {
+      color: var(--text-sub);
+      font-size: 0.95rem;
+    }
+
+    /* Preset Banner */
+    .preset-box {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 22px;
+    }
+
+    .preset-label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .preset-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .preset-btn {
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    /* Goal Cards */
+    .goal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .goal-card {
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #fff;
+    }
+
+    .goal-card:hover {
+      border-color: #93c5fd;
+    }
+
+    .goal-card.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .goal-icon {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .goal-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .goal-card p {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+    }
+
+    /* Budget Control */
+    .budget-box {
+      background: #f8fafc;
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .budget-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .budget-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      padding: 6px 12px;
+    }
+
+    .budget-input-wrap span {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .budget-input-wrap input {
+      border: none;
+      outline: none;
+      font-size: 1.2rem;
+      font-weight: 800;
+      width: 130px;
+      color: var(--text-main);
+      text-align: right;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+      height: 8px;
+      cursor: pointer;
+    }
+
+    /* Channel Selection Grid */
+    .channel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 14px;
+    }
+
+    .channel-pick {
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      background: #fff;
+    }
+
+    .channel-pick:hover {
+      border-color: #93c5fd;
+    }
+
+    .channel-pick.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .channel-pick .check-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: transparent;
+      background: #fff;
+    }
+
+    .channel-pick.selected .check-badge {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .channel-pick h3 {
+      font-size: 1.02rem;
+      margin: 6px 0 4px;
+    }
+
+    .channel-pick p {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+    }
+
+    /* Step 3 Param Cards */
+    .param-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--primary-light);
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .param-toolbar span {
+      font-size: 0.9rem;
+      color: #1e40af;
+      font-weight: 600;
+    }
+
+    .param-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 14px;
+      background: #fff;
+    }
+
+    .param-card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .param-fields {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .field-group .hint {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+    }
+
+    .field-group input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: border-color 0.15s;
+    }
+
+    .field-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    /* Alert Box */
+    .alert {
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .alert.show {
+      display: block;
+    }
+
+    .alert-danger {
+      background: var(--danger-light);
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+
+    .alert-warning {
+      background: var(--warning-light);
+      border: 1px solid #fde68a;
+      color: #92400e;
+    }
+
+    /* Step 4 Results */
+    .hero-summary {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 22px;
+    }
+
+    .hero-summary .tag {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .hero-summary h3 {
+      font-size: 1.35rem;
+      line-height: 1.45;
+      margin-bottom: 16px;
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .kpi-box {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .kpi-box .kpi-label {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      display: block;
+    }
+
+    .kpi-box .kpi-val {
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+
+    /* Visual Bar Chart */
+    .alloc-list {
+      margin-top: 14px;
+    }
+
+    .alloc-item {
+      margin-bottom: 16px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fafafa;
+    }
+
+    .alloc-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .alloc-name {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .alloc-money {
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 1.05rem;
+    }
+
+    .bar-track {
+      width: 100%;
+      height: 12px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .alloc-sub {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.84rem;
+      color: var(--text-sub);
+    }
+
+    /* Advice Box */
+    .advice-card {
+      background: var(--accent-light);
+      border: 1px solid #a7f3d0;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-top: 20px;
+    }
+
+    .advice-card h4 {
+      color: #065f46;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .advice-card ul {
+      padding-left: 20px;
+      color: #064e3b;
+      font-size: 0.92rem;
+    }
+
+    .advice-card li {
+      margin-bottom: 6px;
+    }
+
+    /* Collapsible Math Details */
+    details.math-details {
+      margin-top: 22px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #f8fafc;
+      padding: 14px 18px;
+    }
+
+    details.math-details summary {
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      font-size: 0.92rem;
+    }
+
+    .math-content {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.85rem;
+      color: #334155;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    /* Navigation Buttons */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--text-main);
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .btn-secondary:hover {
       background: #f1f5f9;
     }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 9999px;
+
+    .btn-sm {
+      padding: 7px 14px;
+      font-size: 0.85rem;
+      border-radius: 8px;
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
+
+    .hidden {
+      display: none !important;
     }
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-      opacity: 1;
+
+    @media (max-width: 680px) {
+      .stepper {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .goal-grid,
+      .param-fields,
+      .kpi-row {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-indigo-100 selection:text-indigo-800">
+<body>
+  <div class="container">
+    <header>
+      <h1>🎯 行銷預算分配小幫手</h1>
+      <p>不用懂數學公式，只要跟著 4 個步驟填寫，系統自動幫您算出最划算的廣告配比</p>
+    </header>
 
-  <!-- Toast Notification Container (Replaces native alert) -->
-  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
-
-  <!-- Top Navigation & Hero Header -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
-    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-        <!-- Brand & Title -->
-        <div class="flex items-start sm:items-center gap-3.5">
-          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white shadow-md shadow-indigo-200 shrink-0">
-            <!-- Chart / Optimization SVG Icon -->
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-            </svg>
-          </div>
-          <div>
-            <div class="flex flex-wrap items-center gap-2">
-              <h1 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-                MediaMix LP 行銷預算分配與媒體組合最佳化
-              </h1>
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200/70">
-                線性規劃引擎
-              </span>
-            </div>
-            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
-              透過雙階段單形法 (Two-Phase Simplex) 在預算與商業限制下求解數學全域最佳配置與影子價格
-            </p>
-          </div>
-        </div>
-
-        <!-- Scenario Presets & Reset Action -->
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="text-xs font-medium text-slate-500 mr-1 hidden xl:inline">快速載入情境：</span>
-          <button type="button" data-preset="ecommerce" class="preset-btn px-3 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer bg-indigo-600 text-white border-indigo-600 shadow-xs">
-            電商雙11衝刺：最大化轉換
-          </button>
-          <button type="button" data-preset="brand_launch" class="preset-btn px-3 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer bg-white text-slate-700 border-slate-200 hover:bg-slate-50">
-            新品牌上市：最大化觸及曝光
-          </button>
-          <button type="button" data-preset="saas_b2b" class="preset-btn px-3 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer bg-white text-slate-700 border-slate-200 hover:bg-slate-50">
-            SaaS B2B 精準獲客
-          </button>
-          <button type="button" id="btn-reset-preset" title="重設為目前情境預設值" class="px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200/70 transition-all cursor-pointer inline-flex items-center gap-1.5">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-            </svg>
-            重設預設值
-          </button>
-        </div>
+    <!-- 進度條 -->
+    <div class="stepper" id="stepper">
+      <div class="step-item active" onclick="goToStep(1)">
+        <span class="step-num">1</span>
+        <span class="step-title">目標與總預算</span>
+      </div>
+      <div class="step-item" onclick="goToStep(2)">
+        <span class="step-num">2</span>
+        <span class="step-title">挑選廣告管道</span>
+      </div>
+      <div class="step-item" onclick="goToStep(3)">
+        <span class="step-num">3</span>
+        <span class="step-title">填預估成效</span>
+      </div>
+      <div class="step-item" onclick="goToStep(4)">
+        <span class="step-num">4</span>
+        <span class="step-title">查看最佳建議</span>
       </div>
     </div>
-  </header>
 
-  <!-- Main Workspace Container -->
-  <main class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- STEP 1 -->
+    <section class="card" id="step-1">
+      <div class="card-header">
+        <h2>第 1 步：這次行銷活動最想達成什麼？</h2>
+        <p>先選擇您的主要目標與手邊總預算，或直接點選下方情境範本快速體驗。</p>
+      </div>
 
-      <!-- =========================================================
-           LEFT PANEL: PARAMETERS, POLICY CONSTRAINTS & CHANNELS
-      ========================================================== -->
-      <section class="lg:col-span-5 space-y-6">
+      <div class="preset-box">
+        <span class="preset-label">💡 第一次使用？點選常見商業情境一鍵套用範例：</span>
+        <div class="preset-btns">
+          <button class="preset-btn" onclick="applyPreset('ecommerce')">🛍️ 網拍服飾促銷（預算 10 萬）</button>
+          <button class="preset-btn" onclick="applyPreset('newstore')">🏪 新店開幕造勢（預算 6 萬）</button>
+          <button class="preset-btn" onclick="applyPreset('course')">🎓 線上課程招生（預算 15 萬）</button>
+        </div>
+      </div>
 
-        <!-- Card 1: Global Parameters & Objective -->
-        <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-5">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-2">
-              <span class="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center">1</span>
-              <h2 class="text-base font-bold text-slate-900">全域參數與最佳化目標</h2>
-            </div>
-            <button type="button" id="btn-solve-now" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer">
-              立即重新計算
-            </button>
+      <div class="goal-grid">
+        <div class="goal-card selected" id="goal-conversions" onclick="selectGoal('conversions')">
+          <span class="goal-icon">🛒</span>
+          <h3>衝高訂單 / 預約名單</h3>
+          <p>把每一分錢花在刀口上，換取最多實際購買、填單或私訊詢問。</p>
+        </div>
+        <div class="goal-card" id="goal-reach" onclick="selectGoal('reach')">
+          <span class="goal-icon">📢</span>
+          <h3>衝高品牌曝光 / 知名度</h3>
+          <p>適合新品牌或新品上市，讓越多潛在客人看到廣告越好。</p>
+        </div>
+      </div>
+
+      <div class="budget-box">
+        <div class="budget-top">
+          <div>
+            <strong>💰 這次準備投入的總廣告預算</strong>
+            <div style="font-size:0.84rem;color:var(--text-sub);">可拖曳滑桿或直接輸入金額</div>
           </div>
-
-          <div class="space-y-4">
-            <!-- Total Marketing Budget -->
-            <div>
-              <label for="input-total-budget" class="flex items-center justify-between text-xs font-semibold text-slate-700 mb-1.5">
-                <span>總行銷預算上限 (TWD)</span>
-                <span id="label-budget-formatted" class="text-indigo-600 font-mono">NT$ 500,000</span>
-              </label>
-              <div class="relative">
-                <span class="absolute inset-y-0 left-3.5 flex items-center text-slate-400 text-sm font-medium">NT$</span>
-                <input
-                  type="number"
-                  id="input-total-budget"
-                  min="1000"
-                  step="10000"
-                  value="500000"
-                  class="w-full pl-12 pr-4 py-2.5 rounded-xl border border-slate-300 bg-slate-50/50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-sm font-semibold text-slate-900 transition-all outline-none"
-                />
-              </div>
-            </div>
-
-            <!-- Optimization Objective Selector -->
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1.5">
-                最佳化目標函數 (Objective Function)
-              </label>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="objective-selector">
-                <button type="button" data-objective="conversions" class="obj-btn p-2.5 rounded-xl border text-left transition-all cursor-pointer border-indigo-600 bg-indigo-50/70 ring-1 ring-indigo-600">
-                  <div class="text-xs font-bold text-indigo-900">最大化總轉換數</div>
-                  <div class="text-[11px] text-indigo-600 mt-0.5">追求最高訂單/名單</div>
-                </button>
-                <button type="button" data-objective="reach" class="obj-btn p-2.5 rounded-xl border text-left transition-all cursor-pointer border-slate-200 bg-white hover:bg-slate-50">
-                  <div class="text-xs font-bold text-slate-800">最大化總觸及</div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">追求最大品牌曝光</div>
-                </button>
-                <button type="button" data-objective="revenue" class="obj-btn p-2.5 rounded-xl border text-left transition-all cursor-pointer border-slate-200 bg-white hover:bg-slate-50">
-                  <div class="text-xs font-bold text-slate-800">最大化預估營收</div>
-                  <div class="text-[11px] text-slate-500 mt-0.5">追求最高轉換產值</div>
-                </button>
-              </div>
-            </div>
-
-            <!-- Minimum Total Reach Threshold -->
-            <div class="pt-3 border-t border-slate-100">
-              <div class="flex items-center justify-between mb-2">
-                <label for="toggle-min-reach" class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" id="toggle-min-reach" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300 cursor-pointer" />
-                  <span class="text-xs font-semibold text-slate-700">最低總觸及人數門檻 (人次)</span>
-                </label>
-                <span id="label-reach-formatted" class="text-xs font-mono text-slate-500">800,000 人</span>
-              </div>
-              <div id="container-min-reach">
-                <input
-                  type="number"
-                  id="input-min-reach"
-                  min="0"
-                  step="50000"
-                  value="800000"
-                  class="w-full px-3.5 py-2 rounded-xl border border-slate-300 bg-slate-50/50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-sm font-medium text-slate-900 transition-all outline-none"
-                />
-              </div>
-            </div>
+          <div class="budget-input-wrap">
+            <span>NT$</span>
+            <input type="number" id="total-budget-input" value="100000" min="5000" max="5000000" step="1000" oninput="syncBudgetFromInput()" />
           </div>
         </div>
+        <input type="range" id="total-budget-slider" min="10000" max="500000" step="5000" value="100000" oninput="syncBudgetFromSlider()" />
+      </div>
 
-        <!-- Card 2: Additional Business Policy Constraints -->
-        <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-5">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center">2</span>
-            <h2 class="text-base font-bold text-slate-900">進階商業規則限制</h2>
+      <div class="nav-bar">
+        <span></span>
+        <button class="btn btn-primary" onclick="goToStep(2)">下一步：挑選廣告管道 →</button>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="card hidden" id="step-2">
+      <div class="card-header">
+        <h2>第 2 步：打算使用哪些廣告管道？</h2>
+        <p>像點餐一樣勾選您考慮投放的工具（至少選 2 個，沒勾選的不會出現干擾畫面）。</p>
+      </div>
+
+      <div class="alert alert-danger" id="step2-alert">請至少勾選 2 個廣告管道，系統才能幫您做預算分配比較喔！</div>
+
+      <div class="channel-grid" id="channel-grid"></div>
+
+      <div class="nav-bar">
+        <button class="btn btn-secondary" onclick="goToStep(1)">← 上一步</button>
+        <button class="btn btn-primary" onclick="validateAndGoStep3()">下一步：填寫預估成效 →</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="card hidden" id="step-3">
+      <div class="card-header">
+        <h2>第 3 步：填寫各管道的預估花費與預算限制</h2>
+        <p id="step3-desc">填寫大致經驗值即可。如果不清楚行情，可以直接點擊「套用市場參考值」。</p>
+      </div>
+
+      <div class="param-toolbar">
+        <span>不知道行情怎麼填嗎？系統已為您準備台灣市場常見平均值</span>
+        <button class="btn btn-secondary btn-sm" onclick="fillMarketDefaults()">✨ 一鍵套用市場參考值</button>
+      </div>
+
+      <div class="alert alert-danger" id="step3-alert"></div>
+
+      <div id="param-list"></div>
+
+      <div class="nav-bar">
+        <button class="btn btn-secondary" onclick="goToStep(2)">← 上一步</button>
+        <button class="btn btn-primary" onclick="calculateAndShowResult()">🚀 幫我算出最佳分配方案</button>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="card hidden" id="step-4">
+      <div class="card-header">
+        <h2>第 4 步：您的最佳行銷預算分配報告</h2>
+        <p>系統已根據您的目標與限制條件，精算出效益最大化的分配方式。</p>
+      </div>
+
+      <div class="hero-summary">
+        <span class="tag" id="res-goal-tag">目標：衝高訂單轉換</span>
+        <h3 id="res-headline">建議將預算集中配置在效益最高的管道，預計可帶來 0 筆訂單！</h3>
+        <div class="kpi-row">
+          <div class="kpi-box">
+            <span class="kpi-label">預計投入總預算</span>
+            <span class="kpi-val" id="res-spent">NT$ 0</span>
           </div>
-
-          <div class="space-y-4">
-            <!-- Policy 1: Digital Media Minimum Share -->
-            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
-              <div class="flex items-center justify-between mb-2">
-                <label for="toggle-digital-share" class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" id="toggle-digital-share" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300 cursor-pointer" />
-                  <span class="text-xs font-semibold text-slate-800">數位媒體最低佔比限制</span>
-                </label>
-                <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-lg border border-indigo-200/60">
-                  &ge; <span id="val-digital-share-badge">60</span>%
-                </span>
-              </div>
-              <div id="container-digital-share" class="flex items-center gap-3 mt-2">
-                <input type="range" id="range-digital-share" min="0" max="100" step="5" value="60" class="w-full accent-indigo-600 cursor-pointer" />
-                <div class="flex items-center shrink-0">
-                  <input type="number" id="input-digital-share" min="0" max="100" step="1" value="60" class="w-16 px-2 py-1 rounded-lg border border-slate-300 text-xs font-semibold text-center bg-white outline-none focus:border-indigo-500" />
-                  <span class="text-xs text-slate-500 ml-1">%</span>
-                </div>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-1.5">確保配置於「數位」類型管道的預算佔實際總花費至少達此比例。</p>
-            </div>
-
-            <!-- Policy 2: Single Channel Max Concentration -->
-            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
-              <div class="flex items-center justify-between mb-2">
-                <label for="toggle-max-concentration" class="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" id="toggle-max-concentration" checked class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 border-slate-300 cursor-pointer" />
-                  <span class="text-xs font-semibold text-slate-800">單一管道最高集中度限制</span>
-                </label>
-                <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-lg border border-indigo-200/60">
-                  &le; <span id="val-max-concentration-badge">45</span>%
-                </span>
-              </div>
-              <div id="container-max-concentration" class="flex items-center gap-3 mt-2">
-                <input type="range" id="range-max-concentration" min="10" max="100" step="5" value="45" class="w-full accent-indigo-600 cursor-pointer" />
-                <div class="flex items-center shrink-0">
-                  <input type="number" id="input-max-concentration" min="10" max="100" step="1" value="45" class="w-16 px-2 py-1 rounded-lg border border-slate-300 text-xs font-semibold text-center bg-white outline-none focus:border-indigo-500" />
-                  <span class="text-xs text-slate-500 ml-1">%</span>
-                </div>
-              </div>
-              <p class="text-[11px] text-slate-500 mt-1.5">分散投放風險，單一媒體管道預算不得超過總行銷預算的此比例。</p>
-            </div>
+          <div class="kpi-box">
+            <span class="kpi-label" id="res-outcome-label">預估總訂單數</span>
+            <span class="kpi-val" id="res-outcome">0 筆</span>
           </div>
-        </div>
-
-        <!-- Card 3: Media Channels Configuration -->
-        <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-5">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-2">
-              <span class="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center">3</span>
-              <div>
-                <h2 class="text-base font-bold text-slate-900">媒體管道與投報參數</h2>
-                <p class="text-[11px] text-slate-500">設定各管道單位效益與合約上下限</p>
-              </div>
-            </div>
-            <button type="button" id="btn-add-channel" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-colors cursor-pointer inline-flex items-center gap-1.5 shadow-xs">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-              </svg>
-              新增管道
-            </button>
-          </div>
-
-          <!-- Dynamic Channel Cards Container -->
-          <div id="channels-list" class="space-y-3.5"></div>
-        </div>
-
-      </section>
-
-      <!-- =========================================================
-           RIGHT PANEL: OPTIMIZATION RESULTS, CHARTS & MATH MODEL
-      ========================================================== -->
-      <section class="lg:col-span-7 space-y-6">
-
-        <!-- Infeasible Solution Diagnostic Banner (Hidden when Feasible) -->
-        <div id="infeasible-banner" class="hidden rounded-2xl bg-rose-50 border border-rose-200 p-5 shadow-xs">
-          <div class="flex items-start gap-3.5">
-            <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center shrink-0 mt-0.5">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-              </svg>
-            </div>
-            <div class="flex-1">
-              <div class="flex items-center gap-2">
-                <h3 class="text-base font-bold text-rose-900">目前限制條件衝突：無可行解 (Infeasible Solution)</h3>
-                <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-rose-200/80 text-rose-800">無法求解</span>
-              </div>
-              <p class="text-xs sm:text-sm text-rose-800 mt-1">
-                線性規劃求解器發現目前的限制條件集合在數學上沒有交集，無法同時滿足所有要求。系統診斷出以下衝突原因：
-              </p>
-              <ul id="infeasible-reasons" class="mt-2.5 space-y-1.5 text-xs sm:text-sm font-medium text-rose-900 list-disc list-inside bg-white/70 rounded-xl p-3 border border-rose-200/80"></ul>
-            </div>
+          <div class="kpi-box">
+            <span class="kpi-label" id="res-unit-cost-label">平均每筆訂單成本</span>
+            <span class="kpi-val" id="res-unit-cost">NT$ 0</span>
           </div>
         </div>
+      </div>
 
-        <!-- Feasible Results Wrapper -->
-        <div id="feasible-results-wrapper" class="space-y-6">
-
-          <!-- 4 KPI Summary Cards -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-            <!-- KPI 1: Optimal Objective -->
-            <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-4 relative overflow-hidden">
-              <div class="flex items-center justify-between">
-                <span id="kpi-obj-label" class="text-xs font-semibold text-slate-500">最佳預估總轉換數</span>
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">全域最佳解</span>
-              </div>
-              <div id="kpi-obj-value" class="text-2xl font-bold text-slate-900 mt-2 tracking-tight">0</div>
-              <div id="kpi-obj-sub" class="text-xs text-slate-500 mt-1">總觸及 0 人 · 營收 NT$ 0</div>
-            </div>
-
-            <!-- KPI 2: Allocated Budget & Utilization -->
-            <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-4">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold text-slate-500">實際配置總預算</span>
-                <span id="kpi-util-badge" class="text-xs font-bold text-indigo-600">100%</span>
-              </div>
-              <div id="kpi-budget-value" class="text-2xl font-bold text-slate-900 mt-2 tracking-tight">NT$ 0</div>
-              <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2.5 overflow-hidden">
-                <div id="kpi-util-bar" class="bg-indigo-600 h-1.5 rounded-full transition-all duration-300" style="width: 100%"></div>
-              </div>
-            </div>
-
-            <!-- KPI 3: Average CPA & CPM -->
-            <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-4">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold text-slate-500">平均獲客成本 (CPA)</span>
-                <span class="text-[11px] font-medium text-slate-400">效益指標</span>
-              </div>
-              <div id="kpi-cpa-value" class="text-2xl font-bold text-slate-900 mt-2 tracking-tight">NT$ 0</div>
-              <div id="kpi-cpm-sub" class="text-xs text-slate-500 mt-1">平均千次曝光成本 CPM: NT$ 0</div>
-            </div>
-
-            <!-- KPI 4: Total Budget Shadow Price -->
-            <div class="bg-gradient-to-br from-indigo-600 to-violet-700 rounded-2xl shadow-xs p-4 text-white">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-semibold text-indigo-100">總預算影子價格</span>
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/15 text-white">邊際價值</span>
-              </div>
-              <div id="kpi-shadow-value" class="text-2xl font-bold mt-2 tracking-tight">+0.00</div>
-              <div id="kpi-shadow-sub" class="text-xs text-indigo-100 mt-1">每增加 NT$1,000 預算的目標增量</div>
-            </div>
-          </div>
-
-          <!-- Interactive Charts Row -->
-          <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
-            <!-- Doughnut Chart: Budget Share -->
-            <div class="xl:col-span-5 bg-white rounded-2xl border border-slate-200/90 shadow-xs p-5 flex flex-col">
-              <div class="mb-3">
-                <h3 class="text-sm font-bold text-slate-900">最佳預算分配比例</h3>
-                <p class="text-xs text-slate-500">各媒體管道建議投資佔比 (%)</p>
-              </div>
-              <div class="relative h-64 w-full flex-1">
-                <canvas id="chart-allocation-doughnut"></canvas>
-              </div>
-            </div>
-
-            <!-- Grouped Bar Chart: Min vs Optimal vs Effective Max -->
-            <div class="xl:col-span-7 bg-white rounded-2xl border border-slate-200/90 shadow-xs p-5 flex flex-col">
-              <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
-                <div>
-                  <h3 class="text-sm font-bold text-slate-900">預算區間與最佳建議配置對比</h3>
-                  <p class="text-xs text-slate-500">檢視各管道是否觸及合約下限或上限瓶頸 (單位：TWD)</p>
-                </div>
-              </div>
-              <div class="relative h-64 w-full flex-1">
-                <canvas id="chart-bounds-bar"></canvas>
-              </div>
-            </div>
-          </div>
-
-          <!-- Detailed Allocation & Sensitivity Analysis Table -->
-          <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
-            <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div>
-                <h3 class="text-base font-bold text-slate-900">詳細媒體配置建議與敏感度分析</h3>
-                <p class="text-xs text-slate-500 mt-0.5">
-                  「上限影子價格」代表該管道預算上限每放寬 NT$1,000 時，整體目標函數可額外提升的數值。
-                </p>
-              </div>
-              <button type="button" id="btn-export-csv" class="px-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold transition-colors cursor-pointer inline-flex items-center gap-1.5 self-start sm:self-auto">
-                <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                </svg>
-                匯出 CSV 報表
-              </button>
-            </div>
-
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="bg-slate-50/80 border-b border-slate-200/80 text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                    <th class="py-3 px-4">媒體管道</th>
-                    <th class="py-3 px-4 text-right">建議配置預算</th>
-                    <th class="py-3 px-4 text-right">預估轉換數</th>
-                    <th class="py-3 px-4 text-right">預估觸及人數</th>
-                    <th class="py-3 px-4 text-right">預估營收 (ROAS)</th>
-                    <th class="py-3 px-4 text-center">配置狀態</th>
-                    <th class="py-3 px-4 text-right">上限影子價格</th>
-                  </tr>
-                </thead>
-                <tbody id="results-table-body" class="divide-y divide-slate-100 text-xs sm:text-sm"></tbody>
-                <tfoot id="results-table-foot" class="bg-slate-50/90 border-t-2 border-slate-200 font-bold text-slate-900 text-xs sm:text-sm"></tfoot>
-              </table>
-            </div>
-          </div>
-
+      <!-- 即時試算微調滑桿 -->
+      <div class="budget-box" style="margin-bottom: 20px;">
+        <div class="budget-top">
+          <strong>🎛️ 試算看看：如果總預算增減，分配會怎麼變？</strong>
+          <span style="font-weight:800;color:var(--primary);" id="sim-budget-text">NT$ 100,000</span>
         </div>
+        <input type="range" id="sim-budget-slider" min="10000" max="500000" step="5000" value="100000" oninput="simulateNewBudget(this.value)" />
+      </div>
 
-        <!-- Live Linear Programming Mathematical Model Viewer -->
-        <div class="bg-slate-900 text-slate-100 rounded-2xl shadow-sm border border-slate-800 overflow-hidden">
-          <div class="px-5 py-4 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-2.5">
-              <span class="px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono text-xs font-semibold">
-                LP MODEL
-              </span>
-              <h3 class="text-sm font-bold text-white">動態線性規劃數學模型 (即時同步)</h3>
-            </div>
-            <div class="flex items-center gap-2">
-              <button type="button" id="btn-copy-math" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-colors cursor-pointer inline-flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
-                </svg>
-                複製數學模型
-              </button>
-              <button type="button" id="btn-toggle-math" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-colors cursor-pointer">
-                收合
-              </button>
-            </div>
-          </div>
+      <h3 style="font-size:1.1rem;margin-bottom:4px;">📊 各管道建議分配金額</h3>
+      <div class="alloc-list" id="alloc-list"></div>
 
-          <div id="math-model-body" class="p-5 font-mono text-xs leading-relaxed space-y-4 overflow-x-auto">
-            <!-- Decision Variables -->
-            <div>
-              <div class="text-indigo-400 font-semibold mb-1">// 1. 決策變數 (Decision Variables，單位：千元 TWD)</div>
-              <div id="math-variables" class="text-slate-300 space-y-0.5 pl-2 border-l-2 border-slate-700"></div>
-            </div>
+      <div class="advice-card">
+        <h4>💡 給老闆與行銷人員的加碼決策建議</h4>
+        <ul id="advice-list"></ul>
+      </div>
 
-            <!-- Objective Function -->
-            <div>
-              <div class="text-emerald-400 font-semibold mb-1">// 2. 目標函數 (Objective Function)</div>
-              <div id="math-objective" class="text-emerald-200 bg-slate-950/60 p-3 rounded-xl border border-slate-800"></div>
-            </div>
+      <details class="math-details">
+        <summary>🤓 查看背後的線性規劃（Linear Programming）數學模型與原理</summary>
+        <div class="math-content" id="math-model-text"></div>
+      </details>
 
-            <!-- Constraints -->
-            <div>
-              <div class="text-amber-400 font-semibold mb-1">// 3. 限制條件方程式 (Subject to Constraints)</div>
-              <div id="math-constraints" class="text-slate-300 space-y-1 pl-2 border-l-2 border-slate-700"></div>
-            </div>
-          </div>
-        </div>
+      <div class="nav-bar">
+        <button class="btn btn-secondary" onclick="goToStep(3)">← 修改管道數據</button>
+        <button class="btn btn-primary" onclick="goToStep(1)">🔄 重新規劃新活動</button>
+      </div>
+    </section>
+  </div>
 
-      </section>
-    </div>
-  </main>
-
-  <!-- =========================================================
-       APPLICATION LOGIC & TWO-PHASE SIMPLEX LP SOLVER
-  ========================================================== -->
   <script>
-    /**
-     * ---------------------------------------------------------
-     * 1. BUSINESS SCENARIO PRESETS
-     * ---------------------------------------------------------
-     */
-    const SCENARIO_PRESETS = {
-      ecommerce: {
-        name: '電商雙11衝刺：最大化轉換',
-        totalBudget: 500000,
-        objective: 'conversions',
-        minReachEnabled: true,
-        minReach: 800000,
-        digitalShareEnabled: true,
-        digitalShare: 60,
-        maxConcentrationEnabled: true,
-        maxConcentration: 45,
-        channels: [
-          {
-            id: 'ch-1',
-            name: 'Google 搜尋廣告',
-            type: 'digital',
-            convPerK: 3.4,
-            reachPerK: 1100,
-            valuePerConv: 1850,
-            minBudget: 60000,
-            maxBudget: 220000
-          },
-          {
-            id: 'ch-2',
-            name: 'Meta (FB / IG) 社群廣告',
-            type: 'digital',
-            convPerK: 2.9,
-            reachPerK: 2600,
-            valuePerConv: 1650,
-            minBudget: 50000,
-            maxBudget: 250000
-          },
-          {
-            id: 'ch-3',
-            name: 'YouTube 影音廣告',
-            type: 'digital',
-            convPerK: 1.5,
-            reachPerK: 3400,
-            valuePerConv: 1900,
-            minBudget: 30000,
-            maxBudget: 180000
-          },
-          {
-            id: 'ch-4',
-            name: 'KOL / 網紅業配合作',
-            type: 'digital',
-            convPerK: 2.3,
-            reachPerK: 1900,
-            valuePerConv: 2100,
-            minBudget: 40000,
-            maxBudget: 150000
-          },
-          {
-            id: 'ch-5',
-            name: '捷運 / 戶外看板廣告',
-            type: 'traditional',
-            convPerK: 0.7,
-            reachPerK: 4200,
-            valuePerConv: 2000,
-            minBudget: 50000,
-            maxBudget: 200000
-          }
-        ]
+    // 預設廣告管道資料庫
+    const CHANNELS = [
+      {
+        id: 'meta',
+        icon: '📱',
+        name: 'Meta 廣告 (FB / IG)',
+        desc: '適合視覺商品、零售服飾、餐飲與大眾消費品推廣',
+        color: '#2563eb',
+        defaultCpa: 450,
+        defaultCpm: 140,
+        defaultMin: 10000,
+        defaultMax: 60000
       },
-      brand_launch: {
-        name: '新品牌上市：最大化觸及曝光',
-        totalBudget: 1200000,
-        objective: 'reach',
-        minReachEnabled: true,
-        minReach: 2800000,
-        digitalShareEnabled: true,
-        digitalShare: 50,
-        maxConcentrationEnabled: true,
-        maxConcentration: 40,
-        channels: [
-          {
-            id: 'ch-1',
-            name: 'Google 搜尋廣告',
-            type: 'digital',
-            convPerK: 2.8,
-            reachPerK: 950,
-            valuePerConv: 1500,
-            minBudget: 80000,
-            maxBudget: 350000
-          },
-          {
-            id: 'ch-2',
-            name: 'Meta (FB / IG) 社群廣告',
-            type: 'digital',
-            convPerK: 2.4,
-            reachPerK: 2900,
-            valuePerConv: 1450,
-            minBudget: 120000,
-            maxBudget: 500000
-          },
-          {
-            id: 'ch-3',
-            name: 'YouTube 影音廣告',
-            type: 'digital',
-            convPerK: 1.4,
-            reachPerK: 3900,
-            valuePerConv: 1600,
-            minBudget: 150000,
-            maxBudget: 500000
-          },
-          {
-            id: 'ch-4',
-            name: 'KOL / 網紅業配合作',
-            type: 'digital',
-            convPerK: 2.0,
-            reachPerK: 2300,
-            valuePerConv: 1750,
-            minBudget: 100000,
-            maxBudget: 350000
-          },
-          {
-            id: 'ch-5',
-            name: '捷運 / 戶外看板廣告',
-            type: 'traditional',
-            convPerK: 0.6,
-            reachPerK: 4800,
-            valuePerConv: 1600,
-            minBudget: 150000,
-            maxBudget: 550000
-          }
-        ]
+      {
+        id: 'google',
+        icon: '🔍',
+        name: 'Google 關鍵字搜尋',
+        desc: '攔截主動搜尋需求的精準客人，轉換意圖高',
+        color: '#10b981',
+        defaultCpa: 380,
+        defaultCpm: 260,
+        defaultMin: 15000,
+        defaultMax: 50000
       },
-      saas_b2b: {
-        name: 'SaaS B2B 精準獲客',
-        totalBudget: 300000,
-        objective: 'revenue',
-        minReachEnabled: true,
-        minReach: 220000,
-        digitalShareEnabled: true,
-        digitalShare: 75,
-        maxConcentrationEnabled: true,
-        maxConcentration: 50,
-        channels: [
-          {
-            id: 'ch-1',
-            name: 'Google 搜尋廣告',
-            type: 'digital',
-            convPerK: 1.6,
-            reachPerK: 650,
-            valuePerConv: 12000,
-            minBudget: 50000,
-            maxBudget: 160000
-          },
-          {
-            id: 'ch-2',
-            name: 'Meta (FB / IG) 社群廣告',
-            type: 'digital',
-            convPerK: 1.1,
-            reachPerK: 1800,
-            valuePerConv: 8500,
-            minBudget: 30000,
-            maxBudget: 120000
-          },
-          {
-            id: 'ch-3',
-            name: 'YouTube 影音廣告',
-            type: 'digital',
-            convPerK: 0.7,
-            reachPerK: 2100,
-            valuePerConv: 9500,
-            minBudget: 20000,
-            maxBudget: 100000
-          },
-          {
-            id: 'ch-4',
-            name: 'KOL / 產業意見領袖評測',
-            type: 'digital',
-            convPerK: 1.3,
-            reachPerK: 900,
-            valuePerConv: 14500,
-            minBudget: 30000,
-            maxBudget: 110000
-          },
-          {
-            id: 'ch-5',
-            name: '產業實體研討會 / 看板',
-            type: 'traditional',
-            convPerK: 0.5,
-            reachPerK: 450,
-            valuePerConv: 18000,
-            minBudget: 30000,
-            maxBudget: 90000
-          }
-        ]
+      {
+        id: 'tiktok',
+        icon: '🎵',
+        name: '短影音廣告 (TikTok / Reels)',
+        desc: '觸及年輕族群與快速擴散聲量，曝光成本極低',
+        color: '#8b5cf6',
+        defaultCpa: 520,
+        defaultCpm: 95,
+        defaultMin: 5000,
+        defaultMax: 45000
+      },
+      {
+        id: 'kol',
+        icon: '🌟',
+        name: 'KOL 網紅 / 團購主業配',
+        desc: '透過口碑推薦建立信任感，適合新品開箱與團購',
+        color: '#f59e0b',
+        defaultCpa: 600,
+        defaultCpm: 210,
+        defaultMin: 15000,
+        defaultMax: 50000
+      },
+      {
+        id: 'line',
+        icon: '💬',
+        name: 'LINE 官方帳號 / 推播廣告',
+        desc: '適合熟客回購、在地商圈導客與活動優惠通知',
+        color: '#059669',
+        defaultCpa: 320,
+        defaultCpm: 180,
+        defaultMin: 5000,
+        defaultMax: 25000
       }
-    };
-
-    /**
-     * ---------------------------------------------------------
-     * 2. APPLICATION STATE
-     * ---------------------------------------------------------
-     */
-    let activePresetKey = 'ecommerce';
-    let appState = JSON.parse(JSON.stringify(SCENARIO_PRESETS.ecommerce));
-    let lastSolveResult = null;
-    let doughnutChart = null;
-    let barChart = null;
-
-    const CHANNEL_COLORS = [
-      '#4f46e5', // Indigo 600
-      '#0ea5e9', // Sky 500
-      '#10b981', // Emerald 500
-      '#f59e0b', // Amber 500
-      '#8b5cf6', // Violet 500
-      '#ec4899', // Pink 500
-      '#14b8a6', // Teal 500
-      '#f97316'  // Orange 500
     ];
 
-    /**
-     * ---------------------------------------------------------
-     * 3. EXACT TWO-PHASE SIMPLEX LINEAR PROGRAMMING SOLVER
-     * ---------------------------------------------------------
-     * Solves:
-     *   Maximize   Z = c^T x
-     *   Subject to A_i x (<= | >=) b_i,  x >= 0
-     *
-     * Features:
-     * - Handles <= and >= constraints cleanly
-     * - Automatically flips negative RHS rows so b_i >= 0 initially
-     * - Uses Bland's Rule to prevent cycling on degenerate pivots
-     * - Extracts exact primal decision variables x_j
-     * - Extracts exact dual shadow prices y_i = dZ* / db_i
-     */
-    function solveTwoPhaseSimplex(numVars, c, constraints) {
-      const EPS = 1e-8;
-      const MAX_ITER = 2000;
+    // 狀態管理
+    let state = {
+      step: 1,
+      goal: 'conversions', // 'conversions' | 'reach'
+      totalBudget: 100000,
+      selectedIds: ['meta', 'google', 'tiktok', 'line'],
+      params: {}
+    };
 
-      // Normalize constraints so all RHS >= 0
-      const normConstraints = constraints.map((con, idx) => {
-        const coeffs = con.coeffs.slice();
-        let rhs = con.rhs;
-        let type = con.type; // '<=' or '>='
-        let signFlipped = false;
+    // 初始化參數
+    CHANNELS.forEach(ch => {
+      state.params[ch.id] = {
+        cpa: ch.defaultCpa,
+        cpm: ch.defaultCpm,
+        min: ch.defaultMin,
+        max: ch.defaultMax
+      };
+    });
 
-        if (rhs < -EPS) {
-          for (let j = 0; j < numVars; j++) coeffs[j] = -coeffs[j];
-          rhs = -rhs;
-          type = type === '<=' ? '>=' : '<=';
-          signFlipped = true;
-        } else if (Math.abs(rhs) <= EPS) {
-          rhs = 0;
-        }
+    function formatMoney(num) {
+      return 'NT$ ' + Math.round(num).toLocaleString('zh-TW');
+    }
 
-        return {
-          id: con.id || `con_${idx}`,
-          coeffs,
-          type,
-          rhs,
-          signFlipped
+    function selectGoal(goal) {
+      state.goal = goal;
+      document.getElementById('goal-conversions').classList.toggle('selected', goal === 'conversions');
+      document.getElementById('goal-reach').classList.toggle('selected', goal === 'reach');
+    }
+
+    function syncBudgetFromSlider() {
+      const val = Number(document.getElementById('total-budget-slider').value);
+      state.totalBudget = val;
+      document.getElementById('total-budget-input').value = val;
+    }
+
+    function syncBudgetFromInput() {
+      let val = Number(document.getElementById('total-budget-input').value);
+      if (isNaN(val) || val < 0) val = 0;
+      state.totalBudget = val;
+      const slider = document.getElementById('total-budget-slider');
+      if (val >= Number(slider.min) && val <= Number(slider.max)) {
+        slider.value = val;
+      }
+    }
+
+    function applyPreset(type) {
+      if (type === 'ecommerce') {
+        selectGoal('conversions');
+        state.totalBudget = 100000;
+        state.selectedIds = ['meta', 'google', 'tiktok', 'line'];
+        state.params.meta = { cpa: 420, cpm: 140, min: 15000, max: 50000 };
+        state.params.google = { cpa: 360, cpm: 250, min: 15000, max: 40000 };
+        state.params.tiktok = { cpa: 500, cpm: 90, min: 5000, max: 35000 };
+        state.params.line = { cpa: 300, cpm: 170, min: 5000, max: 20000 };
+      } else if (type === 'newstore') {
+        selectGoal('reach');
+        state.totalBudget = 60000;
+        state.selectedIds = ['meta', 'tiktok', 'kol', 'line'];
+        state.params.meta = { cpa: 480, cpm: 120, min: 10000, max: 30000 };
+        state.params.tiktok = { cpa: 550, cpm: 80, min: 10000, max: 30000 };
+        state.params.kol = { cpa: 600, cpm: 160, min: 10000, max: 25000 };
+        state.params.line = { cpa: 350, cpm: 150, min: 5000, max: 15000 };
+      } else if (type === 'course') {
+        selectGoal('conversions');
+        state.totalBudget = 150000;
+        state.selectedIds = ['meta', 'google', 'kol'];
+        state.params.meta = { cpa: 650, cpm: 160, min: 20000, max: 70000 };
+        state.params.google = { cpa: 520, cpm: 280, min: 30000, max: 65000 };
+        state.params.kol = { cpa: 780, cpm: 220, min: 20000, max: 50000 };
+      }
+      document.getElementById('total-budget-input').value = state.totalBudget;
+      document.getElementById('total-budget-slider').value = Math.min(500000, state.totalBudget);
+      renderChannelGrid();
+      goToStep(2);
+    }
+
+    function renderChannelGrid() {
+      const grid = document.getElementById('channel-grid');
+      grid.innerHTML = CHANNELS.map(ch => {
+        const isSelected = state.selectedIds.includes(ch.id);
+        return `
+          <div class="channel-pick ${isSelected ? 'selected' : ''}" onclick="toggleChannel('${ch.id}')">
+            <span class="check-badge">✓</span>
+            <div style="font-size:1.6rem;">${ch.icon}</div>
+            <h3>${ch.name}</h3>
+            <p>${ch.desc}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleChannel(id) {
+      const idx = state.selectedIds.indexOf(id);
+      if (idx >= 0) {
+        state.selectedIds.splice(idx, 1);
+      } else {
+        state.selectedIds.push(id);
+      }
+      document.getElementById('step2-alert').classList.remove('show');
+      renderChannelGrid();
+    }
+
+    function validateAndGoStep3() {
+      if (state.selectedIds.length < 2) {
+        document.getElementById('step2-alert').classList.add('show');
+        return;
+      }
+      goToStep(3);
+    }
+
+    function renderParamList() {
+      const isConv = state.goal === 'conversions';
+      document.getElementById('step3-desc').textContent = isConv
+        ? '請填寫每個管道「獲得 1 筆訂單大約要花多少廣告費」，以及您願意投入的最低與最高金額。'
+        : '請填寫每個管道「讓 1,000 人看到廣告大約要花多少錢」，以及您願意投入的最低與最高金額。';
+
+      const list = document.getElementById('param-list');
+      list.innerHTML = state.selectedIds.map(id => {
+        const ch = CHANNELS.find(c => c.id === id);
+        const p = state.params[id];
+        const costVal = isConv ? p.cpa : p.cpm;
+        const costLabel = isConv ? '獲得 1 筆訂單的廣告費 (元)' : '每 1,000 次曝光花費 (元)';
+        const costHint = isConv ? '數字越低代表越容易成交' : '數字越低代表曝光越便宜';
+
+        return `
+          <div class="param-card">
+            <div class="param-card-title">${ch.icon} ${ch.name}</div>
+            <div class="param-fields">
+              <div class="field-group">
+                <label>${costLabel}</label>
+                <span class="hint">${costHint}</span>
+                <input type="number" min="1" step="10" value="${costVal}"
+                  onchange="updateParam('${id}', '${isConv ? 'cpa' : 'cpm'}', this.value)" />
+              </div>
+              <div class="field-group">
+                <label>最少要投多少錢 (下限)</label>
+                <span class="hint">可填 0 代表不強制一定要投</span>
+                <input type="number" min="0" step="1000" value="${p.min}"
+                  onchange="updateParam('${id}', 'min', this.value)" />
+              </div>
+              <div class="field-group">
+                <label>最多不超過多少錢 (上限)</label>
+                <span class="hint">避免單一管道受眾疲乏</span>
+                <input type="number" min="1000" step="1000" value="${p.max}"
+                  onchange="updateParam('${id}', 'max', this.value)" />
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateParam(id, field, val) {
+      const num = Math.max(0, Number(val) || 0);
+      state.params[id][field] = num;
+      document.getElementById('step3-alert').classList.remove('show');
+    }
+
+    function fillMarketDefaults() {
+      state.selectedIds.forEach(id => {
+        const ch = CHANNELS.find(c => c.id === id);
+        state.params[id] = {
+          cpa: ch.defaultCpa,
+          cpm: ch.defaultCpm,
+          min: ch.defaultMin,
+          max: ch.defaultMax
         };
       });
+      renderParamList();
+      document.getElementById('step3-alert').classList.remove('show');
+    }
 
-      const m = normConstraints.length;
-      if (m === 0) {
-        return { status: 'unbounded', x: [], shadowPrices: {} };
+    function goToStep(stepNum) {
+      if (stepNum >= 3 && state.selectedIds.length < 2) {
+        alert('請先在第 2 步至少選擇 2 個廣告管道喔！');
+        stepNum = 2;
+      }
+      state.step = stepNum;
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById('step-' + i).classList.toggle('hidden', i !== stepNum);
+      }
+      const items = document.querySelectorAll('.step-item');
+      items.forEach((el, idx) => {
+        const s = idx + 1;
+        el.classList.toggle('active', s === stepNum);
+        el.classList.toggle('done', s < stepNum);
+      });
+
+      if (stepNum === 2) renderChannelGrid();
+      if (stepNum === 3) renderParamList();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ==========================================
+    // 雙階段單形法 (Two-Phase Simplex) 線性規劃求解器
+    // ==========================================
+    function solveMarketingLP(budget, items, goal) {
+      const n = items.length;
+      const alertBox = document.getElementById('step3-alert');
+
+      // 前置可行性檢查（白話錯誤提示）
+      let sumMin = 0;
+      for (const item of items) {
+        if (item.cost <= 0) {
+          return { feasible: false, message: `「${item.name}」的預估花費必須大於 0 元喔！` };
+        }
+        if (item.min > item.max) {
+          return {
+            feasible: false,
+            message: `「${item.name}」的最少預算（${formatMoney(item.min)}）不能大於最多預算（${formatMoney(item.max)}），請修正後再試！`
+          };
+        }
+        sumMin += item.min;
       }
 
-      // Column layout:
-      // [0 .. numVars - 1] : Decision variables x_j
-      // Followed by slack/surplus variables and artificial variables
-      let totalCols = numVars;
-      const slackColForRow = new Array(m).fill(-1);
-      const surplusColForRow = new Array(m).fill(-1);
-      const artificialCols = [];
-      const initialBasicVar = new Array(m).fill(-1);
-
-      for (let i = 0; i < m; i++) {
-        if (normConstraints[i].type === '<=') {
-          slackColForRow[i] = totalCols;
-          initialBasicVar[i] = totalCols;
-          totalCols++;
-        } else {
-          // '>=' constraint gets surplus (-1) and artificial (+1)
-          surplusColForRow[i] = totalCols;
-          totalCols++;
-          artificialCols.push(totalCols);
-          initialBasicVar[i] = totalCols;
-          totalCols++;
-        }
+      if (sumMin > budget) {
+        return {
+          feasible: false,
+          message: `目前所有管道的「最少預算」加起來已經高達 ${formatMoney(sumMin)}，超過您的總預算 ${formatMoney(budget)}！請調低部分管道的最少預算，或增加總預算。`
+        };
       }
 
-      const isArtificial = new Array(totalCols).fill(false);
-      artificialCols.forEach(col => { isArtificial[col] = true; });
+      // 目標係數 c_i：每投入 1 元可獲得的訂單數或曝光數
+      const c = items.map(it => (goal === 'conversions' ? 1 / it.cost : 1000 / it.cost));
 
-      // Build tableau: (m + 1) rows x (totalCols + 1) columns
-      // Row 0 is objective row; Rows 1..m are constraints; Last col is RHS
-      const tableau = Array.from({ length: m + 1 }, () => new Float64Array(totalCols + 1));
+      // 建立標準型限制式：
+      // Row 0: sum(x_i) + s_0 = budget
+      // Row 1..n: x_i + s_i = max_i
+      // Row n+1..n+k: x_i - e_r + a_r = min_i (僅針對 min_i > 0)
+      const minRows = items.map((it, idx) => ({ idx, min: it.min })).filter(r => r.min > 0);
+      const k = minRows.length;
+      const m = 1 + n + k; // 總限制式列數
+      const numSlacks = 1 + n;
+      const numSurplus = k;
+      const numArt = k;
+      const totalCols = n + numSlacks + numSurplus + numArt; // 不含 RHS
 
-      for (let i = 0; i < m; i++) {
-        const row = tableau[i + 1];
-        const con = normConstraints[i];
-        for (let j = 0; j < numVars; j++) {
-          row[j] = con.coeffs[j];
-        }
-        if (con.type === '<=') {
-          row[slackColForRow[i]] = 1;
-        } else {
-          row[surplusColForRow[i]] = -1;
-          row[initialBasicVar[i]] = 1; // artificial variable
-        }
-        row[totalCols] = con.rhs;
+      // 初始化 Tableau: (m + 1) x (totalCols + 1)
+      const T = Array.from({ length: m + 1 }, () => Array(totalCols + 1).fill(0));
+      const basis = Array(m).fill(-1);
+
+      // Row 0: sum(x_i) + s_0 = budget
+      for (let j = 0; j < n; j++) T[0][j] = 1;
+      T[0][n] = 1;
+      T[0][totalCols] = budget;
+      basis[0] = n;
+
+      // Row 1..n: x_i + s_i = max_i
+      for (let i = 0; i < n; i++) {
+        const r = 1 + i;
+        T[r][i] = 1;
+        T[r][n + 1 + i] = 1;
+        T[r][totalCols] = items[i].max;
+        basis[r] = n + 1 + i;
       }
 
-      const basicVar = initialBasicVar.slice();
+      // Row n+1..n+k: x_i - e_r + a_r = min_i
+      for (let idx = 0; idx < k; idx++) {
+        const r = 1 + n + idx;
+        const varIdx = minRows[idx].idx;
+        const surpCol = n + numSlacks + idx;
+        const artCol = n + numSlacks + numSurplus + idx;
+        T[r][varIdx] = 1;
+        T[r][surpCol] = -1;
+        T[r][artCol] = 1;
+        T[r][totalCols] = minRows[idx].min;
+        basis[r] = artCol;
+      }
 
-      // Helper: Pivot on (pivotRowIdx in 1..m, pivotCol in 0..totalCols-1)
-      function pivot(pivotRowIdx, pivotCol) {
-        const pRow = tableau[pivotRowIdx];
-        const pVal = pRow[pivotCol];
-        for (let j = 0; j <= totalCols; j++) {
-          pRow[j] /= pVal;
-        }
-        for (let r = 0; r <= m; r++) {
-          if (r === pivotRowIdx) continue;
-          const row = tableau[r];
-          const factor = row[pivotCol];
-          if (Math.abs(factor) > 1e-13) {
+      const EPS = 1e-9;
+
+      function pivot(pRow, pCol) {
+        const pivVal = T[pRow][pCol];
+        for (let j = 0; j <= totalCols; j++) T[pRow][j] /= pivVal;
+        for (let i = 0; i <= m; i++) {
+          if (i !== pRow && Math.abs(T[i][pCol]) > EPS) {
+            const factor = T[i][pCol];
             for (let j = 0; j <= totalCols; j++) {
-              row[j] -= factor * pRow[j];
+              T[i][j] -= factor * T[pRow][j];
             }
           }
         }
-        basicVar[pivotRowIdx - 1] = pivotCol;
+        basis[pRow] = pCol;
       }
 
-      // -------------------------------------------------------
-      // PHASE I: Minimize sum of artificial variables (Max -sum a_i)
-      // -------------------------------------------------------
-      if (artificialCols.length > 0) {
-        const objRow = tableau[0];
-        // For maximization of -W, c_a = -1 => z_a - c_a = +1 initially
-        for (const aCol of artificialCols) {
-          objRow[aCol] = 1;
-        }
-        // Eliminate basic artificial variables from Row 0
-        for (let i = 0; i < m; i++) {
-          if (isArtificial[basicVar[i]]) {
-            const cRow = tableau[i + 1];
-            for (let j = 0; j <= totalCols; j++) {
-              objRow[j] -= cRow[j];
-            }
-          }
-        }
-
-        let iter = 0;
-        while (iter++ < MAX_ITER) {
-          // Bland's Rule: first column with z_j - c_j < -EPS
+      function runSimplex(maxColExclusive) {
+        for (let iter = 0; iter < 500; iter++) {
+          // Bland's Rule: 選第一個 reduced cost < -EPS 的欄位進入基底
           let enterCol = -1;
-          for (let j = 0; j < totalCols; j++) {
-            if (objRow[j] < -EPS) {
+          for (let j = 0; j < maxColExclusive; j++) {
+            if (T[m][j] < -EPS) {
               enterCol = j;
               break;
             }
           }
-          if (enterCol === -1) break; // Phase I optimal
+          if (enterCol === -1) break; // 已達最佳解
 
-          // Ratio test (Bland's tie-breaking by smallest basicVar index)
           let leaveRow = -1;
           let minRatio = Infinity;
           for (let i = 0; i < m; i++) {
-            const a_ij = tableau[i + 1][enterCol];
-            if (a_ij > EPS) {
-              const ratio = Math.max(0, tableau[i + 1][totalCols]) / a_ij;
-              if (
-                ratio < minRatio - EPS ||
-                (Math.abs(ratio - minRatio) <= EPS && leaveRow !== -1 && basicVar[i] < basicVar[leaveRow - 1])
-              ) {
+            if (T[i][enterCol] > EPS) {
+              const ratio = T[i][totalCols] / T[i][enterCol];
+              if (ratio < minRatio - EPS) {
                 minRatio = ratio;
-                leaveRow = i + 1;
+                leaveRow = i;
               }
             }
           }
           if (leaveRow === -1) break;
           pivot(leaveRow, enterCol);
         }
+      }
 
-        // Check if Phase I objective (-W) is strictly negative => Infeasible
-        if (tableau[0][totalCols] < -1e-5) {
-          return { status: 'infeasible', x: [], shadowPrices: {} };
+      // Phase 1: 若有人工變數，先消除人工變數
+      if (k > 0) {
+        const artStart = n + numSlacks + numSurplus;
+        for (let idx = 0; idx < k; idx++) {
+          T[m][artStart + idx] = 1;
         }
+        for (let idx = 0; idx < k; idx++) {
+          const r = 1 + n + idx;
+          for (let j = 0; j <= totalCols; j++) {
+            T[m][j] -= T[r][j];
+          }
+        }
+        runSimplex(totalCols);
 
-        // Drive out any remaining zero-valued artificial variables from basis
+        // 若人工變數仍在基底中（退化情況），將其移出基底
         for (let i = 0; i < m; i++) {
-          if (isArtificial[basicVar[i]]) {
-            const cRow = tableau[i + 1];
-            for (let j = 0; j < totalCols; j++) {
-              if (!isArtificial[j] && Math.abs(cRow[j]) > EPS) {
-                pivot(i + 1, j);
+          if (basis[i] >= artStart) {
+            for (let j = 0; j < artStart; j++) {
+              if (Math.abs(T[i][j]) > EPS) {
+                pivot(i, j);
                 break;
               }
             }
@@ -859,1165 +1226,206 @@
         }
       }
 
-      // -------------------------------------------------------
-      // PHASE II: Maximize original objective Z = c^T x
-      // -------------------------------------------------------
-      const objRow = tableau[0];
-      objRow.fill(0);
-      for (let j = 0; j < numVars; j++) {
-        objRow[j] = -c[j];
-      }
-      // Eliminate basic variables with non-zero c_j from Row 0
+      // Phase 2: 設定真正目標函數 Maximize sum(c_j * x_j)
+      for (let j = 0; j <= totalCols; j++) T[m][j] = 0;
+      for (let j = 0; j < n; j++) T[m][j] = -c[j];
       for (let i = 0; i < m; i++) {
-        const bCol = basicVar[i];
-        if (bCol < numVars && Math.abs(c[bCol]) > EPS) {
-          const cb = c[bCol];
-          const cRow = tableau[i + 1];
+        const bCol = basis[i];
+        if (bCol >= 0 && bCol < n && Math.abs(T[m][bCol]) > EPS) {
+          const factor = T[m][bCol];
           for (let j = 0; j <= totalCols; j++) {
-            objRow[j] += cb * cRow[j];
+            T[m][j] -= factor * T[i][j];
           }
         }
       }
 
-      let iter2 = 0;
-      while (iter2++ < MAX_ITER) {
-        // Bland's Rule: first non-artificial column with z_j - c_j < -EPS
-        let enterCol = -1;
-        for (let j = 0; j < totalCols; j++) {
-          if (isArtificial[j]) continue;
-          if (objRow[j] < -EPS) {
-            enterCol = j;
-            break;
-          }
-        }
-        if (enterCol === -1) break; // Optimal solution found!
+      const validCols = n + numSlacks + numSurplus;
+      runSimplex(validCols);
 
-        let leaveRow = -1;
-        let minRatio = Infinity;
-        for (let i = 0; i < m; i++) {
-          const a_ij = tableau[i + 1][enterCol];
-          if (a_ij > EPS) {
-            const ratio = Math.max(0, tableau[i + 1][totalCols]) / a_ij;
-            if (
-              ratio < minRatio - EPS ||
-              (Math.abs(ratio - minRatio) <= EPS && leaveRow !== -1 && basicVar[i] < basicVar[leaveRow - 1])
-            ) {
-              minRatio = ratio;
-              leaveRow = i + 1;
-            }
-          }
-        }
-        if (leaveRow === -1) {
-          return { status: 'unbounded', x: [], shadowPrices: {} };
-        }
-        pivot(leaveRow, enterCol);
-      }
-
-      // Extract primal solution x
-      const x = new Array(numVars).fill(0);
+      // 讀取結果
+      const allocations = Array(n).fill(0);
       for (let i = 0; i < m; i++) {
-        const bCol = basicVar[i];
-        if (bCol < numVars) {
-          x[bCol] = Math.max(0, tableau[i + 1][totalCols]);
+        if (basis[i] >= 0 && basis[i] < n) {
+          allocations[basis[i]] = Math.max(0, T[i][totalCols]);
         }
       }
 
-      // Extract exact Dual Shadow Prices y_i = dZ* / db_i
-      const shadowPrices = {};
-      for (let i = 0; i < m; i++) {
-        const con = normConstraints[i];
-        let yVal = 0;
-        if (con.type === '<=') {
-          // Slack variable s_i has +1 in row i => Row0[s_i] = y_i >= 0
-          yVal = tableau[0][slackColForRow[i]];
-        } else {
-          // Surplus variable e_i has -1 in row i => Row0[e_i] = -y_i >= 0
-          yVal = -tableau[0][surplusColForRow[i]];
-        }
-        if (con.signFlipped) yVal = -yVal;
-        shadowPrices[con.id] = Math.abs(yVal) < 1e-7 ? 0 : yVal;
-      }
+      const totalSpent = allocations.reduce((a, b) => a + b, 0);
+      const totalOutcome = allocations.reduce((sum, val, i) => sum + val * c[i], 0);
+      const budgetShadowPrice = Math.max(0, T[m][n]); // 總預算每多 1 元帶來的邊際效益
+      const maxShadowPrices = items.map((_, i) => Math.max(0, T[m][n + 1 + i]));
 
       return {
-        status: 'optimal',
-        objectiveValue: tableau[0][totalCols],
-        x,
-        shadowPrices
-      };
-    }
-
-    /**
-     * ---------------------------------------------------------
-     * 4. BUILD MEDIA MIX LP MODEL, DIAGNOSE & SOLVE
-     * ---------------------------------------------------------
-     */
-    function runMediaMixOptimization() {
-      const channels = appState.channels;
-      const n = channels.length;
-
-      if (n === 0) {
-        renderInfeasible(['請至少新增一個媒體管道以進行預算配置。']);
-        renderMathModel([], [], []);
-        return;
-      }
-
-      // Decision variables x_i are scaled in units of 1,000 TWD (千元)
-      // for strong numerical stability in Simplex pivoting.
-      const B_k = Math.max(0, Number(appState.totalBudget) || 0) / 1000;
-      const minReach = appState.minReachEnabled ? Math.max(0, Number(appState.minReach) || 0) : 0;
-      const digSharePct = appState.digitalShareEnabled ? Math.min(100, Math.max(0, Number(appState.digitalShare) || 0)) : 0;
-      const maxConcPct = appState.maxConcentrationEnabled ? Math.min(100, Math.max(0, Number(appState.maxConcentration) || 0)) : 100;
-
-      // Objective vector c (per 1,000 TWD spent on channel i)
-      const c = channels.map(ch => {
-        const conv = Math.max(0, Number(ch.convPerK) || 0);
-        const reach = Math.max(0, Number(ch.reachPerK) || 0);
-        const val = Math.max(0, Number(ch.valuePerConv) || 0);
-        if (appState.objective === 'conversions') return conv;
-        if (appState.objective === 'reach') return reach;
-        return conv * val; // Expected Revenue in TWD
-      });
-
-      const constraints = [];
-
-      // 1. Total Budget Constraint: sum(x_i) <= B_k
-      constraints.push({
-        id: 'total_budget',
-        coeffs: new Array(n).fill(1),
-        type: '<=',
-        rhs: B_k
-      });
-
-      // 2. Minimum Total Reach Constraint: sum(reachPerK_i * x_i) >= minReach
-      if (appState.minReachEnabled && minReach > 0) {
-        constraints.push({
-          id: 'min_reach',
-          coeffs: channels.map(ch => Math.max(0, Number(ch.reachPerK) || 0)),
-          type: '>=',
-          rhs: minReach
-        });
-      }
-
-      // 3. Digital Media Minimum Share Constraint:
-      // sum_{i in Digital} x_i >= (p / 100) * sum_{all j} x_j
-      // <=> sum_{i in Digital} (1 - p/100) x_i - sum_{j not Digital} (p/100) x_j >= 0
-      if (appState.digitalShareEnabled && digSharePct > 0) {
-        const p = digSharePct / 100;
-        constraints.push({
-          id: 'digital_share',
-          coeffs: channels.map(ch => (ch.type === 'digital' ? 1 - p : -p)),
-          type: '>=',
-          rhs: 0
-        });
-      }
-
-      // 4. Individual Channel Lower Bounds (x_i >= L_i) & Effective Upper Bounds (x_i <= U_eff_i)
-      const channelMeta = channels.map((ch, idx) => {
-        const minK = Math.max(0, Number(ch.minBudget) || 0) / 1000;
-        const rawMaxK = Math.max(0, Number(ch.maxBudget) || 0) / 1000;
-        const concMaxK = appState.maxConcentrationEnabled ? (maxConcPct / 100) * B_k : Infinity;
-        const effMaxK = Math.min(rawMaxK, concMaxK);
-        const cappedByConcentration = appState.maxConcentrationEnabled && concMaxK < rawMaxK - 1e-6;
-
-        if (minK > 0) {
-          const lbCoeffs = new Array(n).fill(0);
-          lbCoeffs[idx] = 1;
-          constraints.push({
-            id: `lb_${idx}`,
-            coeffs: lbCoeffs,
-            type: '>=',
-            rhs: minK
-          });
-        }
-
-        const ubCoeffs = new Array(n).fill(0);
-        ubCoeffs[idx] = 1;
-        constraints.push({
-          id: `ub_${idx}`,
-          coeffs: ubCoeffs,
-          type: '<=',
-          rhs: Math.max(0, effMaxK)
-        });
-
-        return {
-          minK,
-          rawMaxK,
-          concMaxK,
-          effMaxK,
-          cappedByConcentration
-        };
-      });
-
-      // Update Live Mathematical Model View
-      renderMathModel(c, channelMeta, { B_k, minReach, digSharePct, maxConcPct });
-
-      // Solve with Two-Phase Simplex
-      const result = solveTwoPhaseSimplex(n, c, constraints);
-
-      if (result.status !== 'optimal') {
-        const reasons = diagnoseInfeasibility(channels, channelMeta, {
-          B_k,
-          minReach,
-          digSharePct,
-          maxConcPct
-        });
-        renderInfeasible(reasons);
-        lastSolveResult = null;
-        return;
-      }
-
-      // Compute detailed metrics for optimal solution
-      let totalAllocatedTWD = 0;
-      let totalConversions = 0;
-      let totalReach = 0;
-      let totalRevenue = 0;
-
-      const allocations = channels.map((ch, idx) => {
-        const xK = result.x[idx];
-        const budgetTWD = xK * 1000;
-        const conv = xK * (Math.max(0, Number(ch.convPerK) || 0));
-        const reach = xK * (Math.max(0, Number(ch.reachPerK) || 0));
-        const rev = conv * (Math.max(0, Number(ch.valuePerConv) || 0));
-        const roas = budgetTWD > 0 ? rev / budgetTWD : 0;
-
-        totalAllocatedTWD += budgetTWD;
-        totalConversions += conv;
-        totalReach += reach;
-        totalRevenue += rev;
-
-        const meta = channelMeta[idx];
-        const ubShadow = result.shadowPrices[`ub_${idx}`] || 0;
-        const lbShadow = result.shadowPrices[`lb_${idx}`] || 0;
-
-        // Determine binding status badge
-        let statusType = 'interior';
-        let statusLabel = '彈性配置區間';
-        if (meta.effMaxK > 1e-5 && Math.abs(xK - meta.effMaxK) <= 1e-3 && Math.abs(meta.effMaxK - meta.minK) > 1e-3) {
-          if (meta.cappedByConcentration) {
-            statusType = 'cap_conc';
-            statusLabel = `達集中度上限 (${maxConcPct}%)`;
-          } else {
-            statusType = 'cap_channel';
-            statusLabel = '已達管道上限瓶頸';
-          }
-        } else if (meta.minK > 1e-5 && Math.abs(xK - meta.minK) <= 1e-3) {
-          statusType = 'floor';
-          statusLabel = '維持合約下限';
-        } else if (xK <= 1e-4) {
-          statusType = 'zero';
-          statusLabel = '未配置預算';
-        }
-
-        return {
-          channel: ch,
-          xK,
-          budgetTWD,
-          minTWD: meta.minK * 1000,
-          effMaxTWD: meta.effMaxK * 1000,
-          rawMaxTWD: meta.rawMaxK * 1000,
-          conversions: conv,
-          reach,
-          revenue: rev,
-          roas,
-          statusType,
-          statusLabel,
-          ubShadow,
-          lbShadow
-        };
-      });
-
-      const budgetShadowPrice = result.shadowPrices['total_budget'] || 0;
-
-      lastSolveResult = {
-        objective: appState.objective,
-        objectiveValue: result.objectiveValue,
-        totalBudgetTWD: B_k * 1000,
-        totalAllocatedTWD,
-        totalConversions,
-        totalReach,
-        totalRevenue,
+        feasible: true,
+        allocations,
+        totalSpent,
+        totalOutcome,
         budgetShadowPrice,
-        allocations
+        maxShadowPrices
       };
-
-      renderFeasibleResults(lastSolveResult);
     }
 
-    /**
-     * Root-Cause Diagnostic Engine for Infeasible LP Models
-     */
-    function diagnoseInfeasibility(channels, channelMeta, params) {
-      const reasons = [];
-      const totalBudgetTWD = params.B_k * 1000;
-
-      // 1. Check individual channel min > raw max
-      channels.forEach((ch, idx) => {
-        const m = channelMeta[idx];
-        if (m.minK > m.rawMaxK + 1e-5) {
-          reasons.push(
-            `管道「${ch.name}」的最低預算下限（${formatCurrency(m.minK * 1000)}）大於其最高預算上限（${formatCurrency(m.rawMaxK * 1000)}）。`
-          );
-        } else if (m.minK > m.concMaxK + 1e-5) {
-          reasons.push(
-            `管道「${ch.name}」的最低預算下限（${formatCurrency(m.minK * 1000)}）超過「單一管道最高集中度 (${params.maxConcPct}%)」所允許的上限（${formatCurrency(m.concMaxK * 1000)}）。`
-          );
-        }
-      });
-
-      // 2. Check sum of minimum budgets > total budget
-      const sumMinTWD = channelMeta.reduce((acc, m) => acc + m.minK * 1000, 0);
-      if (sumMinTWD > totalBudgetTWD + 1) {
-        reasons.push(
-          `所有管道的最低預算下限總和為 ${formatCurrency(sumMinTWD)}，已超過總行銷預算上限（${formatCurrency(totalBudgetTWD)}）。`
-        );
-      }
-
-      // 3. Check if max possible reach within budget & caps < minReach
-      if (appState.minReachEnabled && params.minReach > 0) {
-        // Greedy upper bound on reach
-        const sortedByReach = channels
-          .map((ch, idx) => ({
-            reachPerK: Math.max(0, Number(ch.reachPerK) || 0),
-            minK: channelMeta[idx].minK,
-            effMaxK: Math.max(channelMeta[idx].minK, channelMeta[idx].effMaxK)
-          }))
-          .sort((a, b) => b.reachPerK - a.reachPerK);
-
-        let remK = params.B_k;
-        let maxPossibleReach = 0;
-        sortedByReach.forEach(item => {
-          maxPossibleReach += item.minK * item.reachPerK;
-          remK -= item.minK;
-        });
-        if (remK > 0) {
-          for (const item of sortedByReach) {
-            const addK = Math.min(remK, Math.max(0, item.effMaxK - item.minK));
-            maxPossibleReach += addK * item.reachPerK;
-            remK -= addK;
-          }
-        }
-        if (maxPossibleReach < params.minReach - 1) {
-          reasons.push(
-            `在目前的預算與上限條件下，最大理論可達成觸及人數僅約 ${formatNumber(Math.floor(maxPossibleReach))} 人，無法達到最低總觸及門檻（${formatNumber(params.minReach)} 人）。`
-          );
-        }
-      }
-
-      // 4. Check digital minimum share conflict
-      if (appState.digitalShareEnabled && params.digSharePct > 0) {
-        const p = params.digSharePct / 100;
-        const maxDigitalK = channelMeta.reduce(
-          (acc, m, idx) => acc + (channels[idx].type === 'digital' ? m.effMaxK : 0),
-          0
-        );
-        const minTradK = channelMeta.reduce(
-          (acc, m, idx) => acc + (channels[idx].type !== 'digital' ? m.minK : 0),
-          0
-        );
-        // To satisfy D >= p * (D + T) => D * (1 - p) >= p * T
-        if (p >= 1 - 1e-6 && minTradK > 1e-5) {
-          reasons.push(
-            `數位媒體最低佔比設為 100%，但傳統媒體管道仍設有最低預算下限（${formatCurrency(minTradK * 1000)}）。`
-          );
-        } else if (maxDigitalK * (1 - p) < p * minTradK - 1e-4) {
-          reasons.push(
-            `數位媒體最高可配置上限（${formatCurrency(maxDigitalK * 1000)}）與傳統媒體最低下限（${formatCurrency(minTradK * 1000)}）衝突，無法滿足數位佔比 ≥ ${params.digSharePct}% 的要求。`
-          );
-        }
-      }
-
-      if (reasons.length === 0) {
-        reasons.push(
-          '多項限制條件（最低觸及門檻、數位媒體佔比、集中度上限與各管道上下限）交集為空集合。建議適度調高總預算或放寬限制門檻。'
-        );
-      }
-
-      return reasons;
-    }
-
-    /**
-     * ---------------------------------------------------------
-     * 5. UI RENDERING FUNCTIONS
-     * ---------------------------------------------------------
-     */
-    function formatCurrency(val) {
-      return 'NT$ ' + Math.round(val).toLocaleString('zh-TW');
-    }
-
-    function formatNumber(val, decimals = 0) {
-      return Number(val).toLocaleString('zh-TW', {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals
+    function getActiveItems() {
+      const isConv = state.goal === 'conversions';
+      return state.selectedIds.map(id => {
+        const ch = CHANNELS.find(c => c.id === id);
+        const p = state.params[id];
+        return {
+          id,
+          name: ch.name,
+          icon: ch.icon,
+          color: ch.color,
+          cost: isConv ? p.cpa : p.cpm,
+          min: p.min,
+          max: p.max
+        };
       });
     }
 
-    function showToast(message, type = 'success') {
-      const container = document.getElementById('toast-container');
-      const toast = document.createElement('div');
-      const bgClass = type === 'success' ? 'bg-slate-900 text-white border-slate-700' : 'bg-rose-600 text-white border-rose-500';
-      toast.className = `pointer-events-auto px-4 py-2.5 rounded-xl border shadow-lg text-xs font-semibold flex items-center gap-2 transition-all duration-300 transform translate-y-2 opacity-0 ${bgClass}`;
-      toast.innerHTML = `
-        <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-        </svg>
-        <span>${message}</span>
-      `;
-      container.appendChild(toast);
-      requestAnimationFrame(() => {
-        toast.classList.remove('translate-y-2', 'opacity-0');
-      });
-      setTimeout(() => {
-        toast.classList.add('opacity-0', 'translate-y-2');
-        setTimeout(() => toast.remove(), 300);
-      }, 2600);
-    }
+    function calculateAndShowResult() {
+      const items = getActiveItems();
+      const res = solveMarketingLP(state.totalBudget, items, state.goal);
+      const alertBox = document.getElementById('step3-alert');
 
-    function syncControlsFromState() {
-      // Total Budget
-      const budgetInput = document.getElementById('input-total-budget');
-      budgetInput.value = appState.totalBudget;
-      document.getElementById('label-budget-formatted').textContent = formatCurrency(appState.totalBudget);
-
-      // Objective Buttons
-      document.querySelectorAll('.obj-btn').forEach(btn => {
-        const isActive = btn.dataset.objective === appState.objective;
-        if (isActive) {
-          btn.className = 'obj-btn p-2.5 rounded-xl border text-left transition-all cursor-pointer border-indigo-600 bg-indigo-50/70 ring-1 ring-indigo-600';
-          btn.children[0].className = 'text-xs font-bold text-indigo-900';
-          btn.children[1].className = 'text-[11px] text-indigo-600 mt-0.5';
-        } else {
-          btn.className = 'obj-btn p-2.5 rounded-xl border text-left transition-all cursor-pointer border-slate-200 bg-white hover:bg-slate-50';
-          btn.children[0].className = 'text-xs font-bold text-slate-800';
-          btn.children[1].className = 'text-[11px] text-slate-500 mt-0.5';
-        }
-      });
-
-      // Min Reach
-      const toggleReach = document.getElementById('toggle-min-reach');
-      const inputReach = document.getElementById('input-min-reach');
-      toggleReach.checked = appState.minReachEnabled;
-      inputReach.value = appState.minReach;
-      inputReach.disabled = !appState.minReachEnabled;
-      document.getElementById('container-min-reach').classList.toggle('opacity-50', !appState.minReachEnabled);
-      document.getElementById('label-reach-formatted').textContent = appState.minReachEnabled
-        ? `${formatNumber(appState.minReach)} 人`
-        : '未啟用';
-
-      // Digital Share
-      const toggleDig = document.getElementById('toggle-digital-share');
-      toggleDig.checked = appState.digitalShareEnabled;
-      document.getElementById('range-digital-share').value = appState.digitalShare;
-      document.getElementById('input-digital-share').value = appState.digitalShare;
-      document.getElementById('val-digital-share-badge').textContent = appState.digitalShare;
-      document.getElementById('range-digital-share').disabled = !appState.digitalShareEnabled;
-      document.getElementById('input-digital-share').disabled = !appState.digitalShareEnabled;
-      document.getElementById('container-digital-share').classList.toggle('opacity-50', !appState.digitalShareEnabled);
-
-      // Max Concentration
-      const toggleConc = document.getElementById('toggle-max-concentration');
-      toggleConc.checked = appState.maxConcentrationEnabled;
-      document.getElementById('range-max-concentration').value = appState.maxConcentration;
-      document.getElementById('input-max-concentration').value = appState.maxConcentration;
-      document.getElementById('val-max-concentration-badge').textContent = appState.maxConcentration;
-      document.getElementById('range-max-concentration').disabled = !appState.maxConcentrationEnabled;
-      document.getElementById('input-max-concentration').disabled = !appState.maxConcentrationEnabled;
-      document.getElementById('container-max-concentration').classList.toggle('opacity-50', !appState.maxConcentrationEnabled);
-
-      // Preset buttons highlight
-      document.querySelectorAll('.preset-btn').forEach(btn => {
-        const isCurrent = btn.dataset.preset === activePresetKey;
-        btn.className = isCurrent
-          ? 'preset-btn px-3 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer bg-indigo-600 text-white border-indigo-600 shadow-xs'
-          : 'preset-btn px-3 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer bg-white text-slate-700 border-slate-200 hover:bg-slate-50';
-      });
-    }
-
-    function renderChannelCards() {
-      const container = document.getElementById('channels-list');
-      container.innerHTML = '';
-
-      appState.channels.forEach((ch, idx) => {
-        const colorDot = CHANNEL_COLORS[idx % CHANNEL_COLORS.length];
-        const card = document.createElement('div');
-        card.className = 'p-4 rounded-xl border border-slate-200 bg-slate-50/60 hover:bg-white hover:border-slate-300 transition-all';
-        card.innerHTML = `
-          <!-- Channel Header Row -->
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <div class="flex items-center gap-2 flex-1 min-w-0">
-              <span class="w-3 h-3 rounded-full shrink-0" style="background-color: ${colorDot}"></span>
-              <span class="text-xs font-mono font-bold text-slate-400 shrink-0">x${idx + 1}</span>
-              <input
-                type="text"
-                data-idx="${idx}"
-                data-field="name"
-                value="${escapeHtml(ch.name)}"
-                placeholder="輸入媒體管道名稱"
-                class="ch-input w-full text-sm font-bold text-slate-900 bg-transparent border-b border-transparent hover:border-slate-300 focus:border-indigo-500 focus:bg-white px-1 py-0.5 rounded-xs outline-none transition-colors"
-              />
-            </div>
-
-            <div class="flex items-center gap-1.5 shrink-0">
-              <select
-                data-idx="${idx}"
-                data-field="type"
-                class="ch-input text-xs font-semibold px-2.5 py-1 rounded-lg border border-slate-200 bg-white text-slate-700 focus:border-indigo-500 outline-none cursor-pointer"
-              >
-                <option value="digital" ${ch.type === 'digital' ? 'selected' : ''}>數位媒體</option>
-                <option value="traditional" ${ch.type === 'traditional' ? 'selected' : ''}>傳統媒體</option>
-              </select>
-
-              <button
-                type="button"
-                data-delete-idx="${idx}"
-                title="刪除此媒體管道"
-                class="btn-delete-ch p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer ${appState.channels.length <= 1 ? 'opacity-30 pointer-events-none' : ''}"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          <!-- Performance Coefficients Grid -->
-          <div class="grid grid-cols-3 gap-2.5 mb-2.5">
-            <div>
-              <label class="block text-[11px] font-medium text-slate-500 mb-1">轉換數 / 千元</label>
-              <input
-                type="number"
-                step="0.1"
-                min="0"
-                data-idx="${idx}"
-                data-field="convPerK"
-                value="${ch.convPerK}"
-                class="ch-input w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-xs font-semibold text-slate-800 focus:border-indigo-500 outline-none"
-              />
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-slate-500 mb-1">觸及人 / 千元</label>
-              <input
-                type="number"
-                step="50"
-                min="0"
-                data-idx="${idx}"
-                data-field="reachPerK"
-                value="${ch.reachPerK}"
-                class="ch-input w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-xs font-semibold text-slate-800 focus:border-indigo-500 outline-none"
-              />
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-slate-500 mb-1">客單價 (TWD)</label>
-              <input
-                type="number"
-                step="100"
-                min="0"
-                data-idx="${idx}"
-                data-field="valuePerConv"
-                value="${ch.valuePerConv}"
-                class="ch-input w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-xs font-semibold text-slate-800 focus:border-indigo-500 outline-none"
-              />
-            </div>
-          </div>
-
-          <!-- Min / Max Budget Bounds Grid -->
-          <div class="grid grid-cols-2 gap-2.5 pt-2 border-t border-slate-200/70">
-            <div>
-              <label class="block text-[11px] font-medium text-slate-500 mb-1">最低預算下限 (TWD)</label>
-              <input
-                type="number"
-                step="5000"
-                min="0"
-                data-idx="${idx}"
-                data-field="minBudget"
-                value="${ch.minBudget}"
-                class="ch-input w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-xs font-semibold text-slate-800 focus:border-indigo-500 outline-none"
-              />
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-slate-500 mb-1">最高預算上限 (TWD)</label>
-              <input
-                type="number"
-                step="10000"
-                min="0"
-                data-idx="${idx}"
-                data-field="maxBudget"
-                value="${ch.maxBudget}"
-                class="ch-input w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-xs font-semibold text-slate-800 focus:border-indigo-500 outline-none"
-              />
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function escapeHtml(str) {
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
-    function renderInfeasible(reasons) {
-      document.getElementById('infeasible-banner').classList.remove('hidden');
-      document.getElementById('feasible-results-wrapper').classList.add('hidden');
-
-      const ul = document.getElementById('infeasible-reasons');
-      ul.innerHTML = reasons.map(r => `<li>${escapeHtml(r)}</li>`).join('');
-    }
-
-    function renderFeasibleResults(res) {
-      document.getElementById('infeasible-banner').classList.add('hidden');
-      document.getElementById('feasible-results-wrapper').classList.remove('hidden');
-
-      // 1. Update KPI Cards
-      const objLabelEl = document.getElementById('kpi-obj-label');
-      const objValEl = document.getElementById('kpi-obj-value');
-      const objSubEl = document.getElementById('kpi-obj-sub');
-
-      if (res.objective === 'conversions') {
-        objLabelEl.textContent = '最佳預估總轉換數';
-        objValEl.textContent = `${formatNumber(res.totalConversions, 1)} 次`;
-        objSubEl.textContent = `總觸及 ${formatNumber(Math.round(res.totalReach))} 人 · 營收 ${formatCurrency(res.totalRevenue)}`;
-      } else if (res.objective === 'reach') {
-        objLabelEl.textContent = '最佳預估總觸及人數';
-        objValEl.textContent = `${formatNumber(Math.round(res.totalReach))} 人`;
-        objSubEl.textContent = `總轉換 ${formatNumber(res.totalConversions, 1)} 次 · 營收 ${formatCurrency(res.totalRevenue)}`;
-      } else {
-        objLabelEl.textContent = '最佳預估總營收';
-        objValEl.textContent = formatCurrency(res.totalRevenue);
-        const overallRoas = res.totalAllocatedTWD > 0 ? (res.totalRevenue / res.totalAllocatedTWD).toFixed(2) : '0.00';
-        objSubEl.textContent = `整體 ROAS ${overallRoas}x · 總轉換 ${formatNumber(res.totalConversions, 1)} 次`;
-      }
-
-      const utilPct = res.totalBudgetTWD > 0 ? Math.min(100, (res.totalAllocatedTWD / res.totalBudgetTWD) * 100) : 0;
-      document.getElementById('kpi-budget-value').textContent = formatCurrency(res.totalAllocatedTWD);
-      document.getElementById('kpi-util-badge').textContent = `${utilPct.toFixed(1)}% 使用率`;
-      document.getElementById('kpi-util-bar').style.width = `${utilPct}%`;
-
-      const avgCpa = res.totalConversions > 0 ? res.totalAllocatedTWD / res.totalConversions : 0;
-      const avgCpm = res.totalReach > 0 ? (res.totalAllocatedTWD / res.totalReach) * 1000 : 0;
-      document.getElementById('kpi-cpa-value').textContent = avgCpa > 0 ? formatCurrency(avgCpa) : 'N/A';
-      document.getElementById('kpi-cpm-sub').textContent = `平均千次曝光成本 CPM: ${avgCpm > 0 ? formatCurrency(avgCpm) : 'N/A'}`;
-
-      // Shadow price formatting
-      const spValEl = document.getElementById('kpi-shadow-value');
-      const spSubEl = document.getElementById('kpi-shadow-sub');
-      if (res.objective === 'conversions') {
-        spValEl.textContent = `+${res.budgetShadowPrice.toFixed(2)} 次`;
-        spSubEl.textContent = '每增加 NT$1,000 預算的轉換增量';
-      } else if (res.objective === 'reach') {
-        spValEl.textContent = `+${formatNumber(Math.round(res.budgetShadowPrice))} 人`;
-        spSubEl.textContent = '每增加 NT$1,000 預算的觸及增量';
-      } else {
-        spValEl.textContent = `+${formatCurrency(res.budgetShadowPrice)}`;
-        spSubEl.textContent = '每增加 NT$1,000 預算的營收增量';
-      }
-
-      // 2. Render Table Rows
-      const tbody = document.getElementById('results-table-body');
-      tbody.innerHTML = '';
-
-      res.allocations.forEach((item, idx) => {
-        const sharePct = res.totalAllocatedTWD > 0 ? (item.budgetTWD / res.totalAllocatedTWD) * 100 : 0;
-        const colorDot = CHANNEL_COLORS[idx % CHANNEL_COLORS.length];
-
-        let badgeClass = 'bg-slate-100 text-slate-700 border-slate-200';
-        if (item.statusType === 'cap_channel' || item.statusType === 'cap_conc') {
-          badgeClass = 'bg-amber-50 text-amber-800 border-amber-200';
-        } else if (item.statusType === 'floor') {
-          badgeClass = 'bg-sky-50 text-sky-800 border-sky-200';
-        } else if (item.statusType === 'interior') {
-          badgeClass = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-        } else if (item.statusType === 'zero') {
-          badgeClass = 'bg-slate-100 text-slate-400 border-slate-200';
-        }
-
-        let ubShadowDisplay = '<span class="text-slate-400">—</span>';
-        if (item.ubShadow > 1e-4) {
-          if (res.objective === 'conversions') {
-            ubShadowDisplay = `<span class="font-bold text-emerald-600">+${item.ubShadow.toFixed(2)} 次</span>`;
-          } else if (res.objective === 'reach') {
-            ubShadowDisplay = `<span class="font-bold text-emerald-600">+${formatNumber(Math.round(item.ubShadow))} 人</span>`;
-          } else {
-            ubShadowDisplay = `<span class="font-bold text-emerald-600">+${formatCurrency(item.ubShadow)}</span>`;
-          }
-        }
-
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-slate-50/80 transition-colors';
-        tr.innerHTML = `
-          <td class="py-3.5 px-4">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${colorDot}"></span>
-              <div>
-                <div class="font-bold text-slate-900">${escapeHtml(item.channel.name)}</div>
-                <span class="inline-block text-[10px] font-semibold px-1.5 py-0.2 rounded bg-slate-100 text-slate-500 mt-0.5">
-                  ${item.channel.type === 'digital' ? '數位媒體' : '傳統媒體'}
-                </span>
-              </div>
-            </div>
-          </td>
-          <td class="py-3.5 px-4 text-right">
-            <div class="font-bold text-slate-900 font-mono">${formatCurrency(item.budgetTWD)}</div>
-            <div class="text-[11px] font-semibold text-indigo-600">${sharePct.toFixed(1)}%</div>
-          </td>
-          <td class="py-3.5 px-4 text-right font-mono text-slate-700">
-            ${formatNumber(item.conversions, 1)}
-          </td>
-          <td class="py-3.5 px-4 text-right font-mono text-slate-700">
-            ${formatNumber(Math.round(item.reach))}
-          </td>
-          <td class="py-3.5 px-4 text-right">
-            <div class="font-mono text-slate-800">${formatCurrency(item.revenue)}</div>
-            <div class="text-[11px] text-slate-400">ROAS ${item.roas.toFixed(2)}x</div>
-          </td>
-          <td class="py-3.5 px-4 text-center">
-            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold border ${badgeClass}">
-              ${item.statusLabel}
-            </span>
-          </td>
-          <td class="py-3.5 px-4 text-right font-mono text-xs">
-            ${ubShadowDisplay}
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-
-      // Table Footer Totals
-      const totalRoas = res.totalAllocatedTWD > 0 ? res.totalRevenue / res.totalAllocatedTWD : 0;
-      document.getElementById('results-table-foot').innerHTML = `
-        <tr>
-          <td class="py-3.5 px-4">總計 / 整體組合表現</td>
-          <td class="py-3.5 px-4 text-right font-mono text-indigo-700">
-            ${formatCurrency(res.totalAllocatedTWD)} <span class="text-[11px] font-normal text-slate-500">(100%)</span>
-          </td>
-          <td class="py-3.5 px-4 text-right font-mono">${formatNumber(res.totalConversions, 1)}</td>
-          <td class="py-3.5 px-4 text-right font-mono">${formatNumber(Math.round(res.totalReach))}</td>
-          <td class="py-3.5 px-4 text-right font-mono">
-            ${formatCurrency(res.totalRevenue)} <span class="text-[11px] font-normal text-slate-500">(${totalRoas.toFixed(2)}x)</span>
-          </td>
-          <td class="py-3.5 px-4 text-center text-xs font-semibold text-emerald-700">最佳組合已達成</td>
-          <td class="py-3.5 px-4 text-right text-xs text-slate-400">—</td>
-        </tr>
-      `;
-
-      // 3. Render Charts
-      renderCharts(res);
-    }
-
-    function renderCharts(res) {
-      const labels = res.allocations.map(a => a.channel.name);
-      const optimalData = res.allocations.map(a => Math.round(a.budgetTWD));
-      const minData = res.allocations.map(a => Math.round(a.minTWD));
-      const maxData = res.allocations.map(a => Math.round(a.effMaxTWD));
-      const colors = res.allocations.map((_, i) => CHANNEL_COLORS[i % CHANNEL_COLORS.length]);
-
-      // 1. Doughnut Chart
-      const ctxDoughnut = document.getElementById('chart-allocation-doughnut').getContext('2d');
-      if (doughnutChart) doughnutChart.destroy();
-      doughnutChart = new Chart(ctxDoughnut, {
-        type: 'doughnut',
-        data: {
-          labels,
-          datasets: [
-            {
-              data: optimalData,
-              backgroundColor: colors,
-              borderColor: '#ffffff',
-              borderWidth: 2,
-              hoverOffset: 6
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: '62%',
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                boxWidth: 10,
-                usePointStyle: true,
-                pointStyle: 'circle',
-                padding: 12,
-                font: { size: 11, family: "'Inter', 'Noto Sans TC', sans-serif" }
-              }
-            },
-            tooltip: {
-              callbacks: {
-                label: ctx => {
-                  const val = ctx.parsed || 0;
-                  const pct = res.totalAllocatedTWD > 0 ? ((val / res.totalAllocatedTWD) * 100).toFixed(1) : '0.0';
-                  return ` ${ctx.label}: ${formatCurrency(val)} (${pct}%)`;
-                }
-              }
-            }
-          }
-        }
-      });
-
-      // 2. Grouped Bar Chart (Min vs Optimal vs Effective Max)
-      const ctxBar = document.getElementById('chart-bounds-bar').getContext('2d');
-      if (barChart) barChart.destroy();
-      barChart = new Chart(ctxBar, {
-        type: 'bar',
-        data: {
-          labels,
-          datasets: [
-            {
-              label: '合約最低下限',
-              data: minData,
-              backgroundColor: '#cbd5e1',
-              borderRadius: 4
-            },
-            {
-              label: 'LP 最佳建議配置',
-              data: optimalData,
-              backgroundColor: '#4f46e5',
-              borderRadius: 4
-            },
-            {
-              label: '有效最高上限',
-              data: maxData,
-              backgroundColor: '#e0e7ff',
-              borderColor: '#a5b4fc',
-              borderWidth: 1,
-              borderRadius: 4
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
-          scales: {
-            x: {
-              grid: { display: false },
-              ticks: {
-                font: { size: 11, family: "'Inter', 'Noto Sans TC', sans-serif" }
-              }
-            },
-            y: {
-              beginAtZero: true,
-              grid: { color: '#f1f5f9' },
-              ticks: {
-                font: { size: 11, family: "'Inter', 'Noto Sans TC', sans-serif" },
-                callback: value => 'NT$ ' + (value / 1000).toLocaleString() + 'k'
-              }
-            }
-          },
-          plugins: {
-            legend: {
-              position: 'top',
-              align: 'end',
-              labels: {
-                boxWidth: 10,
-                usePointStyle: true,
-                pointStyle: 'circle',
-                font: { size: 11, family: "'Inter', 'Noto Sans TC', sans-serif" }
-              }
-            },
-            tooltip: {
-              callbacks: {
-                label: ctx => ` ${ctx.dataset.label}: ${formatCurrency(ctx.parsed.y)}`
-              }
-            }
-          }
-        }
-      });
-    }
-
-    function renderMathModel(c, channelMeta, params) {
-      const channels = appState.channels;
-      const varsEl = document.getElementById('math-variables');
-      const objEl = document.getElementById('math-objective');
-      const consEl = document.getElementById('math-constraints');
-
-      if (channels.length === 0) {
-        varsEl.textContent = '無定義變數';
-        objEl.textContent = '無目標函數';
-        consEl.textContent = '無限制條件';
+      if (!res.feasible) {
+        alertBox.textContent = '⚠️ ' + res.message;
+        alertBox.classList.add('show');
         return;
       }
+      alertBox.classList.remove('show');
 
-      // 1. Variables
-      varsEl.innerHTML = channels
-        .map((ch, i) => `<div>x<sub>${i + 1}</sub> = 「${escapeHtml(ch.name)}」配置預算 (千元 TWD)</div>`)
-        .join('');
+      const simSlider = document.getElementById('sim-budget-slider');
+      simSlider.max = Math.max(500000, state.totalBudget * 2);
+      simSlider.value = state.totalBudget;
+      document.getElementById('sim-budget-text').textContent = formatMoney(state.totalBudget);
 
-      // 2. Objective Function
-      const objNameMap = {
-        conversions: '總轉換數',
-        reach: '總觸及人數',
-        revenue: '預估總營收 (TWD)'
-      };
-      const terms = c.map((coef, i) => `${Number(coef.toFixed(2))}·x<sub>${i + 1}</sub>`);
-      objEl.innerHTML = `<span class="text-slate-400">Maximize Z (${objNameMap[appState.objective]}) =</span> ${terms.join(' + ')}`;
-
-      // 3. Constraints
-      const lines = [];
-      const sumVars = channels.map((_, i) => `x<sub>${i + 1}</sub>`).join(' + ');
-      lines.push(`<div>(1) 總預算上限： ${sumVars} &le; ${params.B_k.toLocaleString()} <span class="text-slate-500">(千元)</span></div>`);
-
-      let idxCounter = 2;
-      if (appState.minReachEnabled && params.minReach > 0) {
-        const reachTerms = channels.map((ch, i) => `${Number(ch.reachPerK) || 0}·x<sub>${i + 1}</sub>`).join(' + ');
-        lines.push(`<div>(${idxCounter++}) 最低總觸及： ${reachTerms} &ge; ${params.minReach.toLocaleString()} <span class="text-slate-500">(人)</span></div>`);
-      }
-
-      if (appState.digitalShareEnabled && params.digSharePct > 0) {
-        const digVars = channels
-          .map((ch, i) => (ch.type === 'digital' ? `x<sub>${i + 1}</sub>` : null))
-          .filter(Boolean);
-        const digExpr = digVars.length > 0 ? digVars.join(' + ') : '0';
-        lines.push(
-          `<div>(${idxCounter++}) 數位媒體佔比： ${digExpr} &ge; ${(params.digSharePct / 100).toFixed(2)} · (${sumVars})</div>`
-        );
-      }
-
-      channels.forEach((ch, i) => {
-        const m = channelMeta[i];
-        lines.push(
-          `<div>(${idxCounter++}) ${escapeHtml(ch.name)}上下限： ${Number(m.minK.toFixed(2))} &le; x<sub>${i + 1}</sub> &le; ${Number(m.effMaxK.toFixed(2))} <span class="text-slate-500">(千元)</span></div>`
-        );
-      });
-
-      consEl.innerHTML = lines.join('');
+      renderReport(state.totalBudget, items, res);
+      goToStep(4);
     }
 
-    /**
-     * ---------------------------------------------------------
-     * 6. EVENT LISTENERS & INTERACTIONS
-     * ---------------------------------------------------------
-     */
-    function bindEvents() {
-      // Scenario Presets
-      document.querySelectorAll('.preset-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const key = btn.dataset.preset;
-          if (!SCENARIO_PRESETS[key]) return;
-          activePresetKey = key;
-          appState = JSON.parse(JSON.stringify(SCENARIO_PRESETS[key]));
-          syncControlsFromState();
-          renderChannelCards();
-          runMediaMixOptimization();
-          showToast(`已載入情境：「${SCENARIO_PRESETS[key].name}」`);
-        });
-      });
-
-      // Reset Preset Button
-      document.getElementById('btn-reset-preset').addEventListener('click', () => {
-        appState = JSON.parse(JSON.stringify(SCENARIO_PRESETS[activePresetKey]));
-        syncControlsFromState();
-        renderChannelCards();
-        runMediaMixOptimization();
-        showToast('已重設為目前情境預設參數');
-      });
-
-      // Manual Solve Button
-      document.getElementById('btn-solve-now').addEventListener('click', () => {
-        runMediaMixOptimization();
-        showToast('已完成線性規劃最佳化求解');
-      });
-
-      // Total Budget Input
-      document.getElementById('input-total-budget').addEventListener('input', e => {
-        appState.totalBudget = Math.max(0, Number(e.target.value) || 0);
-        document.getElementById('label-budget-formatted').textContent = formatCurrency(appState.totalBudget);
-        runMediaMixOptimization();
-      });
-
-      // Objective Buttons
-      document.querySelectorAll('.obj-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          appState.objective = btn.dataset.objective;
-          syncControlsFromState();
-          runMediaMixOptimization();
-        });
-      });
-
-      // Min Reach Toggle & Input
-      document.getElementById('toggle-min-reach').addEventListener('change', e => {
-        appState.minReachEnabled = e.target.checked;
-        syncControlsFromState();
-        runMediaMixOptimization();
-      });
-      document.getElementById('input-min-reach').addEventListener('input', e => {
-        appState.minReach = Math.max(0, Number(e.target.value) || 0);
-        document.getElementById('label-reach-formatted').textContent = `${formatNumber(appState.minReach)} 人`;
-        runMediaMixOptimization();
-      });
-
-      // Digital Share Policy
-      document.getElementById('toggle-digital-share').addEventListener('change', e => {
-        appState.digitalShareEnabled = e.target.checked;
-        syncControlsFromState();
-        runMediaMixOptimization();
-      });
-      document.getElementById('range-digital-share').addEventListener('input', e => {
-        appState.digitalShare = Number(e.target.value) || 0;
-        syncControlsFromState();
-        runMediaMixOptimization();
-      });
-      document.getElementById('input-digital-share').addEventListener('input', e => {
-        appState.digitalShare = Math.min(100, Math.max(0, Number(e.target.value) || 0));
-        syncControlsFromState();
-        runMediaMixOptimization();
-      });
-
-      // Max Single Channel Concentration Policy
-      document.getElementById('toggle-max-concentration').addEventListener('change', e => {
-        appState.maxConcentrationEnabled = e.target.checked;
-        syncControlsFromState();
-        runMediaMixOptimization();
-      });
-      document.getElementById('range-max-concentration').addEventListener('input', e => {
-        appState.maxConcentration = Number(e.target.value) || 10;
-        syncControlsFromState();
-        runMediaMixOptimization();
-      });
-      document.getElementById('input-max-concentration').addEventListener('input', e => {
-        appState.maxConcentration = Math.min(100, Math.max(10, Number(e.target.value) || 10));
-        syncControlsFromState();
-        runMediaMixOptimization();
-      });
-
-      // Add New Channel Button
-      document.getElementById('btn-add-channel').addEventListener('click', () => {
-        const nextNum = appState.channels.length + 1;
-        appState.channels.push({
-          id: 'ch-' + Date.now(),
-          name: `新媒體管道 #${nextNum}`,
-          type: 'digital',
-          convPerK: 2.0,
-          reachPerK: 2000,
-          valuePerConv: 1800,
-          minBudget: 10000,
-          maxBudget: 150000
-        });
-        renderChannelCards();
-        runMediaMixOptimization();
-        showToast('已新增媒體管道');
-      });
-
-      // Delegated Events for Dynamic Channel Cards
-      const channelsList = document.getElementById('channels-list');
-      channelsList.addEventListener('input', e => {
-        const target = e.target;
-        if (!target.classList.contains('ch-input')) return;
-        const idx = Number(target.dataset.idx);
-        const field = target.dataset.field;
-        if (!appState.channels[idx]) return;
-
-        if (field === 'name' || field === 'type') {
-          appState.channels[idx][field] = target.value;
-        } else {
-          appState.channels[idx][field] = Math.max(0, Number(target.value) || 0);
-        }
-        runMediaMixOptimization();
-      });
-
-      channelsList.addEventListener('click', e => {
-        const delBtn = e.target.closest('.btn-delete-ch');
-        if (!delBtn) return;
-        if (appState.channels.length <= 1) return;
-        const idx = Number(delBtn.dataset.deleteIdx);
-        const removedName = appState.channels[idx]?.name || '管道';
-        appState.channels.splice(idx, 1);
-        renderChannelCards();
-        runMediaMixOptimization();
-        showToast(`已移除「${removedName}」`);
-      });
-
-      // Collapse / Expand Math Model
-      document.getElementById('btn-toggle-math').addEventListener('click', e => {
-        const body = document.getElementById('math-model-body');
-        const isHidden = body.classList.toggle('hidden');
-        e.target.textContent = isHidden ? '展開' : '收合';
-      });
-
-      // Copy Math Model via execCommand('copy')
-      document.getElementById('btn-copy-math').addEventListener('click', () => {
-        const varsText = document.getElementById('math-variables').innerText;
-        const objText = document.getElementById('math-objective').innerText;
-        const consText = document.getElementById('math-constraints').innerText;
-        const fullText = `【行銷預算分配線性規劃模型】\n\n1. 決策變數：\n${varsText}\n\n2. 目標函數：\n${objText}\n\n3. 限制條件：\n${consText}`;
-
-        const textarea = document.createElement('textarea');
-        textarea.value = fullText;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-          document.execCommand('copy');
-          showToast('線性規劃數學模型已複製到剪貼簿');
-        } catch (err) {
-          showToast('複製失敗，請手動選取複製', 'error');
-        }
-        document.body.removeChild(textarea);
-      });
-
-      // Export Allocation Report as CSV
-      document.getElementById('btn-export-csv').addEventListener('click', () => {
-        if (!lastSolveResult) return;
-        const headers = [
-          '媒體管道',
-          '媒體類型',
-          '建議配置預算(TWD)',
-          '預算佔比(%)',
-          '預估轉換數',
-          '預估觸及人數',
-          '預估營收(TWD)',
-          '預估ROAS',
-          '配置狀態',
-          '上限影子價格(每+NT$1000)'
-        ];
-
-        const rows = lastSolveResult.allocations.map(item => {
-          const sharePct =
-            lastSolveResult.totalAllocatedTWD > 0
-              ? ((item.budgetTWD / lastSolveResult.totalAllocatedTWD) * 100).toFixed(2)
-              : '0.00';
-          return [
-            `"${item.channel.name.replace(/"/g, '""')}"`,
-            item.channel.type === 'digital' ? '數位媒體' : '傳統媒體',
-            Math.round(item.budgetTWD),
-            sharePct,
-            item.conversions.toFixed(2),
-            Math.round(item.reach),
-            Math.round(item.revenue),
-            item.roas.toFixed(2),
-            `"${item.statusLabel}"`,
-            item.ubShadow.toFixed(4)
-          ].join(',');
-        });
-
-        // Add UTF-8 BOM so Excel opens Traditional Chinese cleanly
-        const csvContent = '\uFEFF' + [headers.join(','), ...rows].join('\n');
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `MediaMix_LP_最佳預算配置_${new Date().toISOString().slice(0, 10)}.csv`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-        showToast('已匯出 CSV 配置報表');
-      });
+    function simulateNewBudget(newVal) {
+      const b = Number(newVal);
+      document.getElementById('sim-budget-text').textContent = formatMoney(b);
+      const items = getActiveItems();
+      const res = solveMarketingLP(b, items, state.goal);
+      if (res.feasible) {
+        renderReport(b, items, res);
+      }
     }
 
-    // Initialize Application
-    window.addEventListener('DOMContentLoaded', () => {
-      syncControlsFromState();
-      renderChannelCards();
-      bindEvents();
-      runMediaMixOptimization();
-    });
+    function renderReport(budget, items, res) {
+      const isConv = state.goal === 'conversions';
+      document.getElementById('res-goal-tag').textContent = isConv
+        ? '目標：衝高訂單 / 預約名單'
+        : '目標：衝高品牌曝光 / 知名度';
+
+      const outcomeText = isConv
+        ? `${Math.round(res.totalOutcome).toLocaleString('zh-TW')} 筆訂單`
+        : `${Math.round(res.totalOutcome).toLocaleString('zh-TW')} 次曝光`;
+
+      const unitCost = res.totalOutcome > 0 ? res.totalSpent / (isConv ? res.totalOutcome : res.totalOutcome / 1000) : 0;
+
+      // 找出分配最多的管道
+      let topIdx = 0;
+      res.allocations.forEach((v, idx) => {
+        if (v > res.allocations[topIdx]) topIdx = idx;
+      });
+
+      document.getElementById('res-headline').textContent =
+        `建議主力放在「${items[topIdx].name}」，預計總共可換回 ${outcomeText}！`;
+
+      document.getElementById('res-spent').textContent = formatMoney(res.totalSpent);
+      document.getElementById('res-outcome-label').textContent = isConv ? '預估總訂單數' : '預估總曝光次數';
+      document.getElementById('res-outcome').textContent = outcomeText;
+      document.getElementById('res-unit-cost-label').textContent = isConv ? '平均每筆訂單成本' : '平均每千次曝光成本';
+      document.getElementById('res-unit-cost').textContent = formatMoney(unitCost);
+
+      // 渲染長條圖清單
+      const allocList = document.getElementById('alloc-list');
+      allocList.innerHTML = items.map((item, i) => {
+        const money = res.allocations[i];
+        const pct = res.totalSpent > 0 ? ((money / res.totalSpent) * 100).toFixed(1) : '0.0';
+        const est = isConv ? Math.round(money / item.cost) : Math.round((money / item.cost) * 1000);
+        const estStr = isConv ? `約 ${est.toLocaleString('zh-TW')} 筆訂單` : `約 ${est.toLocaleString('zh-TW')} 次曝光`;
+        const statusTag =
+          Math.abs(money - item.max) < 1
+            ? '🔥 已投滿上限'
+            : Math.abs(money - item.min) < 1 && item.min > 0
+            ? '📌 維持最低門檻'
+            : '⚖️ 彈性配置';
+
+        return `
+          <div class="alloc-item">
+            <div class="alloc-top">
+              <span class="alloc-name">${item.icon} ${item.name} <small style="color:var(--text-sub);font-weight:500;">(${pct}%)</small></span>
+              <span class="alloc-money">${formatMoney(money)}</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:${pct}%;background:${item.color};"></div>
+            </div>
+            <div class="alloc-sub">
+              <span>預估貢獻：<strong>${estStr}</strong></span>
+              <span>${statusTag}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // 翻譯影子價格為白話加碼建議
+      const adviceList = document.getElementById('advice-list');
+      const advices = [];
+
+      if (res.budgetShadowPrice > 1e-6) {
+        const extra10k = res.budgetShadowPrice * 10000;
+        advices.push(
+          `<strong>總預算還有加碼空間：</strong>目前效益最好的管道還沒投滿，如果您多增加 <strong>NT$ 10,000</strong> 總預算，預計可額外多賺回 <strong>${Math.round(extra10k).toLocaleString('zh-TW')} ${isConv ? '筆訂單' : '次曝光'}</strong>。`
+        );
+      } else {
+        const unused = budget - res.totalSpent;
+        if (unused > 10) {
+          advices.push(
+            `<strong>已達所有管道的投放上限：</strong>您設定的各管道上限總和為 ${formatMoney(res.totalSpent)}，還有 <strong>${formatMoney(unused)}</strong> 預算尚未用完，可考慮放寬高成效管道的上限或新增其他廣告管道。`
+          );
+        }
+      }
+
+      items.forEach((item, i) => {
+        const sp = res.maxShadowPrices[i];
+        if (sp > 1e-6) {
+          const gain10k = sp * 10000;
+          advices.push(
+            `<strong>「${item.name}」表現最亮眼但已觸頂：</strong>它已經吃滿了 ${formatMoney(item.max)} 的上限；若能放寬它的上限並撥給它 1 萬元，淨效益可再多增加 <strong>${Math.round(gain10k).toLocaleString('zh-TW')} ${isConv ? '筆訂單' : '次曝光'}</strong>。`
+          );
+        }
+      });
+
+      if (advices.length === 0) {
+        advices.push('目前各管道的上下限設定非常均衡，已達成現有條件下的最佳配置！');
+      }
+      adviceList.innerHTML = advices.map(a => `<li>${a}</li>`).join('');
+
+      // 渲染數學模型（預設折疊）
+      const objTerms = items
+        .map((it, i) => `${(isConv ? 1 / it.cost : 1000 / it.cost).toFixed(4)}·x${i + 1}`)
+        .join(' + ');
+      const varNames = items.map((it, i) => `  x${i + 1} = ${it.name} 的分配預算（最佳解：${formatMoney(res.allocations[i])}）`).join('\n');
+      const boundLines = items.map((it, i) => `  ${it.min} ≤ x${i + 1} ≤ ${it.max}`).join('\n');
+
+      document.getElementById('math-model-text').textContent =
+`【決策變數】
+${varNames}
+
+【目標函數：最大化${isConv ? '總轉換訂單數' : '總曝光次數'}】
+  Maximize Z = ${objTerms}
+
+【限制條件】
+  1. 總預算上限：${items.map((_, i) => `x${i + 1}`).join(' + ')} ≤ ${budget}
+  2. 各管道上下限：
+${boundLines}`;
+    }
+
+    // 啟動初始化
+    renderChannelGrid();
   </script>
 </body>
 </html>
