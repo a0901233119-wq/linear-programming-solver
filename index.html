@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>行銷預算決策戰情室｜4 步驟最佳化與 AI 策略診斷</title>
+  <title>行銷預算決策戰情室｜4 步驟最佳化與 Gemini AI 策略顧問</title>
   <style>
     :root {
       --bg: #f4f7fb;
@@ -818,7 +818,7 @@
       line-height: 1.45;
     }
 
-    /* Interactive AI Q&A Prompts */
+    /* Interactive AI Q&A Prompts + Gemini Live Chat */
     .ai-qa-box {
       margin-top: 16px;
       padding-top: 16px;
@@ -831,6 +831,54 @@
       color: #312e81;
       margin-bottom: 10px;
       display: block;
+    }
+
+    .ai-config-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      background: #f1f5f9;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+    }
+
+    .ai-config-bar input {
+      flex: 1;
+      min-width: 200px;
+      padding: 7px 10px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      background: #fff;
+    }
+
+    .ai-status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #94a3b8;
+      margin-right: 5px;
+    }
+
+    .ai-status-dot.connected {
+      background: #10b981;
+    }
+
+    .ai-industry-row {
+      margin-bottom: 10px;
+    }
+
+    .ai-industry-row input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid #c7d2fe;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      background: #fff;
     }
 
     .ai-prompt-chips {
@@ -857,6 +905,42 @@
       background: var(--ai-primary);
       border-color: var(--ai-primary);
       color: #fff;
+    }
+
+    .ai-chat-input-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .ai-chat-input-row input {
+      flex: 1;
+      min-width: 220px;
+      padding: 11px 14px;
+      border: 2px solid var(--ai-primary);
+      border-radius: 10px;
+      font-size: 0.92rem;
+      outline: none;
+      background: #fff;
+    }
+
+    .ai-chat-input-row button {
+      background: linear-gradient(135deg, var(--ai-primary), var(--ai-secondary));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 18px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+
+    .ai-chat-input-row button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .ai-answer-bubble {
@@ -1059,7 +1143,7 @@
   <div class="container">
     <header>
       <h1>🎯 行銷預算決策戰情室</h1>
-      <p>4 步驟輕鬆分配廣告預算，內建財務 ROAS 試算、多方案比較與 AI 策略顧問診斷</p>
+      <p>4 步驟輕鬆分配廣告預算，內建財務 ROAS 試算、多方案比較與 Gemini AI 策略顧問</p>
     </header>
 
     <!-- 進度條 -->
@@ -1221,7 +1305,7 @@
     <section class="card hidden" id="step-4">
       <div class="card-header">
         <h2>第 4 步：行銷預算決策戰情室</h2>
-        <p>除了最佳分配金額，您還可以即時微調預算、儲存多組方案比較，並查看 AI 顧問的深度診斷。</p>
+        <p>除了最佳分配金額，您還可以即時微調預算、儲存多組方案比較，並使用 Gemini AI 顧問針對您的產業進行自由提問。</p>
       </div>
 
       <!-- 頂部核心戰果摘要 -->
@@ -1286,7 +1370,7 @@
       </div>
 
       <!-- =========================================
-           AI 行銷策略顧問深度診斷模組
+           AI 行銷策略顧問深度診斷模組（含 Gemini API 串接）
       ========================================= -->
       <div class="ai-advisor-panel" id="ai-advisor-panel">
         <div class="ai-header">
@@ -1315,16 +1399,38 @@
           <h4>🗓️ 建議 4 週落地執行節奏（避免一上線就燒光預算）</h4>
           <div class="roadmap-grid" id="ai-roadmap-grid"></div>
 
-          <!-- 互動式 AI 追問 -->
+          <!-- 互動式 AI 追問 + Gemini API 自由對話框 -->
           <div class="ai-qa-box">
-            <span class="ai-qa-label">💬 點擊下方問題，讓 AI 顧問針對您這組數據做進一步解答：</span>
+            <span class="ai-qa-label">💬 問問 AI 策略顧問（可點選快速問題，或填入 Gemini API Key 針對您的產業自由提問）：</span>
+
+            <!-- 1. API Key 設定列（自動記憶於瀏覽器本機） -->
+            <div class="ai-config-bar">
+              <span><i class="ai-status-dot" id="api-status-dot"></i><strong id="api-status-text">離線規則模式</strong></span>
+              <input type="password" id="gemini-api-key" placeholder="貼上 Gemini API Key 解鎖自由對話（僅存於您的瀏覽器）" oninput="saveApiKey()" />
+              <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="color:var(--ai-primary);font-weight:700;text-decoration:none;">免費取得 Key ↗</a>
+            </div>
+
+            <!-- 2. 產業與商品背景輸入框 -->
+            <div class="ai-industry-row">
+              <input type="text" id="ai-industry-input" placeholder="🏪 選填：輸入您的產業或商品特色（例如：雲林在地手作咖啡廳、客單價 3000 元的線上英文課）" />
+            </div>
+
+            <!-- 3. 免 Key 快速追問按鈕 -->
             <div class="ai-prompt-chips">
               <button class="ai-chip" onclick="askAiQuestion('why_not_all', this)">🤔 為什麼不把錢全投給最便宜的管道？</button>
               <button class="ai-chip" onclick="askAiQuestion('cost_up_20', this)">📉 如果下個月廣告漲價 20% 還賺錢嗎？</button>
               <button class="ai-chip" onclick="askAiQuestion('boss_pitch', this)">👔 幫我寫一段向老闆／合夥人報告的提案說帖</button>
               <button class="ai-chip" onclick="askAiQuestion('optimize_first', this)">⚡ 哪個管道最該優先優化廣告素材？</button>
             </div>
-            <div class="ai-answer-bubble" id="ai-answer-bubble"></div>
+
+            <!-- 4. 自由提問對話框 -->
+            <div class="ai-chat-input-row">
+              <input type="text" id="ai-custom-question" placeholder="輸入任何問題，例如：我的預算不多，這樣的配比在實戰上要注意什麼？" onkeydown="if(event.key==='Enter') askGeminiLive()" />
+              <button id="ai-send-btn" onclick="askGeminiLive()">✨ 詢問 AI</button>
+            </div>
+
+            <!-- AI 回覆顯示氣泡 -->
+            <div class="ai-answer-bubble" id="ai-answer-bubble" style="margin-top:14px;"></div>
           </div>
         </div>
       </div>
@@ -1362,7 +1468,7 @@
   <div class="toast" id="toast">已複製到剪貼簿！</div>
 
   <script>
-    // 預設廣告管道資料庫（加入漏斗角色標籤 role: 'capture' | 'awareness' | 'balanced'）
+    // 預設廣告管道資料庫（含漏斗角色標籤 role: 'capture' | 'awareness' | 'balanced'）
     const CHANNELS = [
       {
         id: 'meta',
@@ -1693,7 +1799,6 @@
 
     // ==========================================
     // 雙階段單形法 (Two-Phase Simplex) 求解器
-    // 支援：總預算上限、各管道上下限、單一管道最大佔比、次要目標保底限制
     // ==========================================
     function solveMarketingLP(budget, items, goal, maxSharePct = 100, secondaryMin = 0) {
       const n = items.length;
@@ -1733,9 +1838,7 @@
         };
       }
 
-      // 目標函數係數 c_i（主目標每 1 元產出）
       const c = effectiveItems.map(it => (goal === 'conversions' ? 1 / it.cpa : 1000 / it.cpm));
-      // 次要保底係數 d_i（若設定保底曝光或保底訂單）
       const d = effectiveItems.map(it => (goal === 'conversions' ? 1000 / it.cpm : 1 / it.cpa));
 
       const minRows = effectiveItems.map((it, idx) => ({ idx, min: it.min })).filter(r => r.min > 0);
@@ -1778,7 +1881,7 @@
         basis[r] = artCol;
       }
 
-      // Optional Secondary Constraint Row: sum(d_j * x_j) - e_sec + a_sec = secondaryMin
+      // Optional Secondary Constraint Row
       if (hasSecondary) {
         const idx = minRows.length;
         const r = 1 + n + idx;
@@ -2092,7 +2195,7 @@ ${boundLines}`;
     }
 
     // ==========================================
-    // AI 行銷策略顧問引擎
+    // AI 行銷策略顧問引擎（內建規則診斷）
     // ==========================================
     function renderAiAdvisor(res, roas, estOrders, estReach, estRevenue) {
       const isConv = state.goal === 'conversions';
@@ -2106,12 +2209,12 @@ ${boundLines}`;
       else if (roas >= 1.8) score += 8;
       else if (roas < 1.2) score -= 10;
 
-      if (maxShare <= 0.55) score += 10; // 分散度良好
-      else if (maxShare > 0.75) score -= 8; // 過度集中單一管道
+      if (maxShare <= 0.55) score += 10;
+      else if (maxShare > 0.75) score -= 8;
 
       const hasCapture = items.some((it, i) => it.role === 'capture' && res.allocations[i] > 0);
       const hasAwareness = items.some((it, i) => (it.role === 'awareness' || it.role === 'balanced') && res.allocations[i] > 0);
-      if (hasCapture && hasAwareness) score += 7; // 漏斗上下游互補
+      if (hasCapture && hasAwareness) score += 7;
 
       score = Math.min(98, Math.max(45, Math.round(score)));
       document.getElementById('ai-score').textContent = score;
@@ -2153,7 +2256,6 @@ ${boundLines}`;
       // 3. 深度診斷與邊際效益白話建議
       const diagList = [];
 
-      // 影子價格建議（瓶頸管道）
       const bottleneckChannels = items
         .map((it, i) => ({ it, sp: res.maxShadowPrices[i], alloc: res.allocations[i] }))
         .filter(x => x.sp > 1e-6);
@@ -2178,7 +2280,6 @@ ${boundLines}`;
         );
       }
 
-      // 找出只拿最低門檻的「低效牽制管道」
       const floorChannels = items.filter((it, i) => it.min > 0 && Math.abs(res.allocations[i] - it.min) < 1 && it.min < it.effectiveMax);
       if (floorChannels.length > 0) {
         const names = floorChannels.map(c => `「${c.name}」`).join('、');
@@ -2216,12 +2317,11 @@ ${boundLines}`;
         </div>
       `;
 
-      // 重置追問氣泡
       document.getElementById('ai-answer-bubble').classList.remove('show');
       document.querySelectorAll('.ai-chip').forEach(c => c.classList.remove('active'));
     }
 
-    // 互動式 AI 追問解答引擎
+    // 互動式 AI 快速追問解答引擎（免 API Key）
     function askAiQuestion(type, btnEl) {
       if (!state.lastResult) return;
       document.querySelectorAll('.ai-chip').forEach(c => c.classList.remove('active'));
@@ -2241,7 +2341,6 @@ ${boundLines}`;
         在真實商業環境中，任何單一廣告管道都有<strong>「受眾天花板」</strong>與<strong>「邊際報酬遞減」</strong>效應（投越多、精準客人越少、廣告費越貴）。<br>
         因此您為「${cheapest.name}」設定了 <strong>${formatMoney(cheapest.effectiveMax)}</strong> 的投放上限，再加上其他管道有最低保底預算，系統才會精算出在「不超過受眾極限」的前提下，第二划算、第三划算的管道各自該補多少錢。`;
       } else if (type === 'cost_up_20') {
-        // 即時進行成本 +20% 壓力測試
         const stressedOrders = Math.round(res.totalConversions / 1.2);
         const stressedRevenue = stressedOrders * state.aov;
         const stressedRoas = res.totalSpent > 0 ? stressedRevenue / res.totalSpent : 0;
@@ -2265,7 +2364,6 @@ ${boundLines}`;
         html = `<strong>👔 建議簡報／提案說帖（可直接複製使用）：</strong><br><br>
         「本次行銷活動總預算規劃為 <strong>${formatMoney(res.totalSpent)}</strong>，透過線性規劃模型評估各管道獲客成本與受眾上限後，我們將主力資金集中於高轉換效率管道（配置為：${breakdown}）。在此最佳組合下，預計可創造 <strong>${estOrders.toLocaleString('zh-TW')} 筆訂單</strong>與 <strong>${formatMoney(estRev)} 營業額</strong>，預估整體 <strong>ROAS 達 ${roas}x</strong>，並已保留風險分散與再行銷收割機制。」`;
       } else if (type === 'optimize_first') {
-        // 找出花最多錢且成本不是最低的管道
         const bySpend = items.map((it, i) => ({ ...it, alloc: res.allocations[i] })).sort((a, b) => b.alloc - a.alloc);
         const target = bySpend[0];
         const savedIf10Pct = Math.round((target.alloc / target.cost) * 0.1 * (isConv ? state.aov : 1));
@@ -2283,7 +2381,7 @@ ${boundLines}`;
     function saveCurrentScenario() {
       if (!state.lastResult) return;
       if (state.savedScenarios.length >= 3) {
-        showToast('最多可同時比較 3 組方案，請先清空或直接覆蓋！');
+        showToast('最多可同時比較 3 組方案，已自動覆蓋最舊一筆！');
         state.savedScenarios.shift();
       }
       const res = state.lastResult;
@@ -2399,8 +2497,174 @@ ${boundLines}`;
       showToast('已開始下載 Excel (CSV) 明細表！');
     }
 
+    // ==========================================
+    // Gemini API Key 管理與真實 AI 策略顧問串接
+    // ==========================================
+    function initGeminiKey() {
+      const savedKey = localStorage.getItem('media_mix_gemini_key') || '';
+      const input = document.getElementById('gemini-api-key');
+      if (input && savedKey) {
+        input.value = savedKey;
+      }
+      updateApiStatusUI(savedKey);
+    }
+
+    function saveApiKey() {
+      const key = document.getElementById('gemini-api-key').value.trim();
+      if (key) {
+        localStorage.setItem('media_mix_gemini_key', key);
+      } else {
+        localStorage.removeItem('media_mix_gemini_key');
+      }
+      updateApiStatusUI(key);
+    }
+
+    function updateApiStatusUI(key) {
+      const dot = document.getElementById('api-status-dot');
+      const text = document.getElementById('api-status-text');
+      if (!dot || !text) return;
+      if (key && key.startsWith('AIza')) {
+        dot.classList.add('connected');
+        text.textContent = '已連線 Gemini AI';
+        text.style.color = '#059669';
+      } else {
+        dot.classList.remove('connected');
+        text.textContent = '離線規則模式';
+        text.style.color = '#64748b';
+      }
+    }
+
+    function buildLpContextForAi() {
+      const res = state.lastResult;
+      const isConv = state.goal === 'conversions';
+      const estOrders = Math.round(res.totalConversions);
+      const estRev = estOrders * state.aov;
+      const roas = res.totalSpent > 0 ? (estRev / res.totalSpent).toFixed(2) : '0.00';
+
+      const channelSummary = res.items.map((it, i) => {
+        const alloc = Math.round(res.allocations[i]);
+        const pct = res.totalSpent > 0 ? ((alloc / res.totalSpent) * 100).toFixed(1) : '0';
+        const sp = res.maxShadowPrices[i];
+        const bottleneckNote = sp > 1e-6
+          ? `【已達上限瓶頸！若放寬上限每多投1萬元可額外增加 ${(sp * 10000).toFixed(1)} ${isConv ? '筆訂單' : '次曝光'}】`
+          : '';
+        return `- ${it.name}（${it.roleLabel}）：建議分配 NT$${alloc.toLocaleString()}（佔比 ${pct}%），預估單筆成本 NT$${it.cpa}，千次曝光成本 NT$${it.cpm}，上下限 [${it.min} ~ ${it.effectiveMax}]。${bottleneckNote}`;
+      }).join('\n');
+
+      const budgetMarginal = res.budgetShadowPrice > 1e-6
+        ? `總預算尚未觸頂，每增加 NT$10,000 總預算可額外帶來 ${(res.budgetShadowPrice * 10000).toFixed(1)} ${isConv ? '筆訂單' : '次曝光'}。`
+        : `所有管道皆已觸及投放上限（或出現閒置預算 NT$${Math.max(0, res.budget - res.totalSpent).toLocaleString()}）。`;
+
+      return `【目前線性規劃最佳化數據】
+- 行銷主要目標：${isConv ? '最大化訂單轉換數' : '最大化品牌曝光次數'}
+- 總投入預算：NT$${Math.round(res.totalSpent).toLocaleString()}（設定總預算上限：NT$${res.budget.toLocaleString()}）
+- 商品平均客單價 (AOV)：NT$${state.aov.toLocaleString()}
+- 預估總訂單數：${estOrders} 筆
+- 預估總曝光數：${Math.round(res.totalReach).toLocaleString()} 次
+- 預估總營業額：NT$${estRev.toLocaleString()}（預估 ROAS：${roas}x）
+- 邊際效益分析（影子價格）：${budgetMarginal}
+
+【各管道最佳配置明細】
+${channelSummary}`;
+    }
+
+    function formatAiMarkdown(rawText) {
+      const escaped = rawText
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      return escaped
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/^\* (.+)$/gm, '• $1')
+        .replace(/^- (.+)$/gm, '• $1')
+        .replace(/\n/g, '<br>');
+    }
+
+    async function askGeminiLive() {
+      if (!state.lastResult) return;
+
+      const apiKey = document.getElementById('gemini-api-key').value.trim();
+      const questionInput = document.getElementById('ai-custom-question');
+      const userQuestion = questionInput.value.trim();
+      const industry = document.getElementById('ai-industry-input').value.trim() || '未指定特定產業（請以一般商業實務角度回答）';
+      const bubble = document.getElementById('ai-answer-bubble');
+      const sendBtn = document.getElementById('ai-send-btn');
+
+      if (!userQuestion) {
+        showToast('請先輸入您想詢問的問題！');
+        questionInput.focus();
+        return;
+      }
+
+      if (!apiKey) {
+        bubble.innerHTML = `⚠️ <strong>尚未填入 Gemini API Key</strong><br>請在上方欄位貼入您的免費 Gemini API Key（可點擊右側「免費取得 Key」至 Google AI Studio 申請），即可解鎖針對「${industry}」的客製化 AI 深度分析！`;
+        bubble.classList.add('show');
+        document.getElementById('gemini-api-key').focus();
+        return;
+      }
+
+      document.querySelectorAll('.ai-chip').forEach(c => c.classList.remove('active'));
+      sendBtn.disabled = true;
+      sendBtn.textContent = '思考中...';
+      bubble.innerHTML = '⏳ <strong>AI 策略顧問正在結合您的線性規劃數據與產業背景進行分析...</strong>';
+      bubble.classList.add('show');
+
+      const lpContext = buildLpContextForAi();
+      const systemPrompt = `你是一位精通「數位行銷投放」與「作業研究線性規劃（Linear Programming）」的資深商業策略顧問。
+請根據使用者提供的【線性規劃最佳化數據】與【產業背景】，用白話、接地氣、具實戰指導價值的語氣回答問題。
+規則：
+1. 必須引用數據中的具體金額、佔比、ROAS 或瓶頸管道（影子價格）作為論點依據，不要講空泛的教科書理論。
+2. 結構清晰，善用條列式與重點粗體（**重點**），總字數控制在 250~400 字以內，讓忙碌的老闆或行銷人員一眼看懂。
+3. 避免使用艱澀的數學術語（如「對偶變數」、「單形法」），請翻譯成「加碼邊際效益」、「受眾天花板」等商業語言。`;
+
+      const fullPrompt = `【使用者產業／商品背景】：${industry}\n\n${lpContext}\n\n【使用者提問】：${userQuestion}`;
+
+      try {
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            systemInstruction: {
+              parts: [{ text: systemPrompt }]
+            },
+            contents: [
+              {
+                role: 'user',
+                parts: [{ text: fullPrompt }]
+              }
+            ],
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 1024
+            }
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          const errMsg = data?.error?.message || `HTTP 錯誤碼 ${response.status}`;
+          throw new Error(errMsg);
+        }
+
+        const aiReply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!aiReply) {
+          throw new Error('模型未回傳有效文字內容，請稍後再試。');
+        }
+
+        bubble.innerHTML = `<strong>✨ Gemini AI 顧問針對「${industry}」的分析：</strong><br><br>${formatAiMarkdown(aiReply)}`;
+      } catch (err) {
+        bubble.innerHTML = `❌ <strong>連線失敗：</strong>${err.message}<br><small style="color:#64748b;">請確認您的 API Key 是否正確、是否已開通 Gemini API 權限，或檢查網路連線狀態。</small>`;
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = '✨ 詢問 AI';
+      }
+    }
+
     // 啟動初始化
     renderChannelGrid();
+    initGeminiKey();
   </script>
 </body>
 </html>
