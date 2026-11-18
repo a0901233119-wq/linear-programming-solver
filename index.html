@@ -9,12 +9,12 @@
             --bg-main: #f1f5f9;
             --bg-card: #ffffff;
             --bg-subtle: #f8fafc;
-            --bg-dark: #0f172a;
-            --bg-dark-card: #1e293b;
+            --bg-elevated: #ffffff;
             --text-primary: #0f172a;
-            --text-secondary: #475569;
+            --text-secondary: #334155;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
+            --border-strong: #cbd5e1;
             --primary: #4f46e5;
             --primary-hover: #4338ca;
             --primary-light: #eef2ff;
@@ -27,25 +27,30 @@
             --rose: #f43f5e;
             --rose-dark: #be123c;
             --rose-light: #fff1f2;
+            --cyan: #06b6d4;
+            --cyan-light: #ecfeff;
             --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-            --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
             --radius-lg: 16px;
             --radius-md: 12px;
             --radius-sm: 8px;
         }
 
         body.dark-mode {
-            --bg-main: #0b1120;
-            --bg-card: #1e293b;
+            --bg-main: #090d16;
+            --bg-card: #131c2e;
             --bg-subtle: #0f172a;
+            --bg-elevated: #1e293b;
             --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
-            --border-color: #334155;
-            --primary-light: rgba(79, 70, 229, 0.2);
+            --border-color: #1e293b;
+            --border-strong: #334155;
+            --primary-light: rgba(79, 70, 229, 0.22);
             --emerald-light: rgba(16, 185, 129, 0.18);
             --amber-light: rgba(245, 158, 11, 0.18);
             --rose-light: rgba(244, 63, 94, 0.18);
+            --cyan-light: rgba(6, 182, 212, 0.18);
             --emerald-dark: #34d399;
             --amber-dark: #fbbf24;
             --rose-dark: #fb7185;
@@ -58,7 +63,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
             background-color: var(--bg-main);
             color: var(--text-primary);
             line-height: 1.5;
@@ -70,19 +75,19 @@
 
         /* 頂部導覽列 */
         .app-header {
-            background: #0f172a;
+            background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
             color: #ffffff;
             border-bottom: 1px solid #1e293b;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
         }
 
         .header-inner {
-            max-width: 1320px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 12px 20px;
+            padding: 12px 22px;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -97,23 +102,23 @@
         }
 
         .brand-logo {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
-            background: linear-gradient(135deg, #4f46e5 0%, #10b981 100%);
+            background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 55%, #10b981 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
+            font-weight: 900;
             font-size: 18px;
             color: #ffffff;
-            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.45);
             flex-shrink: 0;
         }
 
         .brand-title {
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 800;
             letter-spacing: -0.01em;
             display: flex;
             align-items: center;
@@ -122,12 +127,12 @@
 
         .brand-tag {
             font-size: 11px;
-            padding: 2px 8px;
+            padding: 2px 9px;
             border-radius: 999px;
-            background: rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.22);
             color: #a5b4fc;
-            border: 1px solid rgba(99, 102, 241, 0.35);
-            font-weight: 500;
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            font-weight: 600;
         }
 
         .brand-sub {
@@ -149,10 +154,10 @@
             border: none;
             background: transparent;
             color: #cbd5e1;
-            padding: 8px 15px;
+            padding: 8px 16px;
             border-radius: 9px;
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -169,7 +174,7 @@
         .tab-btn.active {
             background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
             color: #ffffff;
-            box-shadow: 0 3px 10px rgba(79, 70, 229, 0.35);
+            box-shadow: 0 3px 12px rgba(79, 70, 229, 0.45);
         }
 
         .header-actions {
@@ -182,7 +187,7 @@
             border: 1px solid #334155;
             background: #1e293b;
             color: #e2e8f0;
-            padding: 7px 12px;
+            padding: 7px 13px;
             border-radius: 9px;
             font-size: 12px;
             font-weight: 600;
@@ -195,18 +200,19 @@
 
         .action-btn:hover {
             background: #334155;
+            border-color: #475569;
         }
 
         /* 主容器與網格 */
         .main-container {
-            max-width: 1320px;
+            max-width: 1400px;
             width: 100%;
             margin: 0 auto;
-            padding: 22px 20px 36px;
+            padding: 22px 22px 42px;
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 22px;
         }
 
         .module-section {
@@ -234,6 +240,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 16px;
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-subtle) 100%);
         }
 
         .module-pill {
@@ -262,14 +269,14 @@
 
         .banner-title {
             font-size: 20px;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--text-primary);
         }
 
         .banner-desc {
             font-size: 13px;
             color: var(--text-secondary);
-            margin-top: 3px;
+            margin-top: 4px;
         }
 
         .preset-group {
@@ -280,13 +287,13 @@
         }
 
         .preset-btn {
-            border: 1px solid var(--border-color);
-            background: var(--bg-subtle);
+            border: 1px solid var(--border-strong);
+            background: var(--bg-card);
             color: var(--text-primary);
             padding: 7px 13px;
             border-radius: 9px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.15s ease;
         }
@@ -295,6 +302,7 @@
             border-color: var(--primary);
             background: var(--primary-light);
             color: var(--primary);
+            transform: translateY(-1px);
         }
 
         /* KPI 四欄卡片 */
@@ -335,7 +343,7 @@
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            font-weight: 700;
+            font-weight: 800;
             flex-shrink: 0;
         }
 
@@ -354,7 +362,7 @@
         }
 
         .kpi-sub {
-            font-size: 11px;
+            font-size: 11.5px;
             font-weight: 600;
         }
 
@@ -371,7 +379,15 @@
             gap: 20px;
         }
 
-        @media (max-width: 980px) {
+        .transport-workspace-grid {
+            display: grid;
+            grid-template-columns: 11fr 13fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 1140px) {
+            .transport-workspace-grid,
             .two-col-grid,
             .two-col-5-7 {
                 grid-template-columns: 1fr;
@@ -391,7 +407,7 @@
 
         .section-title {
             font-size: 15px;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--text-primary);
             display: flex;
             align-items: center;
@@ -404,7 +420,7 @@
             margin-top: 2px;
         }
 
-        /* 表格樣式 */
+        /* 動態 CRUD 矩陣表格樣式 */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -418,9 +434,10 @@
 
         table.lp-table th,
         table.lp-table td {
-            padding: 10px 10px;
+            padding: 9px 8px;
             border-bottom: 1px solid var(--border-color);
             text-align: center;
+            vertical-align: middle;
         }
 
         table.lp-table th {
@@ -441,10 +458,109 @@
             text-align: right;
         }
 
+        /* 可編輯節點名稱輸入框 */
+        .node-header-cell {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-strong);
+            border-radius: 8px;
+            padding: 3px 6px;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .node-header-cell:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        .node-name-input {
+            border: none;
+            background: transparent;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 12.5px;
+            width: 78px;
+            outline: none;
+        }
+
+        .node-name-input.dest-input {
+            text-align: center;
+            width: 72px;
+        }
+
+        .node-del-btn {
+            border: none;
+            background: rgba(244, 63, 94, 0.12);
+            color: var(--rose-dark);
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: 800;
+            line-height: 1;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+            flex-shrink: 0;
+        }
+
+        .node-del-btn:hover:not(:disabled) {
+            background: var(--rose);
+            color: #ffffff;
+        }
+
+        .node-del-btn:disabled {
+            opacity: 0.25;
+            cursor: not-allowed;
+        }
+
+        .crud-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .crud-add-btn {
+            border: 1px dashed var(--primary);
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s ease;
+        }
+
+        .crud-add-btn:hover {
+            background: var(--primary);
+            color: #ffffff;
+            border-style: solid;
+        }
+
+        .crud-add-btn.emerald {
+            border-color: var(--emerald-dark);
+            background: var(--emerald-light);
+            color: var(--emerald-dark);
+        }
+
+        .crud-add-btn.emerald:hover {
+            background: var(--emerald);
+            color: #ffffff;
+        }
+
         .num-input {
-            width: 68px;
-            padding: 6px 8px;
-            border: 1px solid var(--border-color);
+            width: 64px;
+            padding: 6px 6px;
+            border: 1px solid var(--border-strong);
             border-radius: 8px;
             background: var(--bg-card);
             color: var(--text-primary);
@@ -457,19 +573,95 @@
 
         .num-input:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.18);
         }
 
         .num-input.supply-input {
             border-color: #818cf8;
+            background: var(--primary-light);
             color: var(--primary);
-            width: 78px;
+            width: 76px;
         }
 
         .num-input.demand-input {
             border-color: #34d399;
+            background: var(--emerald-light);
             color: var(--emerald-dark);
-            width: 78px;
+            width: 76px;
+        }
+
+        /* 視覺化控制列與桑基圖樣式 */
+        .viz-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            background: var(--bg-subtle);
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 12px;
+        }
+
+        .segmented-group {
+            display: inline-flex;
+            background: var(--bg-card);
+            padding: 3px;
+            border-radius: 9px;
+            border: 1px solid var(--border-strong);
+        }
+
+        .seg-btn {
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 5px 11px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .seg-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 1px 4px rgba(79, 70, 229, 0.3);
+        }
+
+        .sankey-stage {
+            width: 100%;
+            background: radial-gradient(circle at 50% 30%, var(--bg-card) 0%, var(--bg-subtle) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes dashFlow {
+            to {
+                stroke-dashoffset: -36;
+            }
+        }
+
+        .flow-particle-line {
+            animation: dashFlow 1.3s linear infinite;
+            pointer-events: none;
+        }
+
+        /* 熱力圖矩陣卡片 */
+        .heatmap-cell {
+            border-radius: 10px;
+            padding: 10px 8px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            position: relative;
+        }
+
+        .heatmap-cell:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
         /* 滑桿樣式 */
@@ -508,6 +700,7 @@
         .badge {
             display: inline-flex;
             align-items: center;
+            gap: 4px;
             padding: 3px 9px;
             border-radius: 999px;
             font-size: 11px;
@@ -518,25 +711,25 @@
         .badge-emerald {
             background: var(--emerald-light);
             color: var(--emerald-dark);
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            border: 1px solid rgba(16, 185, 129, 0.35);
         }
 
         .badge-rose {
             background: var(--rose-light);
             color: var(--rose-dark);
-            border: 1px solid rgba(244, 63, 94, 0.3);
+            border: 1px solid rgba(244, 63, 94, 0.35);
         }
 
         .badge-indigo {
             background: var(--primary-light);
             color: var(--primary);
-            border: 1px solid rgba(79, 70, 229, 0.3);
+            border: 1px solid rgba(79, 70, 229, 0.35);
         }
 
         .badge-amber {
             background: var(--amber-light);
             color: var(--amber-dark);
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            border: 1px solid rgba(245, 158, 11, 0.35);
         }
 
         .badge-muted {
@@ -688,11 +881,11 @@
         .toast-item {
             background: #0f172a;
             color: #ffffff;
-            padding: 10px 16px;
+            padding: 11px 16px;
             border-radius: 10px;
             font-size: 13px;
             font-weight: 600;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
             border-left: 4px solid #10b981;
             transition: all 0.25s ease;
         }
@@ -714,10 +907,10 @@
             color: var(--text-primary);
             border: 1px solid var(--border-color);
             border-radius: 18px;
-            max-width: 680px;
+            max-width: 720px;
             width: 100%;
             padding: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
             max-height: 85vh;
             overflow-y: auto;
         }
@@ -749,16 +942,16 @@
                 <div>
                     <div class="brand-title">
                         <span>線性規劃實務決策系統</span>
-                        <span class="brand-tag">Decision Studio</span>
+                        <span class="brand-tag">Decision Studio Pro</span>
                     </div>
-                    <div class="brand-sub">作業研究 (Operations Research) 運輸調撥・人力排班・2D 圖解互動平台</div>
+                    <div class="brand-sub">作業研究 (Operations Research) 動態運輸網路・循環人力排班・2D 幾何圖解平台</div>
                 </div>
             </div>
 
             <!-- 三大互動分頁按鈕 -->
             <nav class="nav-tabs" aria-label="功能模組切換">
                 <button id="tab-btn-transport" class="tab-btn active" onclick="switchTab('transport')">
-                    <span>🚚 運輸網路最佳化</span>
+                    <span>🚚 運輸網路最佳化 (M×N)</span>
                 </button>
                 <button id="tab-btn-workforce" class="tab-btn" onclick="switchTab('workforce')">
                     <span>👥 人力排班最佳化</span>
@@ -777,7 +970,7 @@
                     <span>🌙 深色模式</span>
                 </button>
                 <button class="action-btn" onclick="toggleGuideModal(true)">
-                    <span>💡 原理說明</span>
+                    <span>💡 演算法說明</span>
                 </button>
             </div>
         </div>
@@ -790,23 +983,24 @@
     <main class="main-container">
 
         <!-- =================================================================
-             Tab 1: 🚚 運輸網路最佳化 (3x3 Transportation Problem)
+             Tab 1: 🚚 運輸網路最佳化 (Dynamic M×N Transportation Problem)
              ================================================================= -->
         <section id="module-transport" class="module-section">
             <!-- 模組標題與快速範例按鈕 -->
             <div class="card banner-card">
                 <div>
-                    <span class="module-pill pill-indigo">模組一 · Transportation Optimization (3×3 跨區倉儲配送)</span>
-                    <h2 class="banner-title">運輸網路最佳化（台中廠、斗六廠、高雄廠 → 台北站、新竹站、台南站）</h2>
+                    <span class="module-pill pill-indigo">模組一 · Dynamic M×N Transportation Optimization (支援自由新增/刪除/改名廠區與站點)</span>
+                    <h2 class="banner-title">跨區倉儲運輸網路最佳化與邊際機會成本分析</h2>
                     <p class="banner-desc">
-                        於滿足各站點需求量 (Demand) 與各廠區供給量 (Supply) 限制下，使用最小成本法與 MODI 閉迴路演算法求取<strong>最低總運輸成本</strong>。
+                        可自由<strong>新增/刪除出貨廠區與配送站點</strong>或直接點擊名稱改名；內建 VAM + MODI 閉迴路踏石演算法，即時繪製<strong>動態桑基流向網路圖 (Sankey Network)</strong> 與<strong>邊際成本熱力圖</strong>。
                     </p>
                 </div>
                 <div class="preset-group">
-                    <span style="font-size:12px;color:var(--text-muted);font-weight:600;">快速情境：</span>
-                    <button class="preset-btn" onclick="loadTransportPreset('balanced')">⚖️ 平衡運輸 (供需相等)</button>
-                    <button class="preset-btn" onclick="loadTransportPreset('surplus')">📦 供過於求 (產能充裕)</button>
-                    <button class="preset-btn" onclick="loadTransportPreset('rush')">⚡ 急單測試 (產能吃緊)</button>
+                    <span style="font-size:12px;color:var(--text-muted);font-weight:700;">快速載入情境：</span>
+                    <button class="preset-btn" onclick="loadTransportPreset('balanced3x3')">⚖️ 標準 3×3 平衡網路</button>
+                    <button class="preset-btn" onclick="loadTransportPreset('expanded4x4')">🗺️ 4×4 跨區擴編網路</button>
+                    <button class="preset-btn" onclick="loadTransportPreset('surplus')">📦 供過於求 (產能過剩)</button>
+                    <button class="preset-btn" onclick="loadTransportPreset('rush')">⚡ 供不應求 (急單缺口)</button>
                 </div>
             </div>
 
@@ -823,7 +1017,7 @@
                 <div class="kpi-card">
                     <div class="kpi-icon" style="background:var(--emerald-light);color:var(--emerald-dark);">📦</div>
                     <div>
-                        <div class="kpi-label">總配送量 (Shipped)</div>
+                        <div class="kpi-label">最佳總配送量 (Total Shipped)</div>
                         <div class="kpi-value" id="trans-kpi-shipped">0 箱</div>
                         <div class="kpi-sub" id="trans-kpi-routes" style="color:var(--emerald-dark);">啟用 0 條最佳調撥路線</div>
                     </div>
@@ -831,30 +1025,41 @@
                 <div class="kpi-card">
                     <div class="kpi-icon" style="background:var(--amber-light);color:var(--amber-dark);">🏭</div>
                     <div>
-                        <div class="kpi-label">總產能利用率</div>
+                        <div class="kpi-label">網路規模與產能利用率</div>
                         <div class="kpi-value" id="trans-kpi-util">0%</div>
-                        <div class="kpi-sub" id="trans-kpi-totals" style="color:var(--text-muted);">總供給 0 / 總需求 0</div>
+                        <div class="kpi-sub" id="trans-kpi-totals" style="color:var(--text-muted);">3 出貨點 × 3 配送站</div>
                     </div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-icon" style="background:var(--rose-light);color:var(--rose-dark);">⚖️</div>
                     <div>
-                        <div class="kpi-label">供需狀態診斷</div>
+                        <div class="kpi-label">供需平衡與瓶頸診斷</div>
                         <div class="kpi-value" id="trans-kpi-status" style="font-size:18px;">供需完全平衡</div>
                         <div class="kpi-sub" id="trans-kpi-status-sub" style="color:var(--text-muted);">供給恰好滿足所有站點</div>
                     </div>
                 </div>
             </div>
 
-            <!-- 左側：可編輯運費與供需表 + 右側：SVG 雙分流量網路圖 -->
-            <div class="two-col-grid">
-                <!-- 左側輸入矩陣 -->
+            <!-- 主工作區：左側動態 CRUD 矩陣 + 右側雙模式高質感桑基網路圖 -->
+            <div class="transport-workspace-grid">
+                <!-- 左側：可動態新增/刪除/改名的運費與供需矩陣 -->
                 <div class="card" style="display:flex;flex-direction:column;justify-content:space-between;">
                     <div>
                         <div class="section-header">
                             <div>
-                                <div class="section-title">1. 單位運費矩陣 ($/箱) 與廠區供需設定</div>
-                                <div class="section-subtitle">直接修改下方各路線單位運費、右側供給上限與底部站點需求，系統即時重算最佳解</div>
+                                <div class="section-title">
+                                    <span>1. 動態運費與供需矩陣</span>
+                                    <span id="matrix-dim-badge" class="badge badge-indigo">3 × 3 矩陣</span>
+                                </div>
+                                <div class="section-subtitle">直接點擊廠區或站點名稱即可改名；點擊右上角按钮可動態新增列與欄 (2~8 節點)</div>
+                            </div>
+                            <div class="crud-toolbar">
+                                <button class="crud-add-btn" onclick="addTransportSource()" title="新增一個出貨廠區列">
+                                    <span>＋ 新增出貨點</span>
+                                </button>
+                                <button class="crud-add-btn emerald" onclick="addTransportDestination()" title="新增一個配送站點欄">
+                                    <span>＋ 新增配送站</span>
+                                </button>
                             </div>
                         </div>
 
@@ -863,35 +1068,76 @@
 
                     <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border-color);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;">
                         <div id="transport-status-banner" style="font-size:12px;color:var(--text-secondary);"></div>
-                        <button class="btn-primary" onclick="solveAndRenderTransport(true)">⚡ 重新計算最佳解</button>
+                        <div style="display:flex;gap:8px;">
+                            <button class="preset-btn" onclick="autoBalanceTransportSupplyDemand()" title="自動將總供給微調至等於總需求">⚖️ 一鍵平衡供需</button>
+                            <button class="btn-primary" onclick="solveAndRenderTransport(true)">⚡ 重新最佳化求解</button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 右側 SVG 雙分流量網路圖 -->
+                <!-- 右側：雙模式高質感桑基流向網路圖 & 邊際成本熱力圖 -->
                 <div class="card">
-                    <div class="section-header">
+                    <div class="section-header" style="margin-bottom:10px;">
                         <div>
-                            <div class="section-title">2. 雙分流量網路視覺化 (Bipartite Flow Network)</div>
-                            <div class="section-subtitle">曲線粗細代表最佳配送箱數，滑鼠移過節點或路線可檢視運費明細與滿載瓶頸</div>
+                            <div class="section-title">2. 互動式桑基流向網路圖 &amp; 邊際成本熱力圖</div>
+                            <div class="section-subtitle">點擊任意「出貨廠區」或「配送站點」卡片可鎖定聚焦該節點的所有進出貨路線與成本明細</div>
                         </div>
-                        <span id="transport-hover-info" class="badge badge-muted">滑鼠移至節點或連線檢視明細</span>
+                        <span id="transport-hover-info" class="badge badge-indigo">💡 點擊或移過節點/路線檢視明細</span>
                     </div>
 
-                    <div style="width:100%;display:flex;align-items:center;justify-content:center;background:var(--bg-subtle);border-radius:12px;padding:8px;">
-                        <svg id="transport-bipartite-svg" viewBox="0 0 600 370" style="width:100%;height:360px;display:block;"></svg>
+                    <!-- 視覺化控制列 -->
+                    <div class="viz-toolbar">
+                        <div class="segmented-group">
+                            <button id="viz-mode-sankey" class="seg-btn active" onclick="setTransportVizMode('sankey')">
+                                🔀 桑基流向網路圖 (Sankey)
+                            </button>
+                            <button id="viz-mode-heatmap" class="seg-btn" onclick="setTransportVizMode('heatmap')">
+                                🟦 配置與邊際成本熱力圖 (Δ<sub>ij</sub>)
+                            </button>
+                        </div>
+
+                        <div id="sankey-filter-controls" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;">
+                            <div class="segmented-group">
+                                <button id="route-filter-active" class="seg-btn active" onclick="setTransportRouteFilter('active')">
+                                    僅顯示啟用路線 (x<sub>ij</sub>&gt;0)
+                                </button>
+                                <button id="route-filter-all" class="seg-btn" onclick="setTransportRouteFilter('all')">
+                                    顯示全部潛在路線
+                                </button>
+                            </div>
+                            <button id="toggle-badge-btn" class="preset-btn" style="padding:5px 10px;" onclick="toggleTransportBadges()">
+                                🏷️ 標籤：顯示
+                            </button>
+                            <button id="clear-lock-btn" class="preset-btn hidden" style="padding:5px 10px;border-color:var(--rose);color:var(--rose-dark);" onclick="clearTransportLock()">
+                                ✕ 解除節點鎖定
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 模式 A：高精細 SVG 桑基流向網路圖 -->
+                    <div id="transport-sankey-wrapper" class="sankey-stage">
+                        <svg id="transport-bipartite-svg" viewBox="0 0 780 420" style="width:100%;height:auto;display:block;"></svg>
+                    </div>
+
+                    <!-- 模式 B：最佳配置與邊際機會成本 (Reduced Cost) 視覺化熱力矩陣 -->
+                    <div id="transport-heatmap-wrapper" class="hidden" style="padding:6px 0;">
+                        <div id="transport-heatmap-grid"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- 下方：最佳分配決策表 -->
+            <!-- 下方：最佳調撥決策矩陣與邊際機會成本 (Reduced Cost Δij) 明細表 -->
             <div class="card">
                 <div class="section-header">
                     <div>
-                        <div class="section-title">3. 最佳調撥決策矩陣 (Optimal Allocation Matrix x<sub>ij</sub><sup>*</sup>)</div>
-                        <div class="section-subtitle">綠色高亮格代表啟用的最佳配送路線（箱數 × 單位運費 = 路線運費小計）</div>
+                        <div class="section-title">3. 最佳調撥決策矩陣 (x<sub>ij</sub><sup>*</sup>) 與未啟用路線邊際機會成本 (Reduced Cost Δ<sub>ij</sub>)</div>
+                        <div class="section-subtitle">
+                            綠色卡片為最佳啟用路線；未啟用路線標示<strong>邊際機會成本 Δ<sub>ij</sub> = c<sub>ij</sub> − (u<sub>i</sub> + v<sub>j</sub>)</strong>（代表該路線每強行配送 1 箱會增加的額外成本，或運費需降價多少才值得啟用）
+                        </div>
                     </div>
-                    <div style="display:flex;gap:10px;align-items:center;">
+                    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
                         <span class="badge badge-emerald">● 啟用最佳路線 (x<sub>ij</sub><sup>*</sup> &gt; 0)</span>
+                        <span class="badge badge-amber">● 替代最佳解候選 (Δ<sub>ij</sub> = 0)</span>
                         <span class="badge badge-rose">● 100% 滿載瓶頸廠區 (Tight)</span>
                     </div>
                 </div>
@@ -1205,7 +1451,7 @@
                             <h3 style="font-size:16px;font-weight:700;color:#ffffff;">即時數學模型與最佳解自動生成區 (Live Mathematical Model)</h3>
                             <span id="math-active-badge" class="brand-tag">運輸網路最佳化模型</span>
                         </div>
-                        <p style="font-size:12px;color:#94a3b8;">隨著上方表格或滑桿數值變更，即時生成標準作業研究 (OR) 線性規劃代數式與最佳決策變數</p>
+                        <p style="font-size:12px;color:#94a3b8;">隨上方新增/刪除/改名的廠區站點、表格或滑桿數值變更，即時同步生成標準作業研究 (OR) 線性規劃代數式</p>
                     </div>
                 </div>
                 <button class="action-btn" onclick="copyMathFormulation()">
@@ -1221,7 +1467,7 @@
                     </div>
                     <div>
                         <div class="math-label" style="color:#818cf8;">2. 受限於限制條件式 (Subject to Constraints)</div>
-                        <div id="math-con-content" class="math-code-box" style="color:#e2e8f0;max-height:230px;overflow-y:auto;"></div>
+                        <div id="math-con-content" class="math-code-box" style="color:#e2e8f0;max-height:240px;overflow-y:auto;"></div>
                     </div>
                 </div>
 
@@ -1252,8 +1498,8 @@
                     <strong>線性規劃 (Linear Programming, LP)</strong> 是作業研究 (Operations Research) 與管理科學最核心的數學最佳化工具，用於在有限的產能、人力與原料條件下，找出最低成本或最高利潤的配置方案。
                 </p>
                 <div style="padding:12px;border-radius:10px;background:var(--bg-subtle);border:1px solid var(--border-color);">
-                    <strong style="color:var(--primary);">🚚 1. 運輸網路最佳化 (Transportation Problem)</strong>
-                    <p style="margin-top:4px;">採用最小成本法建立初始基本可行解，並以 <strong>MODI (Modified Distribution / u-v 對偶乘數法)</strong> 搭配閉迴路踏石調整 (Stepping-Stone) 求得全域最佳調撥矩陣。</p>
+                    <strong style="color:var(--primary);">🚚 1. 動態 M×N 運輸網路最佳化 (Transportation Problem)</strong>
+                    <p style="margin-top:4px;">支援任意 M 個出貨廠區與 N 個配送站點（可隨時新增、刪除、改名）。內部自動處理供過於求或供不應求之虛擬節點平衡，並以 <strong>MODI (Modified Distribution / u<sub>i</sub> + v<sub>j</sub> 對偶乘數法)</strong> 與閉迴路踏石調整 (Stepping-Stone) 求得全域最佳調撥矩陣與各未啟用路線之邊際機會成本 Δ<sub>ij</sub> = c<sub>ij</sub> − u<sub>i</sub> − v<sub>j</sub>。</p>
                 </div>
                 <div style="padding:12px;border-radius:10px;background:var(--bg-subtle);border:1px solid var(--border-color);">
                     <strong style="color:var(--emerald-dark);">👥 2. 人力排班最佳化 (Workforce Scheduling)</strong>
@@ -1276,6 +1522,26 @@
            ===================================================================== */
         let activeTab = 'transport';
 
+        // 每個出貨廠區的專屬高辨識度色盤 (支援最多 8 個廠區)
+        const SOURCE_PALETTE = [
+            { main: '#4f46e5', light: '#e0e7ff', dark: '#3730a3', name: 'Indigo' },
+            { main: '#059669', light: '#d1fae5', dark: '#065f46', name: 'Emerald' },
+            { main: '#d97706', light: '#fef3c7', dark: '#92400e', name: 'Amber' },
+            { main: '#e11d48', light: '#ffe4e6', dark: '#9f1239', name: 'Rose' },
+            { main: '#0891b2', light: '#cffafe', dark: '#155e75', name: 'Cyan' },
+            { main: '#7c3aed', light: '#ede9fe', dark: '#5b21b6', name: 'Violet' },
+            { main: '#2563eb', light: '#dbeafe', dark: '#1e40af', name: 'Blue' },
+            { main: '#c026d3', light: '#fae8ff', dark: '#86198f', name: 'Fuchsia' }
+        ];
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
         function notifyToast(msg) {
             const box = document.getElementById('toast-box');
             const item = document.createElement('div');
@@ -1286,7 +1552,7 @@
                 item.style.opacity = '0';
                 item.style.transform = 'translateY(8px)';
                 setTimeout(() => item.remove(), 260);
-            }, 2400);
+            }, 2600);
         }
 
         function toggleDarkMode() {
@@ -1296,7 +1562,7 @@
             if (activeTab === 'grapher') {
                 solveAndDrawGrapher();
             }
-            renderTransportSVG();
+            renderTransportVisualization();
         }
 
         function toggleGuideModal(show) {
@@ -1334,8 +1600,7 @@
         }
 
         /* =====================================================================
-           Tab 1: 運輸網路最佳化 (3x3 Transportation Problem)
-           台中廠、斗六廠、高雄廠 -> 台北站、新竹站、台南站
+           Tab 1: 動態 M×N 運輸網路最佳化 (Full CRUD + Sankey + Heatmap)
            ===================================================================== */
         const transportData = {
             sources: ['台中廠', '斗六廠', '高雄廠'],
@@ -1348,11 +1613,17 @@
                 [16, 13, 5]
             ],
             solution: null,
-            hoverTarget: null
+            vizMode: 'sankey',        // 'sankey' | 'heatmap'
+            routeFilter: 'active',    // 'active' | 'all'
+            showBadges: true,
+            hoverTarget: null,        // { type: 'edge'|'src'|'dst', i, j }
+            lockedTarget: null        // 點擊節點可鎖定高亮
         };
 
         const TRANSPORT_PRESETS = {
-            balanced: {
+            balanced3x3: {
+                sources: ['台中廠', '斗六廠', '高雄廠'],
+                destinations: ['台北站', '新竹站', '台南站'],
                 supply: [150, 180, 120],
                 demand: [160, 140, 150],
                 costs: [
@@ -1360,9 +1631,24 @@
                     [11, 8, 9],
                     [16, 13, 5]
                 ],
-                toast: '已載入「平衡運輸」情境（總供給 450 箱 = 總需求 450 箱）'
+                toast: '已載入「標準 3×3 平衡網路」（總供給 450 箱 = 總需求 450 箱）'
+            },
+            expanded4x4: {
+                sources: ['桃園倉', '台中廠', '斗六廠', '高雄廠'],
+                destinations: ['台北站', '新竹站', '台南站', '花蓮站'],
+                supply: [140, 160, 150, 130],
+                demand: [170, 140, 160, 110],
+                costs: [
+                    [4, 5, 13, 9],
+                    [8, 6, 10, 14],
+                    [11, 8, 7, 15],
+                    [16, 13, 5, 12]
+                ],
+                toast: '已載入「4×4 跨區擴編網路」（4 個出貨廠區 × 4 個配送站點，總量 580 箱）'
             },
             surplus: {
+                sources: ['台中廠', '斗六廠', '高雄廠'],
+                destinations: ['台北站', '新竹站', '台南站'],
                 supply: [200, 210, 160],
                 demand: [150, 130, 170],
                 costs: [
@@ -1370,29 +1656,152 @@
                     [11, 8, 9],
                     [16, 13, 5]
                 ],
-                toast: '已載入「供過於求」情境（總供給 570 箱 ≥ 總需求 450 箱，具 120 箱剩餘產能）'
+                toast: '已載入「供過於求」情境（總供給 570 箱 > 總需求 450 箱，具 120 箱餘裕產能）'
             },
             rush: {
-                supply: [140, 150, 110],
-                demand: [180, 150, 160],
+                sources: ['台中廠', '斗六廠', '高雄廠'],
+                destinations: ['台北站', '新竹站', '台南站'],
+                supply: [130, 150, 110],
+                demand: [175, 145, 160],
                 costs: [
                     [8, 6, 12],
                     [11, 8, 9],
                     [16, 13, 5]
                 ],
-                toast: '已載入「急單測試」情境（總需求 490 箱 ≥ 總供給 400 箱，全廠區 100% 滿載瓶頸）'
+                toast: '已載入「供不應求 (急單缺口)」情境（總需求 480 箱 > 總供給 390 箱，全廠區滿載）'
             }
         };
 
         function loadTransportPreset(key) {
-            const p = TRANSPORT_PRESETS[key] || TRANSPORT_PRESETS.balanced;
+            const p = TRANSPORT_PRESETS[key] || TRANSPORT_PRESETS.balanced3x3;
+            transportData.sources = [...p.sources];
+            transportData.destinations = [...p.destinations];
             transportData.supply = [...p.supply];
             transportData.demand = [...p.demand];
             transportData.costs = p.costs.map(r => [...r]);
             transportData.hoverTarget = null;
+            transportData.lockedTarget = null;
+            updateLockButtonUI();
             renderTransportInputMatrix();
             solveAndRenderTransport(false);
             notifyToast(p.toast);
+        }
+
+        /* 動態新增/刪除/改名出貨廠區與配送站點 */
+        const CANDIDATE_SOURCE_NAMES = ['桃園倉', '台南廠', '彰化廠', '宜蘭倉', '屏東廠', '苗栗倉', '嘉義廠'];
+        const CANDIDATE_DEST_NAMES = ['花蓮站', '桃園站', '高雄站', '台中站', '基隆站', '嘉義站', '台東站'];
+
+        function addTransportSource() {
+            const m = transportData.sources.length;
+            if (m >= 8) {
+                notifyToast('⚠️ 出貨廠區最多支援 8 個節點！');
+                return;
+            }
+            let newName = CANDIDATE_SOURCE_NAMES.find(name => !transportData.sources.includes(name));
+            if (!newName) newName = '出貨廠' + (m + 1);
+
+            const n = transportData.destinations.length;
+            const newCostRow = Array.from({ length: n }, (_, j) => 6 + ((m * 3 + j * 4) % 11));
+            transportData.sources.push(newName);
+            transportData.supply.push(120);
+            transportData.costs.push(newCostRow);
+            transportData.lockedTarget = null;
+            updateLockButtonUI();
+
+            renderTransportInputMatrix();
+            solveAndRenderTransport(false);
+            notifyToast('＋ 已新增出貨點「' + newName + '」（可直接點擊名稱修改）');
+        }
+
+        function removeTransportSource(i) {
+            if (transportData.sources.length <= 2) {
+                notifyToast('⚠️ 至少需保留 2 個出貨廠區！');
+                return;
+            }
+            const removed = transportData.sources[i];
+            transportData.sources.splice(i, 1);
+            transportData.supply.splice(i, 1);
+            transportData.costs.splice(i, 1);
+            transportData.hoverTarget = null;
+            transportData.lockedTarget = null;
+            updateLockButtonUI();
+
+            renderTransportInputMatrix();
+            solveAndRenderTransport(false);
+            notifyToast('已刪除出貨點「' + removed + '」');
+        }
+
+        function addTransportDestination() {
+            const n = transportData.destinations.length;
+            if (n >= 8) {
+                notifyToast('⚠️ 配送站點最多支援 8 個節點！');
+                return;
+            }
+            let newName = CANDIDATE_DEST_NAMES.find(name => !transportData.destinations.includes(name));
+            if (!newName) newName = '配送站' + (n + 1);
+
+            transportData.destinations.push(newName);
+            transportData.demand.push(120);
+            transportData.costs.forEach((row, i) => {
+                row.push(7 + ((i * 4 + n * 3) % 10));
+            });
+            transportData.lockedTarget = null;
+            updateLockButtonUI();
+
+            renderTransportInputMatrix();
+            solveAndRenderTransport(false);
+            notifyToast('＋ 已新增配送站「' + newName + '」（可直接點擊名稱修改）');
+        }
+
+        function removeTransportDestination(j) {
+            if (transportData.destinations.length <= 2) {
+                notifyToast('⚠️ 至少需保留 2 個配送站點！');
+                return;
+            }
+            const removed = transportData.destinations[j];
+            transportData.destinations.splice(j, 1);
+            transportData.demand.splice(j, 1);
+            transportData.costs.forEach(row => row.splice(j, 1));
+            transportData.hoverTarget = null;
+            transportData.lockedTarget = null;
+            updateLockButtonUI();
+
+            renderTransportInputMatrix();
+            solveAndRenderTransport(false);
+            notifyToast('已刪除配送站「' + removed + '」');
+        }
+
+        function onSourceNameInput(i, val) {
+            transportData.sources[i] = val.trim() || ('廠區' + (i + 1));
+            renderTransportVisualization();
+            renderTransportSolutionTable();
+            updateLiveMathModel();
+        }
+
+        function onDestNameInput(j, val) {
+            transportData.destinations[j] = val.trim() || ('站點' + (j + 1));
+            renderTransportVisualization();
+            renderTransportSolutionTable();
+            updateLiveMathModel();
+        }
+
+        function autoBalanceTransportSupplyDemand() {
+            const totalS = transportData.supply.reduce((a, b) => a + b, 0);
+            const totalD = transportData.demand.reduce((a, b) => a + b, 0);
+            if (totalS === totalD) {
+                notifyToast('目前總供給與總需求已完全相等 (' + totalS + ' 箱)');
+                return;
+            }
+            if (totalS < totalD) {
+                const diff = totalD - totalS;
+                transportData.supply[transportData.supply.length - 1] += diff;
+            } else {
+                const diff = totalS - totalD;
+                transportData.demand[transportData.demand.length - 1] += diff;
+            }
+            renderTransportInputMatrix();
+            solveAndRenderTransport(false);
+            notifyToast('⚖️ 已自動平衡總供給與總需求！');
         }
 
         function renderTransportInputMatrix() {
@@ -1400,23 +1809,43 @@
             const m = transportData.sources.length;
             const n = transportData.destinations.length;
 
+            const badge = document.getElementById('matrix-dim-badge');
+            if (badge) badge.textContent = m + ' 出貨點 × ' + n + ' 配送站';
+
             let html = '<table class="lp-table"><thead><tr>';
-            html += '<th class="left">發貨廠區 \\ 配送站點</th>';
+            html += '<th class="left" style="min-width:148px;">出貨廠區 \\ 配送站點</th>';
             for (let j = 0; j < n; j++) {
-                html += '<th>' + transportData.destinations[j] + ' (D<sub>' + (j + 1) + '</sub>)</th>';
+                html += '<th>' +
+                    '<div class="node-header-cell" title="點擊直接修改配送站名稱">' +
+                    '<span style="font-size:10px;color:var(--emerald-dark);font-weight:800;">D<sub>' + (j + 1) + '</sub></span>' +
+                    '<input type="text" class="node-name-input dest-input" value="' + escapeHtml(transportData.destinations[j]) + '" ' +
+                    'oninput="onDestNameInput(' + j + ',this.value)">' +
+                    '<button type="button" class="node-del-btn" ' + (n <= 2 ? 'disabled' : '') + ' ' +
+                    'onclick="removeTransportDestination(' + j + ')" title="刪除此配送站">×</button>' +
+                    '</div></th>';
             }
-            html += '<th style="color:var(--primary);">廠區供給上限 (Supply)</th>';
+            html += '<th style="color:var(--primary);min-width:96px;">廠區供給上限<br><span style="font-size:10px;font-weight:600;">(Supply S<sub>i</sub>)</span></th>';
             html += '</tr></thead><tbody>';
 
             for (let i = 0; i < m; i++) {
+                const pal = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
                 html += '<tr>';
-                html += '<td class="left" style="font-weight:700;">' + transportData.sources[i] + ' (S<sub>' + (i + 1) + '</sub>)</td>';
+                html += '<td class="left">' +
+                    '<div class="node-header-cell" style="border-left:4px solid ' + pal.main + ';" title="點擊直接修改出貨廠區名稱">' +
+                    '<span style="font-size:10px;color:' + pal.main + ';font-weight:800;">S<sub>' + (i + 1) + '</sub></span>' +
+                    '<input type="text" class="node-name-input" value="' + escapeHtml(transportData.sources[i]) + '" ' +
+                    'oninput="onSourceNameInput(' + i + ',this.value)">' +
+                    '<button type="button" class="node-del-btn" ' + (m <= 2 ? 'disabled' : '') + ' ' +
+                    'onclick="removeTransportSource(' + i + ')" title="刪除此出貨廠區">×</button>' +
+                    '</div></td>';
+
                 for (let j = 0; j < n; j++) {
                     html += '<td>' +
-                        '<span style="font-size:11px;color:var(--text-muted);margin-right:3px;">$</span>' +
+                        '<div style="display:inline-flex;align-items:center;gap:2px;">' +
+                        '<span style="font-size:11px;color:var(--text-muted);">$</span>' +
                         '<input type="number" min="0" max="999" class="num-input" value="' + transportData.costs[i][j] + '" ' +
                         'oninput="onTransportCostInput(' + i + ',' + j + ',this.value)">' +
-                        '</td>';
+                        '</div></td>';
                 }
                 html += '<td>' +
                     '<input type="number" min="0" max="9999" step="10" class="num-input supply-input" value="' + transportData.supply[i] + '" ' +
@@ -1429,14 +1858,14 @@
             const totalD = transportData.demand.reduce((a, b) => a + b, 0);
 
             html += '<tr style="background:var(--bg-subtle);font-weight:700;">';
-            html += '<td class="left" style="color:var(--emerald-dark);">站點需求量 (Demand)</td>';
+            html += '<td class="left" style="color:var(--emerald-dark);font-size:12px;">站點需求量 (Demand D<sub>j</sub>)</td>';
             for (let j = 0; j < n; j++) {
                 html += '<td>' +
                     '<input type="number" min="0" max="9999" step="10" class="num-input demand-input" value="' + transportData.demand[j] + '" ' +
                     'oninput="onTransportDemandInput(' + j + ',this.value)">' +
                     '</td>';
             }
-            html += '<td id="transport-sum-cell" style="font-size:12px;line-height:1.35;">' +
+            html += '<td id="transport-sum-cell" style="font-size:11.5px;line-height:1.4;">' +
                 '<div>總供給: <strong>' + totalS + '</strong></div>' +
                 '<div style="color:var(--emerald-dark);">總需求: <strong>' + totalD + '</strong></div>' +
                 '</td>';
@@ -1461,7 +1890,8 @@
         }
 
         /**
-         * 運輸問題求解器：Least-Cost 初始解 + MODI (u-v) 閉迴路踏石最佳化演算法
+         * 通用 M×N 運輸問題精確求解器：
+         * VAM / 最小成本初始解 + 無環生成樹基底維護 + MODI (u_i + v_j) 對偶乘數與邊際機會成本 Δ_ij
          */
         function solveTransportationLP(supplyArr, demandArr, costMatrix) {
             const mOrig = supplyArr.length;
@@ -1486,7 +1916,7 @@
             const alloc = Array.from({ length: m }, () => new Array(n).fill(0));
             const isBasic = Array.from({ length: m }, () => new Array(n).fill(false));
 
-            // 1. 最小成本法初始化
+            // 1. 最小成本法建立初始基本可行解
             const remS = [...supply];
             const remD = [...demand];
             const rowDone = new Array(m).fill(false);
@@ -1525,7 +1955,7 @@
                 }
             }
 
-            // 確保基變數形成無環生成樹 (m + n - 1 條邊)
+            // 確保基變數形成連通無環生成樹 (m + n - 1 條邊)
             function rebuildSpanningTreeBasis() {
                 const parent = Array.from({ length: m + n }, (_, k) => k);
                 function find(x) { return parent[x] === x ? x : (parent[x] = find(parent[x])); }
@@ -1616,8 +2046,11 @@
                 return loop;
             }
 
-            // 2. MODI 最佳化迭代
-            for (let iter = 0; iter < 100; iter++) {
+            let finalU = new Array(m).fill(0);
+            let finalV = new Array(n).fill(0);
+
+            // 2. MODI 最佳化迴圈
+            for (let iter = 0; iter < 140; iter++) {
                 rebuildSpanningTreeBasis();
                 const u = new Array(m).fill(null);
                 const v = new Array(n).fill(null);
@@ -1641,11 +2074,14 @@
                     }
                 }
 
+                finalU = u.map(x => x || 0);
+                finalV = v.map(x => x || 0);
+
                 let bestR = -1, bestC = -1, minReduced = -1e-7;
                 for (let i = 0; i < m; i++) {
                     for (let j = 0; j < n; j++) {
                         if (!isBasic[i][j]) {
-                            const rc = costs[i][j] - (u[i] || 0) - (v[j] || 0);
+                            const rc = costs[i][j] - finalU[i] - finalV[j];
                             if (rc < minReduced) {
                                 minReduced = rc;
                                 bestR = i;
@@ -1678,45 +2114,61 @@
                 }
             }
 
-            // 整理實際 3x3 矩陣結果
+            // 整理實際 M×N 矩陣與邊際機會成本 Δ_ij
             const realAlloc = Array.from({ length: mOrig }, (_, i) =>
                 Array.from({ length: nOrig }, (__, j) => Math.round(alloc[i][j]))
+            );
+            const reducedCosts = Array.from({ length: mOrig }, (_, i) =>
+                Array.from({ length: nOrig }, (__, j) => Math.round((costMatrix[i][j] - finalU[i] - finalV[j]) * 100) / 100)
             );
 
             let totalCost = 0;
             let totalShipped = 0;
             let activeRoutes = 0;
             const sourceUsed = new Array(mOrig).fill(0);
+            const sourceCost = new Array(mOrig).fill(0);
             const destReceived = new Array(nOrig).fill(0);
+            const destCost = new Array(nOrig).fill(0);
 
             for (let i = 0; i < mOrig; i++) {
                 for (let j = 0; j < nOrig; j++) {
                     const q = realAlloc[i][j];
                     if (q > 0) {
-                        totalCost += q * costMatrix[i][j];
+                        const sub = q * costMatrix[i][j];
+                        totalCost += sub;
                         totalShipped += q;
                         activeRoutes++;
                         sourceUsed[i] += q;
+                        sourceCost[i] += sub;
                         destReceived[j] += q;
+                        destCost[j] += sub;
                     }
                 }
             }
 
             return {
                 alloc: realAlloc,
+                reducedCosts,
+                u: finalU.slice(0, mOrig),
+                v: finalV.slice(0, nOrig),
                 totalCost,
                 totalShipped,
                 activeRoutes,
                 totalS,
                 totalD,
                 sourceUsed,
-                destReceived
+                sourceCost,
+                destReceived,
+                destCost
             };
         }
 
         function solveAndRenderTransport(showToastFlag) {
             const sol = solveTransportationLP(transportData.supply, transportData.demand, transportData.costs);
             transportData.solution = sol;
+
+            const m = transportData.sources.length;
+            const n = transportData.destinations.length;
 
             const sumCell = document.getElementById('transport-sum-cell');
             if (sumCell) {
@@ -1730,11 +2182,11 @@
             document.getElementById('trans-kpi-unit').textContent = '平均每箱運費 $' + avg;
 
             document.getElementById('trans-kpi-shipped').textContent = sol.totalShipped.toLocaleString() + ' 箱';
-            document.getElementById('trans-kpi-routes').textContent = '啟用 ' + sol.activeRoutes + ' 條最佳調撥路線';
+            document.getElementById('trans-kpi-routes').textContent = '啟用 ' + sol.activeRoutes + ' / ' + (m * n) + ' 條調撥路線';
 
             const util = sol.totalS > 0 ? Math.round((sol.totalShipped / sol.totalS) * 100) : 0;
             document.getElementById('trans-kpi-util').textContent = util + '%';
-            document.getElementById('trans-kpi-totals').textContent = '總供給 ' + sol.totalS + ' / 總需求 ' + sol.totalD;
+            document.getElementById('trans-kpi-totals').textContent = m + ' 出貨點 × ' + n + ' 配送站 (總供給 ' + sol.totalS + ')';
 
             const statusEl = document.getElementById('trans-kpi-status');
             const statusSubEl = document.getElementById('trans-kpi-status-sub');
@@ -1743,20 +2195,20 @@
             if (sol.totalS === sol.totalD) {
                 statusEl.textContent = '供需完全平衡';
                 statusSubEl.textContent = '全廠區 100% 滿載，全站點 100% 滿足';
-                bannerEl.innerHTML = '<span class="badge badge-emerald">平衡狀態</span> 總供給 (' + sol.totalS + ' 箱) = 總需求 (' + sol.totalD + ' 箱)';
+                bannerEl.innerHTML = '<span class="badge badge-emerald">● 平衡網路</span> 總供給 (' + sol.totalS + ' 箱) = 總需求 (' + sol.totalD + ' 箱)';
             } else if (sol.totalS > sol.totalD) {
                 const diff = sol.totalS - sol.totalD;
                 statusEl.textContent = '供過於求 (+' + diff + '箱)';
                 statusSubEl.textContent = '優先由低運費廠區出貨，保留餘裕產能';
-                bannerEl.innerHTML = '<span class="badge badge-indigo">供過於求</span> 總供給超出總需求 ' + diff + ' 箱，部分廠區保有未動用產能 (Slack)';
+                bannerEl.innerHTML = '<span class="badge badge-indigo">● 供過於求</span> 總供給超出總需求 ' + diff + ' 箱，部分廠區保有未動用產能 (Slack)';
             } else {
                 const diff = sol.totalD - sol.totalS;
                 statusEl.textContent = '供不應求 (-' + diff + '箱)';
                 statusSubEl.textContent = '所有廠區皆達 100% 滿載瓶頸 (Tight)';
-                bannerEl.innerHTML = '<span class="badge badge-amber">急單短缺</span> 總需求超出供給 ' + diff + ' 箱，全數廠區均達 100% 產能極限';
+                bannerEl.innerHTML = '<span class="badge badge-amber">● 急單短缺</span> 總需求超出總供給 ' + diff + ' 箱，全數廠區均達 100% 產能上限';
             }
 
-            renderTransportSVG();
+            renderTransportVisualization();
             renderTransportSolutionTable();
 
             if (activeTab === 'transport') {
@@ -1767,7 +2219,71 @@
             }
         }
 
-        function renderTransportSVG() {
+        /* 視覺化模式與篩選器切換 */
+        function setTransportVizMode(mode) {
+            transportData.vizMode = mode;
+            document.getElementById('viz-mode-sankey').classList.toggle('active', mode === 'sankey');
+            document.getElementById('viz-mode-heatmap').classList.toggle('active', mode === 'heatmap');
+            document.getElementById('transport-sankey-wrapper').classList.toggle('hidden', mode !== 'sankey');
+            document.getElementById('transport-heatmap-wrapper').classList.toggle('hidden', mode !== 'heatmap');
+            document.getElementById('sankey-filter-controls').classList.toggle('hidden', mode !== 'sankey');
+            renderTransportVisualization();
+        }
+
+        function setTransportRouteFilter(filter) {
+            transportData.routeFilter = filter;
+            document.getElementById('route-filter-active').classList.toggle('active', filter === 'active');
+            document.getElementById('route-filter-all').classList.toggle('active', filter === 'all');
+            renderTransportVisualization();
+        }
+
+        function toggleTransportBadges() {
+            transportData.showBadges = !transportData.showBadges;
+            document.getElementById('toggle-badge-btn').textContent = transportData.showBadges ? '🏷️ 標籤：顯示' : '🏷️ 標籤：隱藏';
+            renderTransportVisualization();
+        }
+
+        function toggleTransportLock(type, i, j) {
+            const cur = transportData.lockedTarget;
+            if (cur && cur.type === type && cur.i === i && cur.j === j) {
+                transportData.lockedTarget = null;
+            } else {
+                transportData.lockedTarget = { type, i, j };
+            }
+            updateLockButtonUI();
+            updateTransportInfoBadge(transportData.lockedTarget || transportData.hoverTarget);
+            renderTransportVisualization();
+        }
+
+        function clearTransportLock() {
+            transportData.lockedTarget = null;
+            updateLockButtonUI();
+            updateTransportInfoBadge(null);
+            renderTransportVisualization();
+        }
+
+        function updateLockButtonUI() {
+            const btn = document.getElementById('clear-lock-btn');
+            if (!btn) return;
+            if (transportData.lockedTarget) btn.classList.remove('hidden');
+            else btn.classList.add('hidden');
+        }
+
+        function renderTransportVisualization() {
+            if (transportData.vizMode === 'sankey') {
+                renderTransportSankeySVG();
+            } else {
+                renderTransportHeatmap();
+            }
+        }
+
+        /**
+         * 高質感動態自適應 SVG 雙分桑基流向網路圖 (Bipartite Sankey Flow Network)
+         * - 根據廠區與站點數量自動調整 SVG 高度，絕不擁擠
+         * - 貝茲曲線參數 t 交錯防碰撞演算法 (Anti-Collision Staggered Badges)
+         * - 左右高對比節點資訊卡（含進度條、出貨/收貨成本、滿載/缺口徽章）
+         */
+        function renderTransportSankeySVG() {
             const svg = document.getElementById('transport-bipartite-svg');
             const sol = transportData.solution;
             if (!svg || !sol) return;
@@ -1775,135 +2291,358 @@
             const isDark = document.body.classList.contains('dark-mode');
             const m = transportData.sources.length;
             const n = transportData.destinations.length;
-            const leftX = 115;
-            const rightX = 485;
-            const H = 370;
+            const maxNodes = Math.max(m, n);
 
-            const sY = (i) => 35 + ((i + 0.5) * (H - 50)) / m;
-            const dY = (j) => 35 + ((j + 0.5) * (H - 50)) / n;
+            const W = 780;
+            const rowStep = 94;
+            const topPad = 56;
+            const H = Math.max(380, topPad + maxNodes * rowStep + 26);
+            svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+
+            const srcCardX = 16;
+            const srcCardW = 190;
+            const srcCardH = 74;
+            const srcPortX = srcCardX + srcCardW; // 206
+
+            const dstCardW = 190;
+            const dstCardX = W - 16 - dstCardW;   // 574
+            const dstCardH = 74;
+            const dstPortX = dstCardX;            // 574
+
+            const availH = H - topPad - 20;
+            const sY = (i) => topPad + ((i + 0.5) * availH) / m;
+            const dY = (j) => topPad + ((j + 0.5) * availH) / n;
+
             const maxFlow = Math.max(1, ...sol.alloc.flat());
-            const hv = transportData.hoverTarget;
+            const activeFocus = transportData.lockedTarget || transportData.hoverTarget;
 
-            let html = '<defs>' +
-                '<linearGradient id="flowGrad" x1="0%" y1="0%" x2="100%" y2="0%">' +
-                '<stop offset="0%" stop-color="#4f46e5"/>' +
-                '<stop offset="100%" stop-color="#10b981"/>' +
-                '</linearGradient>' +
-                '</defs>';
+            // 三次貝茲曲線精確座標計算函式 B(t)
+            function cubicBezierPoint(t, x0, y0, cx1, cy1, cx2, cy2, x3, y3) {
+                const u = 1 - t;
+                const tt = t * t, uu = u * u;
+                const uuu = uu * u, ttt = tt * t;
+                const x = uuu * x0 + 3 * uu * t * cx1 + 3 * u * tt * cx2 + ttt * x3;
+                const y = uuu * y0 + 3 * uu * t * cy1 + 3 * u * tt * cy2 + ttt * y3;
+                return { x, y };
+            }
 
-            html += '<text x="' + leftX + '" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="' + (isDark ? '#a5b4fc' : '#312e81') + '">發貨廠區 (Supply &amp; 利用率)</text>';
-            html += '<text x="' + rightX + '" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="' + (isDark ? '#6ee7b7' : '#065f46') + '">配送站點 (Demand &amp; 收貨量)</text>';
+            let html = '<defs>';
+            for (let i = 0; i < m; i++) {
+                const pal = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
+                html += '<linearGradient id="srcGrad' + i + '" x1="0%" y1="0%" x2="100%" y2="0%">' +
+                    '<stop offset="0%" stop-color="' + pal.main + '" stop-opacity="0.92"/>' +
+                    '<stop offset="100%" stop-color="#10b981" stop-opacity="0.92"/>' +
+                    '</linearGradient>';
+            }
+            html += '<filter id="cardShadow" x="-8%" y="-8%" width="116%" height="120%">' +
+                '<feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="' + (isDark ? '0.45' : '0.08') + '"/>' +
+                '</filter></defs>';
 
-            // 未啟用虛線路線
+            // 頂部欄位標題列
+            html += '<rect x="16" y="10" width="190" height="30" rx="8" fill="' + (isDark ? '#1e293b' : '#eef2ff') + '"/>' +
+                '<text x="111" y="29" text-anchor="middle" font-size="12" font-weight="800" fill="' + (isDark ? '#a5b4fc' : '#3730a3') + '">🏭 出貨廠區 (Supply &amp; 稼動率)</text>';
+
+            html += '<text x="' + (W / 2) + '" y="28" text-anchor="middle" font-size="11.5" font-weight="700" fill="' + (isDark ? '#94a3b8' : '#64748b') + '">' +
+                '最佳物流調撥桑基網路 (總運量 ' + sol.totalShipped + ' 箱 · 總成本 $' + sol.totalCost.toLocaleString() + ')' +
+                '</text>';
+
+            html += '<rect x="' + dstCardX + '" y="10" width="190" height="30" rx="8" fill="' + (isDark ? '#1e293b' : '#ecfdf5') + '"/>' +
+                '<text x="' + (dstCardX + 95) + '" y="29" text-anchor="middle" font-size="12" font-weight="800" fill="' + (isDark ? '#6ee7b7' : '#065f46') + '">🏪 配送站點 (Demand &amp; 滿足率)</text>';
+
+            // 1. 潛在未啟用路線 (若切換為「顯示全部潛在路線」或聚焦特定節點時顯示)
             for (let i = 0; i < m; i++) {
                 for (let j = 0; j < n; j++) {
-                    if (sol.alloc[i][j] === 0) {
-                        const y1 = sY(i), y2 = dY(j);
-                        html += '<line x1="' + (leftX + 54) + '" y1="' + y1 + '" x2="' + (rightX - 54) + '" y2="' + y2 + '" ' +
-                            'stroke="' + (isDark ? '#334155' : '#cbd5e1') + '" stroke-width="1.2" stroke-dasharray="4 4" opacity="' + (hv ? 0.25 : 0.65) + '"/>';
+                    if (sol.alloc[i][j] > 0) continue;
+
+                    const isFocused = activeFocus && (
+                        (activeFocus.type === 'src' && activeFocus.i === i) ||
+                        (activeFocus.type === 'dst' && activeFocus.j === j) ||
+                        (activeFocus.type === 'edge' && activeFocus.i === i && activeFocus.j === j)
+                    );
+
+                    if (transportData.routeFilter !== 'all' && !isFocused) continue;
+
+                    const y1 = sY(i), y2 = dY(j);
+                    const cx1 = srcPortX + 135, cy1 = y1;
+                    const cx2 = dstPortX - 135, cy2 = y2;
+                    const op = isFocused ? 0.65 : 0.25;
+
+                    html += '<g style="cursor:pointer;" onmouseenter="setTransportHover(\'edge\',' + i + ',' + j + ')" onmouseleave="clearTransportHover()">' +
+                        '<path d="M ' + srcPortX + ' ' + y1 + ' C ' + cx1 + ' ' + cy1 + ', ' + cx2 + ' ' + cy2 + ', ' + dstPortX + ' ' + y2 + '" ' +
+                        'fill="none" stroke="' + (isDark ? '#475569' : '#94a3b8') + '" stroke-width="1.4" stroke-dasharray="5 5" opacity="' + op + '"/>';
+
+                    if (isFocused) {
+                        const t = 0.26 + ((i * 3 + j * 2) % 5) * 0.11;
+                        const pt = cubicBezierPoint(t, srcPortX, y1, cx1, cy1, cx2, cy2, dstPortX, y2);
+                        const rc = sol.reducedCosts[i][j];
+                        html += '<rect x="' + (pt.x - 52) + '" y="' + (pt.y - 11) + '" width="104" height="22" rx="6" fill="' + (isDark ? '#1e293b' : '#f8fafc') + '" stroke="#94a3b8" stroke-width="1"/>' +
+                            '<text x="' + pt.x + '" y="' + (pt.y + 4) + '" text-anchor="middle" font-size="10" font-weight="700" fill="' + (isDark ? '#cbd5e1' : '#475569') + '">$' + transportData.costs[i][j] + ' (Δ=+' + rc + ')</text>';
                     }
+                    html += '</g>';
                 }
             }
 
-            // 啟用之最佳流量曲線
+            // 2. 啟用之最佳流量桑基曲線 + 流動方向動畫粒子
+            const badgeRenderQueue = [];
+
             for (let i = 0; i < m; i++) {
+                const pal = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
                 for (let j = 0; j < n; j++) {
                     const q = sol.alloc[i][j];
                     if (q <= 0) continue;
-                    const y1 = sY(i), y2 = dY(j);
-                    const sw = 2.5 + (q / maxFlow) * 8;
 
-                    let active = true;
-                    if (hv) {
-                        if (hv.type === 'edge') active = (hv.i === i && hv.j === j);
-                        else if (hv.type === 'src') active = (hv.i === i);
-                        else if (hv.type === 'dst') active = (hv.j === j);
+                    const y1 = sY(i) + (j - (n - 1) / 2) * 3.5;
+                    const y2 = dY(j) + (i - (m - 1) / 2) * 3.5;
+                    const cx1 = srcPortX + 145, cy1 = y1;
+                    const cx2 = dstPortX - 145, cy2 = y2;
+
+                    const sw = 3.5 + (q / maxFlow) * 12;
+
+                    let isHighlighted = true;
+                    if (activeFocus) {
+                        if (activeFocus.type === 'edge') isHighlighted = (activeFocus.i === i && activeFocus.j === j);
+                        else if (activeFocus.type === 'src') isHighlighted = (activeFocus.i === i);
+                        else if (activeFocus.type === 'dst') isHighlighted = (activeFocus.j === j);
                     }
-                    const op = hv ? (active ? 1 : 0.18) : 0.9;
-                    const midX = (leftX + rightX) / 2 + (i - j) * 16;
-                    const midY = (y1 + y2) / 2;
-                    const c = transportData.costs[i][j];
+                    const op = activeFocus ? (isHighlighted ? 0.98 : 0.12) : 0.86;
 
-                    html += '<g style="cursor:pointer;" onmouseenter="setTransportHover(\'edge\',' + i + ',' + j + ')" onmouseleave="clearTransportHover()">' +
-                        '<path d="M ' + (leftX + 54) + ' ' + y1 + ' C ' + (leftX + 165) + ' ' + y1 + ', ' + (rightX - 165) + ' ' + y2 + ', ' + (rightX - 54) + ' ' + y2 + '" ' +
-                        'fill="none" stroke="url(#flowGrad)" stroke-width="' + sw.toFixed(1) + '" stroke-linecap="round" opacity="' + op + '"/>' +
-                        '<rect x="' + (midX - 44) + '" y="' + (midY - 12) + '" width="88" height="24" rx="6" ' +
-                        'fill="' + (isDark ? '#0f172a' : '#ffffff') + '" stroke="#10b981" stroke-width="1.5" opacity="' + op + '"/>' +
-                        '<text x="' + midX + '" y="' + (midY + 4) + '" text-anchor="middle" font-size="11" font-weight="700" fill="' + (isDark ? '#f8fafc' : '#0f172a') + '" opacity="' + op + '">' +
-                        q + '箱 ($' + c + ')' +
-                        '</text></g>';
+                    html += '<g style="cursor:pointer;" ' +
+                        'onmouseenter="setTransportHover(\'edge\',' + i + ',' + j + ')" ' +
+                        'onmouseleave="clearTransportHover()" ' +
+                        'onclick="toggleTransportLock(\'edge\',' + i + ',' + j + ')">' +
+                        '<path d="M ' + srcPortX + ' ' + y1 + ' C ' + cx1 + ' ' + cy1 + ', ' + cx2 + ' ' + cy2 + ', ' + dstPortX + ' ' + y2 + '" ' +
+                        'fill="none" stroke="url(#srcGrad' + i + ')" stroke-width="' + sw.toFixed(1) + '" stroke-linecap="round" opacity="' + op + '"/>';
+
+                    if (isHighlighted) {
+                        html += '<path class="flow-particle-line" d="M ' + srcPortX + ' ' + y1 + ' C ' + cx1 + ' ' + cy1 + ', ' + cx2 + ' ' + cy2 + ', ' + dstPortX + ' ' + y2 + '" ' +
+                            'fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="4 14" stroke-linecap="round" opacity="' + (activeFocus ? '0.85' : '0.55') + '"/>';
+                    }
+                    html += '</g>';
+
+                    // 計算交錯式防重疊參數 t (讓不同路線標籤均勻分布在左中右，絕不擠在正中央)
+                    if (transportData.showBadges || (activeFocus && isHighlighted)) {
+                        const staggerSlot = (i * 2 + j * 3) % 5; // 0, 1, 2, 3, 4
+                        const t = 0.24 + staggerSlot * 0.13;      // 0.24 ~ 0.76
+                        const pt = cubicBezierPoint(t, srcPortX, y1, cx1, cy1, cx2, cy2, dstPortX, y2);
+                        badgeRenderQueue.push({
+                            i, j, q,
+                            cost: transportData.costs[i][j],
+                            x: pt.x,
+                            y: pt.y,
+                            color: pal.main,
+                            isHighlighted,
+                            op
+                        });
+                    }
                 }
             }
 
-            // 左側廠區節點
+            // 3. 繪製防重疊路線明細膠囊標籤 (放在曲線層上方確保清晰可讀)
+            for (const b of badgeRenderQueue) {
+                if (activeFocus && !b.isHighlighted) continue;
+                const subCost = b.q * b.cost;
+                const pillW = 104;
+                const pillH = 26;
+                html += '<g style="cursor:pointer;" ' +
+                    'onmouseenter="setTransportHover(\'edge\',' + b.i + ',' + b.j + ')" ' +
+                    'onmouseleave="clearTransportHover()" ' +
+                    'onclick="toggleTransportLock(\'edge\',' + b.i + ',' + b.j + ')">' +
+                    '<rect x="' + (b.x - pillW / 2) + '" y="' + (b.y - pillH / 2) + '" width="' + pillW + '" height="' + pillH + '" rx="8" ' +
+                    'fill="' + (isDark ? '#0f172a' : '#ffffff') + '" stroke="' + b.color + '" stroke-width="1.8" filter="url(#cardShadow)"/>' +
+                    '<text x="' + b.x + '" y="' + (b.y + 4) + '" text-anchor="middle" font-size="11" font-weight="800" fill="' + (isDark ? '#f8fafc' : '#0f172a') + '">' +
+                    b.q + '箱 · @$' + b.cost + ' ($' + subCost + ')' +
+                    '</text></g>';
+            }
+
+            // 4. 繪製左側出貨廠區高質感節點卡片
             for (let i = 0; i < m; i++) {
-                const y = sY(i);
+                const pal = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
+                const cy = sY(i);
+                const topY = cy - srcCardH / 2;
                 const used = sol.sourceUsed[i];
                 const cap = transportData.supply[i];
-                const pct = cap > 0 ? Math.round((used / cap) * 100) : 0;
+                const pct = cap > 0 ? Math.min(100, Math.round((used / cap) * 100)) : 0;
                 const isTight = cap > 0 && used === cap;
+                const isLocked = transportData.lockedTarget && transportData.lockedTarget.type === 'src' && transportData.lockedTarget.i === i;
 
-                html += '<g style="cursor:pointer;" onmouseenter="setTransportHover(\'src\',' + i + ',-1)" onmouseleave="clearTransportHover()">' +
-                    '<rect x="' + (leftX - 56) + '" y="' + (y - 26) + '" width="110" height="52" rx="10" ' +
-                    'fill="' + (isDark ? '#1e293b' : '#ffffff') + '" stroke="' + (isTight ? '#f43f5e' : '#4f46e5') + '" stroke-width="2"/>' +
-                    '<text x="' + (leftX - 1) + '" y="' + (y - 6) + '" text-anchor="middle" font-size="12" font-weight="700" fill="' + (isDark ? '#f8fafc' : '#1e1b4b') + '">' +
-                    transportData.sources[i] + '</text>' +
-                    '<text x="' + (leftX - 1) + '" y="' + (y + 11) + '" text-anchor="middle" font-size="10.5" font-weight="600" fill="' + (isDark ? '#cbd5e1' : '#475569') + '">' +
-                    used + '/' + cap + '箱 (' + pct + '%)</text>' +
-                    (isTight ? '<rect x="' + (leftX - 50) + '" y="' + (y - 35) + '" width="48" height="15" rx="4" fill="#f43f5e"/>' +
-                        '<text x="' + (leftX - 26) + '" y="' + (y - 24) + '" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">滿載瓶頸</text>' : '') +
+                const barW = 158;
+                const fillW = Math.round((pct / 100) * barW);
+
+                html += '<g style="cursor:pointer;" ' +
+                    'onmouseenter="setTransportHover(\'src\',' + i + ',-1)" ' +
+                    'onmouseleave="clearTransportHover()" ' +
+                    'onclick="toggleTransportLock(\'src\',' + i + ',-1)">' +
+                    '<rect x="' + srcCardX + '" y="' + topY + '" width="' + srcCardW + '" height="' + srcCardH + '" rx="12" ' +
+                    'fill="' + (isDark ? '#1e293b' : '#ffffff') + '" stroke="' + (isLocked ? '#f43f5e' : pal.main) + '" stroke-width="' + (isLocked ? '2.8' : '1.8') + '" filter="url(#cardShadow)"/>' +
+                    // 左側色條
+                    '<rect x="' + srcCardX + '" y="' + (topY + 10) + '" width="5" height="' + (srcCardH - 20) + '" rx="2.5" fill="' + pal.main + '"/>' +
+                    // 廠區標題與狀態徽章
+                    '<text x="' + (srcCardX + 14) + '" y="' + (topY + 22) + '" font-size="13" font-weight="800" fill="' + (isDark ? '#f8fafc' : '#0f172a') + '">' +
+                    escapeHtml(transportData.sources[i]) + '</text>' +
+                    '<rect x="' + (srcCardX + 122) + '" y="' + (topY + 9) + '" width="58" height="17" rx="6" fill="' + (isTight ? '#ffe4e6' : '#e0e7ff') + '"/>' +
+                    '<text x="' + (srcCardX + 151) + '" y="' + (topY + 21) + '" text-anchor="middle" font-size="9.5" font-weight="800" fill="' + (isTight ? '#be123c' : '#3730a3') + '">' +
+                    (isTight ? '滿載 Tight' : '餘裕 ' + (cap - used)) + '</text>' +
+                    // 出貨量與成本文字
+                    '<text x="' + (srcCardX + 14) + '" y="' + (topY + 42) + '" font-size="11" font-weight="600" fill="' + (isDark ? '#cbd5e1' : '#475569') + '">' +
+                    '出貨 ' + used + '/' + cap + '箱 (' + pct + '%)</text>' +
+                    '<text x="' + (srcCardX + 178) + '" y="' + (topY + 42) + '" text-anchor="end" font-size="11" font-weight="800" fill="' + pal.main + '">$' + sol.sourceCost[i].toLocaleString() + '</text>' +
+                    // 進度條
+                    '<rect x="' + (srcCardX + 14) + '" y="' + (topY + 53) + '" width="' + barW + '" height="7" rx="3.5" fill="' + (isDark ? '#334155' : '#e2e8f0') + '"/>' +
+                    '<rect x="' + (srcCardX + 14) + '" y="' + (topY + 53) + '" width="' + fillW + '" height="7" rx="3.5" fill="' + pal.main + '"/>' +
+                    // 連接埠圓點
+                    '<circle cx="' + srcPortX + '" cy="' + cy + '" r="5.5" fill="' + pal.main + '" stroke="#ffffff" stroke-width="2"/>' +
                     '</g>';
             }
 
-            // 右側站點節點
+            // 5. 繪製右側配送站點高質感節點卡片
             for (let j = 0; j < n; j++) {
-                const y = dY(j);
+                const cy = dY(j);
+                const topY = cy - dstCardH / 2;
                 const rec = sol.destReceived[j];
                 const dem = transportData.demand[j];
+                const pct = dem > 0 ? Math.min(100, Math.round((rec / dem) * 100)) : 0;
                 const isShort = rec < dem;
+                const isLocked = transportData.lockedTarget && transportData.lockedTarget.type === 'dst' && transportData.lockedTarget.j === j;
 
-                html += '<g style="cursor:pointer;" onmouseenter="setTransportHover(\'dst\',-1,' + j + ')" onmouseleave="clearTransportHover()">' +
-                    '<rect x="' + (rightX - 54) + '" y="' + (y - 26) + '" width="110" height="52" rx="10" ' +
-                    'fill="' + (isDark ? '#1e293b' : '#ffffff') + '" stroke="' + (isShort ? '#f59e0b' : '#10b981') + '" stroke-width="2"/>' +
-                    '<text x="' + (rightX + 1) + '" y="' + (y - 6) + '" text-anchor="middle" font-size="12" font-weight="700" fill="' + (isDark ? '#f8fafc' : '#064e3b') + '">' +
-                    transportData.destinations[j] + '</text>' +
-                    '<text x="' + (rightX + 1) + '" y="' + (y + 11) + '" text-anchor="middle" font-size="10.5" font-weight="600" fill="' + (isShort ? '#f59e0b' : '#10b981') + '">' +
-                    '收貨 ' + rec + '/' + dem + '箱</text>' +
+                const barW = 158;
+                const fillW = Math.round((pct / 100) * barW);
+                const accent = isShort ? '#f59e0b' : '#10b981';
+
+                html += '<g style="cursor:pointer;" ' +
+                    'onmouseenter="setTransportHover(\'dst\',-1,' + j + ')" ' +
+                    'onmouseleave="clearTransportHover()" ' +
+                    'onclick="toggleTransportLock(\'dst\',-1,' + j + ')">' +
+                    '<rect x="' + dstCardX + '" y="' + topY + '" width="' + dstCardW + '" height="' + dstCardH + '" rx="12" ' +
+                    'fill="' + (isDark ? '#1e293b' : '#ffffff') + '" stroke="' + (isLocked ? '#f43f5e' : accent) + '" stroke-width="' + (isLocked ? '2.8' : '1.8') + '" filter="url(#cardShadow)"/>' +
+                    // 右側色條
+                    '<rect x="' + (dstCardX + dstCardW - 5) + '" y="' + (topY + 10) + '" width="5" height="' + (dstCardH - 20) + '" rx="2.5" fill="' + accent + '"/>' +
+                    // 站點標題與滿足徽章
+                    '<text x="' + (dstCardX + 14) + '" y="' + (topY + 22) + '" font-size="13" font-weight="800" fill="' + (isDark ? '#f8fafc' : '#0f172a') + '">' +
+                    escapeHtml(transportData.destinations[j]) + '</text>' +
+                    '<rect x="' + (dstCardX + 118) + '" y="' + (topY + 9) + '" width="60" height="17" rx="6" fill="' + (isShort ? '#fef3c7' : '#d1fae5') + '"/>' +
+                    '<text x="' + (dstCardX + 148) + '" y="' + (topY + 21) + '" text-anchor="middle" font-size="9.5" font-weight="800" fill="' + (isShort ? '#b45309' : '#065f46') + '">' +
+                    (isShort ? '缺口 ' + (dem - rec) : '100% 達標') + '</text>' +
+                    // 收貨量與成本文字
+                    '<text x="' + (dstCardX + 14) + '" y="' + (topY + 42) + '" font-size="11" font-weight="600" fill="' + (isDark ? '#cbd5e1' : '#475569') + '">' +
+                    '到貨 ' + rec + '/' + dem + '箱 (' + pct + '%)</text>' +
+                    '<text x="' + (dstCardX + 176) + '" y="' + (topY + 42) + '" text-anchor="end" font-size="11" font-weight="800" fill="' + accent + '">$' + sol.destCost[j].toLocaleString() + '</text>' +
+                    // 進度條
+                    '<rect x="' + (dstCardX + 14) + '" y="' + (topY + 53) + '" width="' + barW + '" height="7" rx="3.5" fill="' + (isDark ? '#334155' : '#e2e8f0') + '"/>' +
+                    '<rect x="' + (dstCardX + 14) + '" y="' + (topY + 53) + '" width="' + fillW + '" height="7" rx="3.5" fill="' + accent + '"/>' +
+                    // 連接埠圓點
+                    '<circle cx="' + dstPortX + '" cy="' + cy + '" r="5.5" fill="' + accent + '" stroke="#ffffff" stroke-width="2"/>' +
                     '</g>';
             }
 
             svg.innerHTML = html;
         }
 
-        function setTransportHover(type, i, j) {
-            transportData.hoverTarget = { type, i, j };
+        /**
+         * 模式 B：最佳配置與邊際機會成本 (Reduced Cost Δ_ij) 視覺化熱力圖
+         */
+        function renderTransportHeatmap() {
+            const box = document.getElementById('transport-heatmap-grid');
             const sol = transportData.solution;
+            if (!box || !sol) return;
+
+            const m = transportData.sources.length;
+            const n = transportData.destinations.length;
+            const maxAlloc = Math.max(1, ...sol.alloc.flat());
+
+            let html = '<div class="table-responsive"><table class="lp-table" style="border-spacing:6px;border-collapse:separate;">';
+            html += '<thead><tr><th class="left">廠區 \\ 站點 (對偶乘數 v<sub>j</sub>)</th>';
+            for (let j = 0; j < n; j++) {
+                html += '<th>' + escapeHtml(transportData.destinations[j]) + '<br><span style="font-size:10px;color:var(--text-muted);">v<sub>' + (j + 1) + '</sub> = ' + sol.v[j] + '</span></th>';
+            }
+            html += '<th>廠區出貨合計</th></tr></thead><tbody>';
+
+            for (let i = 0; i < m; i++) {
+                const pal = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
+                html += '<tr>';
+                html += '<td class="left" style="font-weight:800;border-left:4px solid ' + pal.main + ';padding-left:10px;">' +
+                    escapeHtml(transportData.sources[i]) +
+                    '<div style="font-size:10px;color:var(--text-muted);font-weight:600;">u<sub>' + (i + 1) + '</sub> = ' + sol.u[i] + '</div></td>';
+
+                for (let j = 0; j < n; j++) {
+                    const q = sol.alloc[i][j];
+                    const c = transportData.costs[i][j];
+                    const rc = sol.reducedCosts[i][j];
+
+                    if (q > 0) {
+                        const intensity = 0.16 + (q / maxAlloc) * 0.28;
+                        html += '<td><div class="heatmap-cell" style="background:rgba(16,185,129,' + intensity.toFixed(2) + ');border:1.5px solid #10b981;">' +
+                            '<div style="font-size:15px;font-weight:900;color:var(--emerald-dark);">' + q + ' 箱</div>' +
+                            '<div style="font-size:11px;font-weight:700;color:var(--text-primary);">單價 $' + c + ' · $' + (q * c).toLocaleString() + '</div>' +
+                            '<div style="font-size:10px;color:var(--emerald-dark);font-weight:700;">啟用基變數 (Δ=0)</div>' +
+                            '</div></td>';
+                    } else {
+                        const isAlt = Math.abs(rc) < 1e-5;
+                        html += '<td><div class="heatmap-cell" style="background:var(--bg-subtle);border:1px dashed ' + (isAlt ? '#f59e0b' : 'var(--border-strong)') + ';">' +
+                            '<div style="font-size:13px;font-weight:700;color:var(--text-muted);">0 箱 (單價 $' + c + ')</div>' +
+                            '<div style="font-size:11px;font-weight:800;color:' + (isAlt ? 'var(--amber-dark)' : 'var(--rose-dark)') + ';margin-top:2px;">' +
+                            (isAlt ? '★ 替代最佳路線 (Δ=0)' : '邊際成本 Δ = +$' + rc) +
+                            '</div>' +
+                            '<div style="font-size:10px;color:var(--text-muted);">' +
+                            (isAlt ? '可與現有路線互換不增成本' : '運費需降至 $' + Math.max(0, c - rc) + ' 才划算') +
+                            '</div></div></td>';
+                    }
+                }
+                html += '<td style="font-weight:800;font-family:monospace;">' + sol.sourceUsed[i] + ' / ' + transportData.supply[i] + ' 箱<br><span style="color:var(--primary);">$' + sol.sourceCost[i].toLocaleString() + '</span></td>';
+                html += '</tr>';
+            }
+            html += '</tbody></table></div>';
+            box.innerHTML = html;
+        }
+
+        function updateTransportInfoBadge(target) {
             const info = document.getElementById('transport-hover-info');
+            const sol = transportData.solution;
+            if (!info || !sol) return;
+
+            if (!target) {
+                info.textContent = '💡 點擊或移過節點/路線檢視明細';
+                info.className = 'badge badge-indigo';
+                return;
+            }
+            const { type, i, j } = target;
             if (type === 'edge') {
                 const q = sol.alloc[i][j];
                 const c = transportData.costs[i][j];
-                info.textContent = transportData.sources[i] + ' → ' + transportData.destinations[j] + '：配送 ' + q + ' 箱 × $' + c + ' = $' + (q * c).toLocaleString();
-                info.className = 'badge badge-indigo';
+                const rc = sol.reducedCosts[i][j];
+                if (q > 0) {
+                    info.textContent = transportData.sources[i] + ' → ' + transportData.destinations[j] + '：配送 ' + q + ' 箱 × $' + c + ' = $' + (q * c).toLocaleString();
+                    info.className = 'badge badge-emerald';
+                } else {
+                    info.textContent = transportData.sources[i] + ' → ' + transportData.destinations[j] + '：未啟用 (單價 $' + c + '，邊際機會成本 Δ = +$' + rc + '/箱)';
+                    info.className = 'badge badge-amber';
+                }
             } else if (type === 'src') {
                 const used = sol.sourceUsed[i];
                 const cap = transportData.supply[i];
-                info.textContent = transportData.sources[i] + '：出貨 ' + used + ' / ' + cap + ' 箱 (' + (cap === used ? '100% 滿載瓶頸' : '剩餘 ' + (cap - used) + ' 箱') + ')';
+                info.textContent = transportData.sources[i] + '：總出貨 ' + used + '/' + cap + ' 箱｜出貨總成本 $' + sol.sourceCost[i].toLocaleString();
                 info.className = 'badge badge-indigo';
             } else if (type === 'dst') {
                 const rec = sol.destReceived[j];
                 const dem = transportData.demand[j];
-                info.textContent = transportData.destinations[j] + '：收貨 ' + rec + ' / ' + dem + ' 箱';
+                info.textContent = transportData.destinations[j] + '：總到貨 ' + rec + '/' + dem + ' 箱｜到貨總成本 $' + sol.destCost[j].toLocaleString();
                 info.className = 'badge badge-emerald';
             }
-            renderTransportSVG();
+        }
+
+        function setTransportHover(type, i, j) {
+            transportData.hoverTarget = { type, i, j };
+            if (!transportData.lockedTarget) {
+                updateTransportInfoBadge(transportData.hoverTarget);
+            }
+            renderTransportVisualization();
         }
 
         function clearTransportHover() {
             transportData.hoverTarget = null;
-            const info = document.getElementById('transport-hover-info');
-            info.textContent = '滑鼠移至節點或連線檢視明細';
-            info.className = 'badge badge-muted';
-            renderTransportSVG();
+            if (!transportData.lockedTarget) {
+                updateTransportInfoBadge(null);
+            }
+            renderTransportVisualization();
         }
 
         function renderTransportSolutionTable() {
@@ -1917,9 +2656,10 @@
             let html = '<table class="lp-table"><thead><tr>';
             html += '<th class="left">發貨廠區 \\ 配送站點</th>';
             for (let j = 0; j < n; j++) {
-                html += '<th>' + transportData.destinations[j] + '</th>';
+                html += '<th>' + escapeHtml(transportData.destinations[j]) + '</th>';
             }
             html += '<th>實際出貨 / 供給上限</th>';
+            html += '<th>廠區運費小計</th>';
             html += '<th>產能瓶頸診斷</th>';
             html += '</tr></thead><tbody>';
 
@@ -1927,32 +2667,53 @@
                 const used = sol.sourceUsed[i];
                 const cap = transportData.supply[i];
                 const isTight = cap > 0 && used === cap;
+                const pal = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
 
                 html += '<tr>';
-                html += '<td class="left" style="font-weight:700;">' + transportData.sources[i] + '</td>';
+                html += '<td class="left" style="font-weight:800;"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:' + pal.main + ';margin-right:6px;"></span>' + escapeHtml(transportData.sources[i]) + '</td>';
                 for (let j = 0; j < n; j++) {
                     const q = sol.alloc[i][j];
                     const c = transportData.costs[i][j];
+                    const rc = sol.reducedCosts[i][j];
                     if (q > 0) {
+                        const pctCost = sol.totalCost > 0 ? Math.round((q * c / sol.totalCost) * 100) : 0;
                         html += '<td><div class="alloc-box-active">' +
                             '<div style="font-weight:800;font-size:14px;color:var(--emerald-dark);">x<sub>' + (i + 1) + (j + 1) + '</sub><sup>*</sup> = ' + q + ' 箱</div>' +
-                            '<div style="font-size:11px;color:var(--text-secondary);">@$' + c + ' · 小計 $' + (q * c).toLocaleString() + '</div>' +
+                            '<div style="font-size:11px;color:var(--text-secondary);">@$' + c + ' · 小計 $' + (q * c).toLocaleString() + ' (' + pctCost + '%)</div>' +
                             '</div></td>';
                     } else {
+                        const isAlt = Math.abs(rc) < 1e-5;
                         html += '<td><div class="alloc-box-zero">' +
-                            '<div>0 箱</div>' +
-                            '<div style="font-size:11px;">(@$' + c + '/箱)</div>' +
-                            '</div></td>';
+                            '<div style="font-weight:600;">0 箱 (@$' + c + ')</div>' +
+                            '<div style="font-size:10.5px;color:' + (isAlt ? 'var(--amber-dark)' : 'var(--text-muted)') + ';font-weight:700;">' +
+                            (isAlt ? 'Δ = 0 (多重最佳解)' : '機會成本 Δ = +$' + rc) +
+                            '</div></div></td>';
                     }
                 }
                 html += '<td style="font-family:monospace;font-weight:700;">' + used + ' / ' + cap + ' 箱</td>';
+                html += '<td style="font-family:monospace;font-weight:800;color:var(--primary);">$' + sol.sourceCost[i].toLocaleString() + '</td>';
                 html += '<td>' + (isTight
                     ? '<span class="badge badge-rose">Tight (100% 滿載瓶頸)</span>'
-                    : '<span class="badge badge-muted">Slack (剩餘 ' + (cap - used) + ' 箱)</span>') + '</td>';
+                    : '<span class="badge badge-muted">Slack (餘裕 ' + (cap - used) + ' 箱)</span>') + '</td>';
                 html += '</tr>';
             }
 
-            html += '</tbody></table>';
+            // 底部站點到貨匯總列
+            html += '<tr style="background:var(--bg-subtle);font-weight:700;">';
+            html += '<td class="left" style="color:var(--emerald-dark);">站點實際到貨 / 需求</td>';
+            for (let j = 0; j < n; j++) {
+                const rec = sol.destReceived[j];
+                const dem = transportData.demand[j];
+                html += '<td style="font-family:monospace;">' +
+                    '<div>' + rec + ' / ' + dem + ' 箱</div>' +
+                    '<div style="font-size:11px;color:var(--emerald-dark);">到貨成本 $' + sol.destCost[j].toLocaleString() + '</div>' +
+                    '</td>';
+            }
+            html += '<td style="font-family:monospace;font-weight:800;">總運量 ' + sol.totalShipped + ' 箱</td>';
+            html += '<td style="font-family:monospace;font-weight:900;color:var(--emerald-dark);font-size:14px;">$' + sol.totalCost.toLocaleString() + '</td>';
+            html += '<td><span class="badge badge-emerald">全域最佳解 ★</span></td>';
+            html += '</tr></tbody></table>';
+
             container.innerHTML = html;
         }
 
@@ -2061,17 +2822,14 @@
             let bestShifts = [0, 0, 0, 0, 0, 0, 0];
 
             const startN = Math.ceil(lpLower);
-            // 對每個候選總人數 targetN 檢查是否存在合法非負整數休假分配 r[0..6]
             for (let targetN = startN; targetN <= startN + 6; targetN++) {
                 if (bestCost < Infinity && targetN * Math.min(wWeekday, wWeekend) >= bestCost) {
                     break;
                 }
 
-                // cap[d] = targetN - demands[d] 代表星期 d 最多可允許休假的人數上限
                 const cap = demands.map(b => targetN - b);
                 if (cap.some(c => c < 0)) continue;
 
-                // r[d] 為在 (星期 d, 星期 d+1) 連休的班別人數
                 const rToShift = [2, 3, 4, 5, 6, 0, 1];
                 const rWage = rToShift.map(idx => shiftWages[idx]);
                 const r = new Array(7).fill(0);
@@ -2656,7 +3414,7 @@
 
 
         /* =====================================================================
-           底部共用：即時數學模型與最佳解自動生成區 (零殘留標籤、純淨 Unicode 算式)
+           底部共用：即時數學模型與最佳解自動生成區 (動態支援任意 M×N 節點名稱)
            ===================================================================== */
         function updateLiveMathModel() {
             const badge = document.getElementById('math-active-badge');
@@ -2666,9 +3424,9 @@
             const optBox = document.getElementById('math-opt-content');
 
             if (activeTab === 'transport') {
-                badge.textContent = '模組一：運輸網路最佳化 LP 模型';
                 const m = transportData.sources.length;
                 const n = transportData.destinations.length;
+                badge.textContent = '模組一：' + m + '×' + n + ' 運輸網路最佳化 LP 模型';
 
                 const terms = [];
                 for (let i = 0; i < m; i++) {
@@ -2676,38 +3434,38 @@
                         terms.push(transportData.costs[i][j] + '·x' + (i + 1) + (j + 1));
                     }
                 }
-                objBox.textContent = 'Minimize Z = ∑ᵢ ∑ⱼ cᵢⱼ xᵢⱼ\n           = ' + terms.join(' + ');
+                objBox.textContent = 'Minimize Z = ∑ᵢ₌₁..' + m + ' ∑ⱼ₌₁..' + n + ' cᵢⱼ xᵢⱼ\n           = ' + terms.join(' + ');
 
                 const lines = [];
-                lines.push('<div style="color:#a5b4fc;font-weight:700;">// (1) 各發貨廠區供給上限限制式 (Supply Constraints):</div>');
+                lines.push('<div style="color:#a5b4fc;font-weight:700;">// (1) 各出貨廠區供給上限限制式 (Supply Constraints, i = 1..' + m + '):</div>');
                 for (let i = 0; i < m; i++) {
                     const rTerms = [];
-                    for (let j = 0; j < n; j++) rTerms.push('x' + (i + 1) + (j + 1));
-                    lines.push('<div>' + rTerms.join(' + ') + ' ≤ ' + transportData.supply[i] + '   <span style="color:#94a3b8;">(' + transportData.sources[i] + ')</span></div>');
+                    for (let j = 0; j < n; j++) rTerms.push('x<sub>' + (i + 1) + (j + 1) + '</sub>');
+                    lines.push('<div>' + rTerms.join(' + ') + ' ≤ ' + transportData.supply[i] + '   <span style="color:#94a3b8;">(' + escapeHtml(transportData.sources[i]) + ')</span></div>');
                 }
-                lines.push('<div style="color:#6ee7b7;font-weight:700;margin-top:6px;">// (2) 各配送站點需求滿足限制式 (Demand Constraints):</div>');
+                lines.push('<div style="color:#6ee7b7;font-weight:700;margin-top:6px;">// (2) 各配送站點需求滿足限制式 (Demand Constraints, j = 1..' + n + '):</div>');
                 const sol = transportData.solution;
                 const op = (sol && sol.totalS < sol.totalD) ? '≤' : '≥';
                 for (let j = 0; j < n; j++) {
                     const cTerms = [];
-                    for (let i = 0; i < m; i++) cTerms.push('x' + (i + 1) + (j + 1));
-                    lines.push('<div>' + cTerms.join(' + ') + ' ' + op + ' ' + transportData.demand[j] + '   <span style="color:#94a3b8;">(' + transportData.destinations[j] + ')</span></div>');
+                    for (let i = 0; i < m; i++) cTerms.push('x<sub>' + (i + 1) + (j + 1) + '</sub>');
+                    lines.push('<div>' + cTerms.join(' + ') + ' ' + op + ' ' + transportData.demand[j] + '   <span style="color:#94a3b8;">(' + escapeHtml(transportData.destinations[j]) + ')</span></div>');
                 }
                 conBox.innerHTML = lines.join('');
 
-                varBox.innerHTML = '<div>• <strong>xᵢⱼ ≥ 0</strong> ，其中 i ∈ {1, 2, 3}，j ∈ {1, 2, 3}</div>' +
-                    '<div style="font-size:12px;color:#94a3b8;margin-top:4px;">xᵢⱼ 代表由第 i 個廠區配送至第 j 個站點的貨物箱數（共 9 個決策變數）。</div>';
+                varBox.innerHTML = '<div>• <strong>x<sub>ij</sub> ≥ 0</strong> ，其中 i ∈ {1, ..., ' + m + '}，j ∈ {1, ..., ' + n + '}</div>' +
+                    '<div style="font-size:12px;color:#94a3b8;margin-top:4px;">x<sub>ij</sub> 代表由第 i 個出貨點配送至第 j 個配送站的貨物箱數（共 ' + (m * n) + ' 個決策變數）。</div>';
 
                 if (sol) {
                     const activeList = [];
                     for (let i = 0; i < m; i++) {
                         for (let j = 0; j < n; j++) {
                             if (sol.alloc[i][j] > 0) {
-                                activeList.push('x' + (i + 1) + (j + 1) + '* = ' + sol.alloc[i][j] + ' (' + transportData.sources[i] + '→' + transportData.destinations[j] + ')');
+                                activeList.push('x<sub>' + (i + 1) + (j + 1) + '</sub><sup>*</sup> = ' + sol.alloc[i][j] + ' (' + escapeHtml(transportData.sources[i]) + '→' + escapeHtml(transportData.destinations[j]) + ')');
                             }
                         }
                     }
-                    optBox.innerHTML = '<div style="font-weight:800;color:#34d399;">★ 最低總運輸成本 Z* = $' + sol.totalCost.toLocaleString() + '</div>' +
+                    optBox.innerHTML = '<div style="font-weight:800;color:#34d399;">★ 最低總運輸成本 Z* = $' + sol.totalCost.toLocaleString() + ' ｜ 總運量 = ' + sol.totalShipped + ' 箱</div>' +
                         '<div style="margin-top:4px;font-size:12px;">' + activeList.join(' ， ') + '</div>';
                 }
             } else if (activeTab === 'workforce') {
@@ -2724,7 +3482,7 @@
                 for (let d = 0; d < 7; d++) {
                     const activeShifts = [];
                     for (let s = 0; s < 7; s++) {
-                        if (SHIFT_PATTERNS[s].mask[d] === 1) activeShifts.push('x' + (s + 1));
+                        if (SHIFT_PATTERNS[s].mask[d] === 1) activeShifts.push('x<sub>' + (s + 1) + '</sub>');
                     }
                     const slack = sol ? sol.dailySlack[d] : 0;
                     const tag = slack === 0
@@ -2734,11 +3492,11 @@
                 }
                 conBox.innerHTML = lines.join('');
 
-                varBox.innerHTML = '<div>• <strong>xⱼ ≥ 0 且 xⱼ 為整數 (Integer)</strong> ，j = 1, 2, ..., 7</div>' +
-                    '<div style="font-size:12px;color:#94a3b8;margin-top:4px;">xⱼ 代表指派至第 j 種「連上 5 天、連休 2 天」循環班別之全職員工人數。</div>';
+                varBox.innerHTML = '<div>• <strong>x<sub>j</sub> ≥ 0 且 x<sub>j</sub> 為整數 (Integer)</strong> ，j = 1, 2, ..., 7</div>' +
+                    '<div style="font-size:12px;color:#94a3b8;margin-top:4px;">x<sub>j</sub> 代表指派至第 j 種「連上 5 天、連休 2 天」循環班別之全職員工人數。</div>';
 
                 if (sol) {
-                    const vec = sol.shifts.map((v, i) => 'x' + (i + 1) + '* = ' + v).join(', ');
+                    const vec = sol.shifts.map((v, i) => 'x<sub>' + (i + 1) + '</sub><sup>*</sup> = ' + v).join(', ');
                     optBox.innerHTML = '<div style="font-weight:800;color:#34d399;">★ 最少總人數 N* = ' + sol.totalStaff + ' 人 ｜ 最低每週總薪資 Z* = $' + sol.totalCost.toLocaleString() + '</div>' +
                         '<div style="margin-top:4px;font-size:12px;">最佳班別人數向量：(' + vec + ')</div>';
                 }
@@ -2749,17 +3507,17 @@
 
                 const lines = [];
                 grapherData.constraints.forEach((c, idx) => {
-                    lines.push('<div>(' + (idx + 1) + ') ' + c.a1 + '·x₁ + ' + c.a2 + '·x₂ ≤ ' + c.b + '   <span style="color:#94a3b8;">(' + c.name + ')</span></div>');
+                    lines.push('<div>(' + (idx + 1) + ') ' + c.a1 + '·x<sub>1</sub> + ' + c.a2 + '·x<sub>2</sub> ≤ ' + c.b + '   <span style="color:#94a3b8;">(' + c.name + ')</span></div>');
                 });
                 conBox.innerHTML = lines.join('');
 
-                varBox.innerHTML = '<div>• <strong>x₁ ≥ 0 , x₂ ≥ 0</strong></div>' +
+                varBox.innerHTML = '<div>• <strong>x<sub>1</sub> ≥ 0 , x<sub>2</sub> ≥ 0</strong></div>' +
                     '<div style="font-size:12px;color:#94a3b8;margin-top:4px;">二維非負連續決策變數，可行域為 3 條資源限制線與座標軸圍成之凸多邊形。</div>';
 
                 const res = grapherData.result;
                 if (res && res.optVertex) {
                     optBox.innerHTML = '<div style="font-weight:800;color:#34d399;">★ 最佳目標函數值 Z* = ' + Math.round(res.optZ).toLocaleString() + '</div>' +
-                        '<div style="margin-top:4px;font-size:12px;">最佳端點決策座標：(x₁*, x₂*) = (' + res.optVertex.x.toFixed(2) + ', ' + res.optVertex.y.toFixed(2) + ')</div>';
+                        '<div style="margin-top:4px;font-size:12px;">最佳端點決策座標：(x<sub>1</sub><sup>*</sup>, x<sub>2</sub><sup>*</sup>) = (' + res.optVertex.x.toFixed(2) + ', ' + res.optVertex.y.toFixed(2) + ')</div>';
                 }
             }
         }
@@ -2777,7 +3535,7 @@
             ta.select();
             document.execCommand('copy');
             ta.remove();
-            notifyToast('已將完整線性規劃數學模型複製到剪貼簿！');
+            notifyToast('📋 已將完整線性規劃數學模型複製到剪貼簿！');
         }
 
         /* =====================================================================
