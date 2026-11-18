@@ -813,138 +813,6 @@
             }
         }
 
-        /* 2D 圖解線性規劃專屬進階樣式 */
-        .lp2d-layout {
-            display: grid;
-            grid-template-columns: 460px 1fr;
-            gap: 20px;
-            align-items: start;
-        }
-
-        @media (max-width: 1180px) {
-            .lp2d-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .constraint-card {
-            padding: 12px 14px;
-            border-radius: 12px;
-            background: var(--bg-subtle);
-            border: 1.5px solid var(--border-color);
-            transition: all 0.16s ease;
-        }
-
-        .constraint-card:hover,
-        .constraint-card.active-hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .constraint-card.disabled-card {
-            opacity: 0.52;
-            background: var(--bg-main);
-        }
-
-        .con-formula-row {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .con-num-input {
-            width: 66px;
-            padding: 5px 6px;
-            border: 1px solid var(--border-strong);
-            border-radius: 7px;
-            background: var(--bg-card);
-            color: var(--text-primary);
-            font-weight: 700;
-            font-size: 13px;
-            text-align: center;
-            font-family: "JetBrains Mono", monospace;
-            outline: none;
-        }
-
-        .con-num-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.18);
-        }
-
-        .con-op-select {
-            padding: 5px 8px;
-            border: 1px solid var(--border-strong);
-            border-radius: 7px;
-            background: var(--bg-card);
-            color: var(--primary);
-            font-weight: 800;
-            font-size: 13.5px;
-            cursor: pointer;
-            outline: none;
-        }
-
-        .canvas-toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            padding: 9px 12px;
-            background: var(--bg-subtle);
-            border: 1px solid var(--border-color);
-            border-radius: 11px;
-            margin-bottom: 12px;
-        }
-
-        .canvas-tool-btn {
-            border: 1px solid var(--border-strong);
-            background: var(--bg-card);
-            color: var(--text-primary);
-            padding: 4px 10px;
-            border-radius: 7px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: all 0.15s ease;
-        }
-
-        .canvas-tool-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: var(--primary-light);
-        }
-
-        .canvas-tool-btn.active {
-            background: var(--primary);
-            color: #ffffff;
-            border-color: var(--primary);
-        }
-
-        .toggle-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 11.5px;
-            font-weight: 700;
-            color: var(--text-secondary);
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 4px 9px;
-            border-radius: 999px;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .toggle-chip input {
-            accent-color: var(--primary);
-            cursor: pointer;
-        }
-
         /* 底部數學模型面板 */
         .math-panel {
             background: #0f172a;
@@ -1433,249 +1301,124 @@
              Tab 3: 📐 2D 圖解線性規劃 (2D Graphical LP Sandbox)
              ================================================================= -->
         <section id="module-grapher" class="module-section hidden">
-            <!-- 模組標題與 6 大經典 OR 快速情境按鈕 -->
+            <!-- 模組標題與快速範例按鈕 -->
             <div class="card banner-card">
                 <div>
-                    <span class="module-pill pill-amber">模組三 · Interactive 2D Graphical LP Engine (支援任意目標係數、動態增刪 ≤ / ≥ / = 限制式與滾輪縮放畫布)</span>
-                    <h2 class="banner-title">2D 幾何線性規劃互動實驗室（半平面交集可行域、梯度推進與影子價格敏感度分析）</h2>
+                    <span class="module-pill pill-amber">模組三 · 2D Graphical LP Sandbox (幾何可行域與端點最佳解)</span>
+                    <h2 class="banner-title">2D 圖解線性規劃實驗室（可行域多邊形、等利潤線與端點定理驗證）</h2>
                     <p class="banner-desc">
-                        自由輸入或拉動目標函數 <strong>Max / Min Z = c₁x₁ + c₂x₂</strong> 與任意 <strong>≤、≥、= 限制條件</strong>；支援畫布<strong>滑鼠滾輪縮放、拖曳平移</strong>及<strong>特殊解診斷（唯一解、多重解線段、無界解、無可行解）</strong>。
+                        即時拉動滑桿調整目標函數 Z = c₁x₁ + c₂x₂ 與三大資源限制式（組裝工時、核心原料、設備產能），動態繪製可行域與最佳端點。
                     </p>
                 </div>
                 <div class="preset-group">
-                    <span style="font-size:12px;color:var(--text-muted);font-weight:700;">經典 OR 情境：</span>
-                    <button class="preset-btn" onclick="loadGrapherPreset('production')">🏭 產能利潤最大化 (標準 ≤)</button>
-                    <button class="preset-btn" onclick="loadGrapherPreset('dietMin')">💊 採購成本最小化 (Min + ≥)</button>
-                    <button class="preset-btn" onclick="loadGrapherPreset('enclosed')">⚖️ 混合雙向限制 (≤ + ≥ 封閉域)</button>
-                    <button class="preset-btn" onclick="loadGrapherPreset('multiple')">✨ 多重最佳解 (平行邊界)</button>
-                    <button class="preset-btn" onclick="loadGrapherPreset('unbounded')">🚀 無界解示範 (Unbounded)</button>
-                    <button class="preset-btn" onclick="loadGrapherPreset('infeasible')">🚫 無可行解衝突 (Infeasible)</button>
+                    <span style="font-size:12px;color:var(--text-muted);font-weight:600;">快速範例：</span>
+                    <button class="preset-btn" onclick="loadGrapherPreset('production')">🏭 雙產品生產組合</button>
+                    <button class="preset-btn" onclick="loadGrapherPreset('cargo')">🚢 貨櫃裝載收益最佳化</button>
+                    <button class="preset-btn" onclick="loadGrapherPreset('blend')">🧪 高純度原料調配</button>
                 </div>
             </div>
 
-            <!-- 頂部 4 張重點 KPI 診斷卡 -->
-            <div class="kpi-grid">
-                <div class="kpi-card">
-                    <div class="kpi-icon" style="background:var(--emerald-light);color:var(--emerald-dark);">Z*</div>
-                    <div>
-                        <div class="kpi-label">最佳目標函數值 (Optimal Z*)</div>
-                        <div class="kpi-value" id="grapher-kpi-z">1,600</div>
-                        <div class="kpi-sub" id="grapher-kpi-z-sub" style="color:var(--emerald-dark);">最大化目標 (Maximize)</div>
-                    </div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-icon" style="background:var(--primary-light);color:var(--primary);">🎯</div>
-                    <div>
-                        <div class="kpi-label">最佳決策點座標 (x₁*, x₂*)</div>
-                        <div class="kpi-value" id="grapher-kpi-xy">(20, 15)</div>
-                        <div class="kpi-sub" id="grapher-kpi-xy-sub" style="color:var(--primary);">位於可行域端點 V₃</div>
-                    </div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-icon" style="background:var(--amber-light);color:var(--amber-dark);">⬡</div>
-                    <div>
-                        <div class="kpi-label">解的型態與可行域診斷</div>
-                        <div class="kpi-value" id="grapher-kpi-status" style="font-size:19px;">唯一最佳端點解</div>
-                        <div class="kpi-sub" id="grapher-kpi-vertices" style="color:var(--text-muted);">5 個可行端點 · 封閉凸多邊形</div>
-                    </div>
-                </div>
-                <div class="kpi-card">
-                    <div class="kpi-icon" style="background:var(--rose-light);color:var(--rose-dark);">∇</div>
-                    <div>
-                        <div class="kpi-label">等值線斜率與梯度方向 ∇Z</div>
-                        <div class="kpi-value" id="grapher-kpi-slope" style="font-size:19px;">斜率 -1.25</div>
-                        <div class="kpi-sub" id="grapher-kpi-grad" style="color:var(--rose-dark);">梯度向量 ∇Z = (50, 40)</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 主工作區：左側智慧目標函數與動態 CRUD 限制式面板 + 右側互動幾何畫布 -->
-            <div class="lp2d-layout">
-                <!-- 左側控制面板 -->
+            <div class="two-col-5-7">
+                <!-- 左側：目標函數與 3 條限制式滑桿面板 -->
                 <div style="display:flex;flex-direction:column;gap:18px;">
-                    <!-- 1. 智慧型目標函數設定 -->
                     <div class="card">
-                        <div class="section-header" style="margin-bottom:12px;">
+                        <div class="section-header">
+                            <div class="section-title">1. 目標函數設定 (Z = c₁x₁ + c₂x₂)</div>
+                            <div style="display:inline-flex;background:var(--bg-subtle);padding:3px;border-radius:8px;border:1px solid var(--border-color);">
+                                <button id="btn-goal-max" onclick="setGrapherGoal('max')" style="border:none;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;background:var(--primary);color:#fff;">Max Z</button>
+                                <button id="btn-goal-min" onclick="setGrapherGoal('min')" style="border:none;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;background:transparent;color:var(--text-secondary);">Min Z</button>
+                            </div>
+                        </div>
+
+                        <div style="background:#0f172a;color:#34d399;padding:12px 14px;border-radius:10px;font-family:monospace;font-size:15px;font-weight:700;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;">
+                            <span style="color:#94a3b8;font-size:12px;font-family:sans-serif;">當前目標式：</span>
+                            <span id="grapher-formula-banner">Max Z = 50 x₁ + 40 x₂</span>
+                        </div>
+
+                        <div style="display:flex;flex-direction:column;gap:12px;">
                             <div>
-                                <div class="section-title">1. 智慧目標函數引擎 (Objective Function)</div>
-                                <div class="section-subtitle">支援直接輸入任意正負數/小數，或拖曳自適應滑桿即時旋轉等值線斜率</div>
-                            </div>
-                            <div class="segmented-group">
-                                <button id="btn-goal-max" class="seg-btn active" onclick="setGrapherGoal('max')">▲ 最大化 Max</button>
-                                <button id="btn-goal-min" class="seg-btn" onclick="setGrapherGoal('min')">▼ 最小化 Min</button>
-                            </div>
-                        </div>
-
-                        <!-- 自訂決策變數名稱 -->
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
-                            <div style="display:flex;align-items:center;gap:6px;background:var(--bg-subtle);padding:5px 9px;border-radius:8px;border:1px solid var(--border-color);">
-                                <span style="font-size:11.5px;font-weight:800;color:var(--primary);white-space:nowrap;">X軸 (x₁) 名稱:</span>
-                                <input type="text" id="input-var1-name" class="node-name-input" style="width:100%;" value="A產品(x₁)" oninput="onGrapherVarNameChange()">
-                            </div>
-                            <div style="display:flex;align-items:center;gap:6px;background:var(--bg-subtle);padding:5px 9px;border-radius:8px;border:1px solid var(--border-color);">
-                                <span style="font-size:11.5px;font-weight:800;color:var(--emerald-dark);white-space:nowrap;">Y軸 (x₂) 名稱:</span>
-                                <input type="text" id="input-var2-name" class="node-name-input" style="width:100%;" value="B產品(x₂)" oninput="onGrapherVarNameChange()">
-                            </div>
-                        </div>
-
-                        <!-- 互動式目標函數算式編輯黑板 -->
-                        <div style="background:#0f172a;color:#f8fafc;padding:12px 14px;border-radius:12px;margin-bottom:14px;border:1px solid #1e293b;">
-                            <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
-                                <span id="grapher-goal-badge" style="font-size:12px;font-weight:800;color:#34d399;background:rgba(16,185,129,0.16);padding:3px 8px;border-radius:6px;">MAXIMIZE Z =</span>
-                                <div style="display:flex;align-items:center;gap:6px;font-family:monospace;font-size:14px;font-weight:800;">
-                                    <input type="number" id="input-c1" step="any" class="con-num-input" style="width:74px;background:#1e293b;color:#38bdf8;border-color:#334155;" value="50" oninput="onGrapherCoeffInput('c1', this.value)">
-                                    <span style="color:#cbd5e1;">· x₁ +</span>
-                                    <input type="number" id="input-c2" step="any" class="con-num-input" style="width:74px;background:#1e293b;color:#34d399;border-color:#334155;" value="40" oninput="onGrapherCoeffInput('c2', this.value)">
-                                    <span style="color:#cbd5e1;">· x₂</span>
+                                <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:4px;">
+                                    <span>決策變數 x₁ 單位利潤係數 (c₁)</span>
+                                    <span id="label-c1" style="color:var(--primary);font-weight:800;">50</span>
                                 </div>
-                            </div>
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid #1e293b;font-size:11.5px;color:#94a3b8;">
-                                <span id="grapher-formula-banner">Max Z = 50 x₁ + 40 x₂</span>
-                                <div style="display:flex;gap:5px;">
-                                    <button type="button" class="action-btn" style="padding:2px 7px;font-size:11px;" onclick="quickSetObjRatio(1, 1)" title="設為 1:1 等權重">1:1</button>
-                                    <button type="button" class="action-btn" style="padding:2px 7px;font-size:11px;" onclick="quickSetObjRatio(2, 1)" title="設為 2:1 偏重 x₁">2:1</button>
-                                    <button type="button" class="action-btn" style="padding:2px 7px;font-size:11px;" onclick="quickSetObjRatio(1, 2)" title="設為 1:2 偏重 x₂">1:2</button>
-                                    <button type="button" class="action-btn" style="padding:2px 7px;font-size:11px;" onclick="swapObjCoeffs()" title="對調 c₁ 與 c₂">⇄ 對調</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 自適應雙滑桿 -->
-                        <div style="display:flex;flex-direction:column;gap:11px;">
-                            <div>
-                                <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:4px;">
-                                    <span>x₁ 目標係數 (c₁) 快速微調</span>
-                                    <span id="label-c1" style="color:var(--primary);font-family:monospace;font-weight:800;">50</span>
-                                </div>
-                                <input type="range" id="slider-c1" min="-100" max="200" step="1" value="50" oninput="onGrapherCoeffSlider('c1', this.value)">
+                                <input type="range" id="slider-c1" min="5" max="100" step="5" value="50" oninput="onGrapherParamChange()">
                             </div>
                             <div>
-                                <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:4px;">
-                                    <span>x₂ 目標係數 (c₂) 快速微調</span>
-                                    <span id="label-c2" style="color:var(--emerald-dark);font-family:monospace;font-weight:800;">40</span>
+                                <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:4px;">
+                                    <span>決策變數 x₂ 單位利潤係數 (c₂)</span>
+                                    <span id="label-c2" style="color:var(--primary);font-weight:800;">40</span>
                                 </div>
-                                <input type="range" id="slider-c2" min="-100" max="200" step="1" value="40" oninput="onGrapherCoeffSlider('c2', this.value)">
+                                <input type="range" id="slider-c2" min="5" max="100" step="5" value="40" oninput="onGrapherParamChange()">
                             </div>
                         </div>
 
-                        <!-- 等值線 (Iso-Value Line) 平行推進與動畫控制 -->
+                        <!-- 等利潤線推進滑桿 -->
                         <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-color);">
-                            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px;margin-bottom:6px;">
-                                <span style="font-size:12px;font-weight:800;color:var(--rose-dark);">
-                                    --- 等值線推進掃描 (當前 Z = <span id="iso-current-z-val" style="font-family:monospace;">1,600</span>)
-                                </span>
-                                <div style="display:flex;gap:6px;">
-                                    <button type="button" id="btn-iso-play" class="badge badge-indigo" style="cursor:pointer;border:none;" onclick="toggleIsoSweepAnimation()">▶ 自動掃描動畫</button>
-                                    <button type="button" class="badge badge-emerald" style="cursor:pointer;border:none;" onclick="snapIsoLine()">★ 鎖定最佳解 Z*</button>
-                                </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                                <span style="font-size:12px;font-weight:700;">等利潤虛線 (Iso-profit Line) 平行推進掃描</span>
+                                <button class="badge badge-emerald" style="cursor:pointer;" onclick="snapIsoLine()">對齊最佳端點 Z*</button>
                             </div>
-                            <input type="range" id="slider-iso" min="0" max="135" step="1" value="100" oninput="onIsoLineSlide(this.value)">
+                            <input type="range" id="slider-iso" min="10" max="100" step="1" value="100" oninput="onIsoLineSlide()">
                         </div>
                     </div>
 
-                    <!-- 2. 動態限制式 CRUD 管理系統 -->
+                    <!-- 3 條資源限制式設定 -->
                     <div class="card">
-                        <div class="section-header" style="margin-bottom:12px;">
+                        <div class="section-header">
                             <div>
-                                <div class="section-title">
-                                    <span>2. 動態限制式管理 (Constraints CRUD)</span>
-                                    <span id="grapher-con-count-badge" class="badge badge-indigo">3 條限制式</span>
-                                </div>
-                                <div class="section-subtitle">可自由新增/刪除/勾選啟用，並支援切換 <strong>≤、≥、=</strong> 與直接輸入任意係數</div>
+                                <div class="section-title">2. 三大資源限制式係數與上限設定</div>
+                                <div class="section-subtitle">調整 a<sub>i1</sub>x₁ + a<sub>i2</sub>x₂ ≤ b<sub>i</sub> 觀察右側可行域多邊形變化</div>
                             </div>
-                            <button type="button" class="crud-add-btn" onclick="addGrapherConstraint()">
-                                <span>＋ 新增限制式</span>
-                            </button>
                         </div>
-
-                        <div id="grapher-constraints-box" style="display:flex;flex-direction:column;gap:10px;max-height:520px;overflow-y:auto;padding-right:2px;"></div>
+                        <div id="grapher-constraints-box" style="display:flex;flex-direction:column;gap:12px;"></div>
                     </div>
                 </div>
 
-                <!-- 右側：Desmos / GeoGebra 等級互動幾何畫布 + 端點與影子價格分析表 -->
+                <!-- 右側：Canvas 幾何座標圖 + 端點評估表 -->
                 <div style="display:flex;flex-direction:column;gap:18px;">
                     <div class="card">
-                        <!-- 畫布工具列：視角縮放、自動適應與圖層開關 -->
-                        <div class="canvas-toolbar">
-                            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;">
-                                <button type="button" class="canvas-tool-btn" onclick="autoFitGrapherViewport()" title="自動縮放至完整顯示所有端點與截距">
-                                    🎯 自動適應視角
-                                </button>
-                                <button type="button" class="canvas-tool-btn" onclick="zoomGrapherViewport(0.8)" title="放大視角 (亦可使用滑鼠滾輪)">
-                                    🔍＋ 放大
-                                </button>
-                                <button type="button" class="canvas-tool-btn" onclick="zoomGrapherViewport(1.25)" title="縮小視角 (亦可使用滑鼠滾輪)">
-                                    🔍－ 縮小
-                                </button>
-                                <button type="button" class="canvas-tool-btn" onclick="resetGrapherOrigin()" title="將原點 (0,0) 對齊左下角">
-                                    ∟ 對齊原點
-                                </button>
+                        <!-- 3 個頂部重點指標 -->
+                        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;">
+                            <div style="background:var(--emerald-light);border:1px solid rgba(16,185,129,0.3);border-radius:12px;padding:10px 14px;">
+                                <div style="font-size:11px;font-weight:700;color:var(--emerald-dark);">最佳目標值 (Z*)</div>
+                                <div id="grapher-kpi-z" style="font-size:22px;font-weight:800;color:var(--text-primary);">1,600</div>
                             </div>
-
-                            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;">
-                                <label class="toggle-chip" title="在限制線旁繪製半平面可行方向齒紋">
-                                    <input type="checkbox" id="chk-show-halfplane" checked onchange="onGrapherLayerToggle()">
-                                    <span>半平面陰影</span>
-                                </label>
-                                <label class="toggle-chip" title="顯示目標函數法向量梯度方向箭頭 ∇Z = (c₁, c₂)">
-                                    <input type="checkbox" id="chk-show-gradient" checked onchange="onGrapherLayerToggle()">
-                                    <span>梯度向量 ∇Z</span>
-                                </label>
-                                <label class="toggle-chip" title="顯示被其他限制式排除在外之非可行交點">
-                                    <input type="checkbox" id="chk-show-infeasible-pts" checked onchange="onGrapherLayerToggle()">
-                                    <span>非可行交點</span>
-                                </label>
-                                <label class="toggle-chip" title="在畫布上直接顯示所有端點座標與 Z 值">
-                                    <input type="checkbox" id="chk-show-vertex-labels" checked onchange="onGrapherLayerToggle()">
-                                    <span>端點標籤</span>
-                                </label>
+                            <div style="background:var(--primary-light);border:1px solid rgba(79,70,229,0.3);border-radius:12px;padding:10px 14px;">
+                                <div style="font-size:11px;font-weight:700;color:var(--primary);">最佳端點座標 (x₁*, x₂*)</div>
+                                <div id="grapher-kpi-xy" style="font-size:22px;font-weight:800;color:var(--text-primary);">(20, 15)</div>
+                            </div>
+                            <div style="background:var(--amber-light);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:10px 14px;">
+                                <div style="font-size:11px;font-weight:700;color:var(--amber-dark);">可行域端點總數</div>
+                                <div id="grapher-kpi-vertices" style="font-size:22px;font-weight:800;color:var(--text-primary);">5 個端點</div>
                             </div>
                         </div>
 
-                        <!-- 高解析度互動式 HTML5 Canvas -->
-                        <div style="position:relative;width:100%;background:var(--bg-subtle);border:1.5px solid var(--border-strong);border-radius:14px;overflow:hidden;">
-                            <canvas id="lp-2d-canvas" style="width:100%;height:460px;display:block;cursor:grab;"></canvas>
-
-                            <!-- 右上角即時探針 HUD -->
-                            <div id="canvas-hover-pill" style="position:absolute;top:12px;right:12px;background:rgba(15,23,42,0.88);backdrop-filter:blur(4px);color:#f8fafc;padding:6px 12px;border-radius:9px;font-family:monospace;font-size:12px;pointer-events:none;border:1px solid rgba(255,255,255,0.15);box-shadow:0 4px 12px rgba(0,0,0,0.25);">
-                                游標探針: (0.0, 0.0) | Z = 0
-                            </div>
-
-                            <!-- 左上角視角範圍與操作提示 -->
-                            <div id="canvas-viewport-badge" style="position:absolute;top:12px;left:12px;background:rgba(15,23,42,0.75);color:#cbd5e1;padding:4px 10px;border-radius:7px;font-size:11px;font-weight:600;pointer-events:none;">
-                                💡 滾輪縮放 · 按住左鍵拖曳平移 · 移近端點自動吸附
+                        <!-- HTML5 Canvas -->
+                        <div style="position:relative;width:100%;background:var(--bg-subtle);border:1px solid var(--border-color);border-radius:12px;overflow:hidden;">
+                            <canvas id="lp-2d-canvas" style="width:100%;height:390px;display:block;cursor:crosshair;"></canvas>
+                            <div id="canvas-hover-pill" style="position:absolute;top:10px;right:10px;background:rgba(15,23,42,0.85);color:#fff;padding:4px 10px;border-radius:8px;font-family:monospace;font-size:12px;pointer-events:none;">
+                                座標: (0.0, 0.0) | Z = 0
                             </div>
                         </div>
 
-                        <!-- 圖例說明列 -->
-                        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-top:11px;font-size:12px;color:var(--text-secondary);">
-                            <div style="display:flex;flex-wrap:wrap;gap:14px;">
-                                <span><strong style="color:#4f46e5;">■</strong> 藍綠半透明區：可行域多邊形 Ω</span>
-                                <span><strong style="color:#10b981;">★</strong> 翡翠綠雙圈：最佳解端點 / 線段</span>
-                                <span><strong style="color:#f43f5e;">---</strong> 紅色虛線：等值線 (c₁x₁+c₂x₂=Z)</span>
-                                <span><strong style="color:#f59e0b;">➔</strong> 橘色箭頭：梯度增長方向 ∇Z</span>
-                                <span><strong style="color:#94a3b8;">○</strong> 空心灰點：非可行區交點</span>
-                            </div>
+                        <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:10px;font-size:12px;color:var(--text-secondary);">
+                            <span>■ 藍紫色區域：可行域多邊形 (Feasible Region)</span>
+                            <span>★ 綠色圓點：最佳解端點 (Optimal Vertex)</span>
+                            <span>--- 紅色虛線：等利潤線 (Iso-profit Line)</span>
                         </div>
                     </div>
 
-                    <!-- 下方雙欄分析表：端點枚舉表 + 限制式寬裕度與影子價格 (Shadow Price) 表 -->
+                    <!-- 端點清單與資源使用率分析 -->
                     <div class="two-col-grid">
                         <div class="card">
-                            <div class="section-header" style="margin-bottom:10px;padding-bottom:8px;">
-                                <div>
-                                    <div class="section-title" style="font-size:14px;">3. 可行域端點枚舉與目標值排行表</div>
-                                    <div class="section-subtitle">點擊任一端點列可在畫布上聚焦並將等值線對齊該點</div>
-                                </div>
-                            </div>
-                            <div class="table-responsive" style="max-height:270px;overflow-y:auto;">
+                            <div class="section-title" style="font-size:14px;margin-bottom:10px;">可行域所有端點 (Corner Vertices) 評估表</div>
+                            <div class="table-responsive">
                                 <table class="lp-table">
                                     <thead>
                                         <tr>
                                             <th class="left">端點</th>
                                             <th>座標 (x₁, x₂)</th>
                                             <th class="right">目標值 Z</th>
-                                            <th>交會緊束邊界</th>
                                             <th>狀態</th>
                                         </tr>
                                     </thead>
@@ -1685,13 +1428,8 @@
                         </div>
 
                         <div class="card">
-                            <div class="section-header" style="margin-bottom:10px;padding-bottom:8px;">
-                                <div>
-                                    <div class="section-title" style="font-size:14px;">4. 限制式寬裕度與影子價格 (Shadow Price)</div>
-                                    <div class="section-subtitle">影子價格 ∂Z*/∂b 代表該資源上限每增加 1 單位時，最佳目標值 Z* 的邊際改善量</div>
-                                </div>
-                            </div>
-                            <div id="grapher-slack-bars" style="display:flex;flex-direction:column;gap:9px;max-height:270px;overflow-y:auto;padding-right:2px;"></div>
+                            <div class="section-title" style="font-size:14px;margin-bottom:10px;">最佳解下之資源使用率與餘裕 (Slack)</div>
+                            <div id="grapher-slack-bars" style="display:flex;flex-direction:column;gap:10px;"></div>
                         </div>
                     </div>
                 </div>
@@ -1780,41 +1518,75 @@
 
     <script>
         /* =====================================================================
-           全域狀態與通用 UI 輔助函式
+           全域狀態與介面輔助函式
            ===================================================================== */
         let activeTab = 'transport';
 
+        // 每個出貨廠區的專屬高辨識度色盤 (支援最多 8 個廠區)
+        const SOURCE_PALETTE = [
+            { main: '#4f46e5', light: '#e0e7ff', dark: '#3730a3', name: 'Indigo' },
+            { main: '#059669', light: '#d1fae5', dark: '#065f46', name: 'Emerald' },
+            { main: '#d97706', light: '#fef3c7', dark: '#92400e', name: 'Amber' },
+            { main: '#e11d48', light: '#ffe4e6', dark: '#9f1239', name: 'Rose' },
+            { main: '#0891b2', light: '#cffafe', dark: '#155e75', name: 'Cyan' },
+            { main: '#7c3aed', light: '#ede9fe', dark: '#5b21b6', name: 'Violet' },
+            { main: '#2563eb', light: '#dbeafe', dark: '#1e40af', name: 'Blue' },
+            { main: '#c026d3', light: '#fae8ff', dark: '#86198f', name: 'Fuchsia' }
+        ];
+
         function escapeHtml(str) {
-            return String(str ?? '')
+            return String(str)
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
+                .replace(/"/g, '&quot;');
         }
 
-        function notifyToast(message) {
+        function notifyToast(msg) {
             const box = document.getElementById('toast-box');
-            if (!box) return;
             const item = document.createElement('div');
             item.className = 'toast-item';
-            item.textContent = message;
+            item.textContent = msg;
             box.appendChild(item);
             setTimeout(() => {
                 item.style.opacity = '0';
                 item.style.transform = 'translateY(8px)';
                 setTimeout(() => item.remove(), 260);
-            }, 2800);
+            }, 2600);
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('theme-toggle-btn').innerHTML = isDark ? '<span>☀️ 淺色模式</span>' : '<span>🌙 深色模式</span>';
+            if (activeTab === 'grapher') {
+                solveAndDrawGrapher();
+            }
+            renderTransportVisualization();
+        }
+
+        function toggleGuideModal(show) {
+            const modal = document.getElementById('guide-modal');
+            if (show) modal.classList.remove('hidden');
+            else modal.classList.add('hidden');
+        }
+
+        function scrollToMathPanel() {
+            document.getElementById('math-model-panel').scrollIntoView({ behavior: 'smooth' });
         }
 
         function switchTab(tab) {
             activeTab = tab;
-            const tabs = ['transport', 'workforce', 'grapher'];
-            tabs.forEach(t => {
-                const section = document.getElementById('module-' + t);
+            ['transport', 'workforce', 'grapher'].forEach(t => {
+                const sec = document.getElementById('module-' + t);
                 const btn = document.getElementById('tab-btn-' + t);
-                if (section) section.classList.toggle('hidden', t !== tab);
-                if (btn) btn.classList.toggle('active', t === tab);
+                if (t === tab) {
+                    sec.classList.remove('hidden');
+                    btn.classList.add('active');
+                } else {
+                    sec.classList.add('hidden');
+                    btn.classList.remove('active');
+                }
             });
 
             if (tab === 'transport') {
@@ -1822,108 +1594,81 @@
             } else if (tab === 'workforce') {
                 solveAndRenderWorkforce();
             } else if (tab === 'grapher') {
-                setTimeout(() => solveAndDrawGrapher(), 20);
+                solveAndDrawGrapher();
             }
             updateLiveMathModel();
         }
 
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            const btn = document.getElementById('theme-toggle-btn');
-            if (btn) btn.innerHTML = isDark ? '<span>☀️ 淺色模式</span>' : '<span>🌙 深色模式</span>';
-            if (activeTab === 'transport') {
-                renderTransportBipartiteSVG();
-                renderTransportHeatmap();
-            } else if (activeTab === 'grapher') {
-                solveAndDrawGrapher();
-            }
-        }
-
-        function toggleGuideModal(show) {
-            const modal = document.getElementById('guide-modal');
-            if (modal) modal.classList.toggle('hidden', !show);
-        }
-
-        function scrollToMathPanel() {
-            const panel = document.getElementById('math-model-panel');
-            if (panel) panel.scrollIntoView({ behavior: 'smooth' });
-        }
-
         /* =====================================================================
-           Tab 1: 🚚 動態 M×N 運輸網路最佳化 (Transportation Problem Engine)
+           Tab 1: 動態 M×N 運輸網路最佳化 (Full CRUD + Sankey + Heatmap)
            ===================================================================== */
-        const SOURCE_PALETTE = ['#4f46e5', '#0891b2', '#059669', '#d97706', '#e11d48', '#7c3aed', '#2563eb', '#c026d3'];
-        const DEST_PALETTE = ['#059669', '#0284c7', '#7c3aed', '#ea580c', '#e11d48', '#4f46e5', '#0d9488', '#9333ea'];
-
         const transportData = {
             sources: ['台中廠', '斗六廠', '高雄廠'],
             destinations: ['台北站', '新竹站', '台南站'],
+            supply: [150, 180, 120],
+            demand: [160, 140, 150],
             costs: [
-                [8, 6, 10],
-                [9, 5, 7],
-                [14, 12, 4]
+                [8, 6, 12],
+                [11, 8, 9],
+                [16, 13, 5]
             ],
-            supply: [120, 150, 130],
-            demand: [140, 110, 150],
+            solution: null,
             vizMode: 'sankey',        // 'sankey' | 'heatmap'
             routeFilter: 'active',    // 'active' | 'all'
             showBadges: true,
-            lockedNode: null,         // { type: 'source'|'dest', index: number } | null
-            hoveredNode: null,        // { type: 'source'|'dest', index: number } | null
-            hoveredRoute: null,       // { i: number, j: number } | null
-            solution: null
+            hoverTarget: null,        // { type: 'edge'|'src'|'dst', i, j }
+            lockedTarget: null        // 點擊節點可鎖定高亮
         };
 
         const TRANSPORT_PRESETS = {
             balanced3x3: {
                 sources: ['台中廠', '斗六廠', '高雄廠'],
                 destinations: ['台北站', '新竹站', '台南站'],
+                supply: [150, 180, 120],
+                demand: [160, 140, 150],
                 costs: [
-                    [8, 6, 10],
-                    [9, 5, 7],
-                    [14, 12, 4]
+                    [8, 6, 12],
+                    [11, 8, 9],
+                    [16, 13, 5]
                 ],
-                supply: [120, 150, 130],
-                demand: [140, 110, 150],
-                toast: '已載入「標準 3×3 平衡運輸網路」（總供給 = 總需求 = 400 箱）'
+                toast: '已載入「標準 3×3 平衡網路」（總供給 450 箱 = 總需求 450 箱）'
             },
             expanded4x4: {
-                sources: ['桃園廠', '台中廠', '斗六廠', '高雄廠'],
+                sources: ['桃園倉', '台中廠', '斗六廠', '高雄廠'],
                 destinations: ['台北站', '新竹站', '台南站', '花蓮站'],
+                supply: [140, 160, 150, 130],
+                demand: [170, 140, 160, 110],
                 costs: [
-                    [4, 5, 11, 9],
-                    [8, 6, 9, 12],
-                    [10, 7, 6, 13],
-                    [15, 12, 4, 11]
+                    [4, 5, 13, 9],
+                    [8, 6, 10, 14],
+                    [11, 8, 7, 15],
+                    [16, 13, 5, 12]
                 ],
-                supply: [140, 130, 150, 120],
-                demand: [160, 120, 150, 110],
-                toast: '已載入「4×4 跨區擴編運輸網路」（4 出貨廠區 × 4 配送站點，共 540 箱）'
+                toast: '已載入「4×4 跨區擴編網路」（4 個出貨廠區 × 4 個配送站點，總量 580 箱）'
             },
             surplus: {
                 sources: ['台中廠', '斗六廠', '高雄廠'],
                 destinations: ['台北站', '新竹站', '台南站'],
+                supply: [200, 210, 160],
+                demand: [150, 130, 170],
                 costs: [
-                    [8, 6, 10],
-                    [9, 5, 7],
-                    [14, 12, 4]
+                    [8, 6, 12],
+                    [11, 8, 9],
+                    [16, 13, 5]
                 ],
-                supply: [160, 180, 150],
-                demand: [130, 110, 140],
-                toast: '已載入「供過於求情境」：總供給 490 箱 > 總需求 380 箱（保留 110 箱未出貨餘裕）'
+                toast: '已載入「供過於求」情境（總供給 570 箱 > 總需求 450 箱，具 120 箱餘裕產能）'
             },
             rush: {
                 sources: ['台中廠', '斗六廠', '高雄廠'],
                 destinations: ['台北站', '新竹站', '台南站'],
+                supply: [130, 150, 110],
+                demand: [175, 145, 160],
                 costs: [
-                    [8, 6, 10],
-                    [9, 5, 7],
-                    [14, 12, 4]
+                    [8, 6, 12],
+                    [11, 8, 9],
+                    [16, 13, 5]
                 ],
-                supply: [100, 120, 110],
-                demand: [150, 120, 140],
-                toast: '已載入「急單供不應求情境」：總供給 330 箱 < 總需求 410 箱（產生 80 箱缺口）'
+                toast: '已載入「供不應求 (急單缺口)」情境（總需求 480 箱 > 總供給 390 箱，全廠區滿載）'
             }
         };
 
@@ -1931,21 +1676,20 @@
             const p = TRANSPORT_PRESETS[key] || TRANSPORT_PRESETS.balanced3x3;
             transportData.sources = [...p.sources];
             transportData.destinations = [...p.destinations];
-            transportData.costs = p.costs.map(r => [...r]);
             transportData.supply = [...p.supply];
             transportData.demand = [...p.demand];
-            transportData.lockedNode = null;
-            transportData.hoveredNode = null;
-            transportData.hoveredRoute = null;
-
+            transportData.costs = p.costs.map(r => [...r]);
+            transportData.hoverTarget = null;
+            transportData.lockedTarget = null;
+            updateLockButtonUI();
             renderTransportInputMatrix();
             solveAndRenderTransport(false);
             notifyToast(p.toast);
         }
 
-        /* 動態新增/刪除/修改出貨廠區與配送站點 (CRUD) */
-        const CANDIDATE_SOURCES = ['桃園廠', '彰化廠', '嘉義廠', '屏東廠', '宜蘭廠', '苗栗廠'];
-        const CANDIDATE_DESTS = ['基隆站', '桃園站', '嘉義站', '花蓮站', '台東站', '屏東站'];
+        /* 動態新增/刪除/改名出貨廠區與配送站點 */
+        const CANDIDATE_SOURCE_NAMES = ['桃園倉', '台南廠', '彰化廠', '宜蘭倉', '屏東廠', '苗栗倉', '嘉義廠'];
+        const CANDIDATE_DEST_NAMES = ['花蓮站', '桃園站', '高雄站', '台中站', '基隆站', '嘉義站', '台東站'];
 
         function addTransportSource() {
             const m = transportData.sources.length;
@@ -1953,22 +1697,20 @@
                 notifyToast('⚠️ 出貨廠區最多支援 8 個節點！');
                 return;
             }
-            let newName = CANDIDATE_SOURCES.find(n => !transportData.sources.includes(n));
+            let newName = CANDIDATE_SOURCE_NAMES.find(name => !transportData.sources.includes(name));
             if (!newName) newName = '出貨廠' + (m + 1);
 
             const n = transportData.destinations.length;
-            const newCostRow = [];
-            for (let j = 0; j < n; j++) {
-                newCostRow.push(5 + ((m * 3 + j * 2) % 9));
-            }
+            const newCostRow = Array.from({ length: n }, (_, j) => 6 + ((m * 3 + j * 4) % 11));
             transportData.sources.push(newName);
+            transportData.supply.push(120);
             transportData.costs.push(newCostRow);
-            transportData.supply.push(110);
-            transportData.lockedNode = null;
+            transportData.lockedTarget = null;
+            updateLockButtonUI();
 
             renderTransportInputMatrix();
             solveAndRenderTransport(false);
-            notifyToast('＋ 已新增出貨點「' + newName + '」');
+            notifyToast('＋ 已新增出貨點「' + newName + '」（可直接點擊名稱修改）');
         }
 
         function removeTransportSource(i) {
@@ -1978,9 +1720,11 @@
             }
             const removed = transportData.sources[i];
             transportData.sources.splice(i, 1);
-            transportData.costs.splice(i, 1);
             transportData.supply.splice(i, 1);
-            transportData.lockedNode = null;
+            transportData.costs.splice(i, 1);
+            transportData.hoverTarget = null;
+            transportData.lockedTarget = null;
+            updateLockButtonUI();
 
             renderTransportInputMatrix();
             solveAndRenderTransport(false);
@@ -1993,19 +1737,20 @@
                 notifyToast('⚠️ 配送站點最多支援 8 個節點！');
                 return;
             }
-            let newName = CANDIDATE_DESTS.find(name => !transportData.destinations.includes(name));
+            let newName = CANDIDATE_DEST_NAMES.find(name => !transportData.destinations.includes(name));
             if (!newName) newName = '配送站' + (n + 1);
 
             transportData.destinations.push(newName);
-            for (let i = 0; i < transportData.sources.length; i++) {
-                transportData.costs[i].push(6 + ((i * 2 + n * 3) % 8));
-            }
-            transportData.demand.push(110);
-            transportData.lockedNode = null;
+            transportData.demand.push(120);
+            transportData.costs.forEach((row, i) => {
+                row.push(7 + ((i * 4 + n * 3) % 10));
+            });
+            transportData.lockedTarget = null;
+            updateLockButtonUI();
 
             renderTransportInputMatrix();
             solveAndRenderTransport(false);
-            notifyToast('＋ 已新增配送站「' + newName + '」');
+            notifyToast('＋ 已新增配送站「' + newName + '」（可直接點擊名稱修改）');
         }
 
         function removeTransportDestination(j) {
@@ -2015,53 +1760,36 @@
             }
             const removed = transportData.destinations[j];
             transportData.destinations.splice(j, 1);
-            for (let i = 0; i < transportData.sources.length; i++) {
-                transportData.costs[i].splice(j, 1);
-            }
             transportData.demand.splice(j, 1);
-            transportData.lockedNode = null;
+            transportData.costs.forEach(row => row.splice(j, 1));
+            transportData.hoverTarget = null;
+            transportData.lockedTarget = null;
+            updateLockButtonUI();
 
             renderTransportInputMatrix();
             solveAndRenderTransport(false);
             notifyToast('已刪除配送站「' + removed + '」');
         }
 
-        function onTransportNodeNameChange(type, idx, val) {
-            const clean = val.trim() || (type === 'source' ? '廠區S' + (idx + 1) : '站點D' + (idx + 1));
-            if (type === 'source') {
-                transportData.sources[idx] = clean;
-            } else {
-                transportData.destinations[idx] = clean;
-            }
-            renderTransportBipartiteSVG();
-            renderTransportHeatmap();
+        function onSourceNameInput(i, val) {
+            transportData.sources[i] = val.trim() || ('廠區' + (i + 1));
+            renderTransportVisualization();
             renderTransportSolutionTable();
             updateLiveMathModel();
         }
 
-        function onTransportCostChange(i, j, val) {
-            const num = Math.max(0, Math.round(parseFloat(val) || 0));
-            transportData.costs[i][j] = num;
-            solveAndRenderTransport(false);
-        }
-
-        function onTransportSupplyChange(i, val) {
-            const num = Math.max(0, Math.round(parseFloat(val) || 0));
-            transportData.supply[i] = num;
-            solveAndRenderTransport(false);
-        }
-
-        function onTransportDemandChange(j, val) {
-            const num = Math.max(0, Math.round(parseFloat(val) || 0));
-            transportData.demand[j] = num;
-            solveAndRenderTransport(false);
+        function onDestNameInput(j, val) {
+            transportData.destinations[j] = val.trim() || ('站點' + (j + 1));
+            renderTransportVisualization();
+            renderTransportSolutionTable();
+            updateLiveMathModel();
         }
 
         function autoBalanceTransportSupplyDemand() {
             const totalS = transportData.supply.reduce((a, b) => a + b, 0);
             const totalD = transportData.demand.reduce((a, b) => a + b, 0);
             if (totalS === totalD) {
-                notifyToast('⚖️ 目前總供給與總需求已完全平衡 (' + totalS + ' 箱)');
+                notifyToast('目前總供給與總需求已完全相等 (' + totalS + ' 箱)');
                 return;
             }
             if (totalS < totalD) {
@@ -2073,41 +1801,40 @@
             }
             renderTransportInputMatrix();
             solveAndRenderTransport(false);
-            notifyToast('⚖️ 已自動平衡總供給與總需求為 ' + Math.max(totalS, totalD) + ' 箱');
+            notifyToast('⚖️ 已自動平衡總供給與總需求！');
         }
 
         function renderTransportInputMatrix() {
             const container = document.getElementById('transport-input-container');
-            const badge = document.getElementById('matrix-dim-badge');
-            if (!container) return;
-
             const m = transportData.sources.length;
             const n = transportData.destinations.length;
-            if (badge) badge.textContent = m + ' × ' + n + ' 矩陣';
+
+            const badge = document.getElementById('matrix-dim-badge');
+            if (badge) badge.textContent = m + ' 出貨點 × ' + n + ' 配送站';
 
             let html = '<table class="lp-table"><thead><tr>';
-            html += '<th class="left" style="min-width:135px;">出貨廠區 \\ 配送站點</th>';
-
+            html += '<th class="left" style="min-width:148px;">出貨廠區 \\ 配送站點</th>';
             for (let j = 0; j < n; j++) {
                 html += '<th>' +
                     '<div class="node-header-cell" title="點擊直接修改配送站名稱">' +
                     '<span style="font-size:10px;color:var(--emerald-dark);font-weight:800;">D<sub>' + (j + 1) + '</sub></span>' +
                     '<input type="text" class="node-name-input dest-input" value="' + escapeHtml(transportData.destinations[j]) + '" ' +
-                    'oninput="onTransportNodeNameChange(\'dest\',' + j + ',this.value)">' +
+                    'oninput="onDestNameInput(' + j + ',this.value)">' +
                     '<button type="button" class="node-del-btn" ' + (n <= 2 ? 'disabled' : '') + ' ' +
                     'onclick="removeTransportDestination(' + j + ')" title="刪除此配送站">×</button>' +
                     '</div></th>';
             }
-            html += '<th style="background:var(--primary-light);color:var(--primary);">廠區供給上限 (S<sub>i</sub>)</th>';
+            html += '<th style="color:var(--primary);min-width:96px;">廠區供給上限<br><span style="font-size:10px;font-weight:600;">(Supply S<sub>i</sub>)</span></th>';
             html += '</tr></thead><tbody>';
 
             for (let i = 0; i < m; i++) {
+                const pal = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
                 html += '<tr>';
                 html += '<td class="left">' +
-                    '<div class="node-header-cell" title="點擊直接修改出貨廠區名稱">' +
-                    '<span style="font-size:10px;color:var(--primary);font-weight:800;">S<sub>' + (i + 1) + '</sub></span>' +
+                    '<div class="node-header-cell" style="border-left:4px solid ' + pal.main + ';" title="點擊直接修改出貨廠區名稱">' +
+                    '<span style="font-size:10px;color:' + pal.main + ';font-weight:800;">S<sub>' + (i + 1) + '</sub></span>' +
                     '<input type="text" class="node-name-input" value="' + escapeHtml(transportData.sources[i]) + '" ' +
-                    'oninput="onTransportNodeNameChange(\'source\',' + i + ',this.value)">' +
+                    'oninput="onSourceNameInput(' + i + ',this.value)">' +
                     '<button type="button" class="node-del-btn" ' + (m <= 2 ? 'disabled' : '') + ' ' +
                     'onclick="removeTransportSource(' + i + ')" title="刪除此出貨廠區">×</button>' +
                     '</div></td>';
@@ -2116,464 +1843,447 @@
                     html += '<td>' +
                         '<div style="display:inline-flex;align-items:center;gap:2px;">' +
                         '<span style="font-size:11px;color:var(--text-muted);">$</span>' +
-                        '<input type="number" min="0" step="1" class="num-input" value="' + transportData.costs[i][j] + '" ' +
-                        'oninput="onTransportCostChange(' + i + ',' + j + ',this.value)" title="單位運費 c_' + (i + 1) + (j + 1) + '">' +
+                        '<input type="number" min="0" max="999" class="num-input" value="' + transportData.costs[i][j] + '" ' +
+                        'oninput="onTransportCostInput(' + i + ',' + j + ',this.value)">' +
                         '</div></td>';
                 }
-
-                html += '<td style="background:rgba(79,70,229,0.04);">' +
-                    '<input type="number" min="0" step="5" class="num-input supply-input" value="' + transportData.supply[i] + '" ' +
-                    'oninput="onTransportSupplyChange(' + i + ',this.value)" title="供給上限 S_' + (i + 1) + '">' +
+                html += '<td>' +
+                    '<input type="number" min="0" max="9999" step="10" class="num-input supply-input" value="' + transportData.supply[i] + '" ' +
+                    'oninput="onTransportSupplyInput(' + i + ',this.value)">' +
                     '</td>';
                 html += '</tr>';
             }
 
-            // 底部需求列
             const totalS = transportData.supply.reduce((a, b) => a + b, 0);
             const totalD = transportData.demand.reduce((a, b) => a + b, 0);
 
-            html += '<tr style="background:var(--bg-subtle);font-weight:800;">';
-            html += '<td class="left" style="color:var(--emerald-dark);">站點需求量 (D<sub>j</sub>)</td>';
+            html += '<tr style="background:var(--bg-subtle);font-weight:700;">';
+            html += '<td class="left" style="color:var(--emerald-dark);font-size:12px;">站點需求量 (Demand D<sub>j</sub>)</td>';
             for (let j = 0; j < n; j++) {
                 html += '<td>' +
-                    '<input type="number" min="0" step="5" class="num-input demand-input" value="' + transportData.demand[j] + '" ' +
-                    'oninput="onTransportDemandChange(' + j + ',this.value)" title="需求量 D_' + (j + 1) + '">' +
+                    '<input type="number" min="0" max="9999" step="10" class="num-input demand-input" value="' + transportData.demand[j] + '" ' +
+                    'oninput="onTransportDemandInput(' + j + ',this.value)">' +
                     '</td>';
             }
-            html += '<td id="matrix-totals-cell" style="font-size:11.5px;line-height:1.35;">' +
-                '<div style="color:var(--primary);">總供給: ' + totalS + '</div>' +
-                '<div style="color:var(--emerald-dark);">總需求: ' + totalD + '</div>' +
-                '</td></tr>';
+            html += '<td id="transport-sum-cell" style="font-size:11.5px;line-height:1.4;">' +
+                '<div>總供給: <strong>' + totalS + '</strong></div>' +
+                '<div style="color:var(--emerald-dark);">總需求: <strong>' + totalD + '</strong></div>' +
+                '</td>';
+            html += '</tr></tbody></table>';
 
-            html += '</tbody></table>';
             container.innerHTML = html;
         }
 
-        /**
-         * 運輸問題求解核心：VAM (Vogel's Approximation) / 最小成本初始解 + MODI (u_i + v_j) 閉迴路踏石最佳化
-         */
-        function solveTransportationCore(costs, supply, demand) {
-            const mOrig = supply.length;
-            const nOrig = demand.length;
-            const totalS = supply.reduce((a, b) => a + b, 0);
-            const totalD = demand.reduce((a, b) => a + b, 0);
+        function onTransportCostInput(i, j, val) {
+            transportData.costs[i][j] = Math.max(0, parseFloat(val) || 0);
+            solveAndRenderTransport(false);
+        }
 
-            // 建立平衡運輸矩陣（若供需不等則自動加入虛擬廠區或虛擬站點）
-            const s = [...supply];
-            const d = [...demand];
-            const c = costs.map(row => [...row]);
+        function onTransportSupplyInput(i, val) {
+            transportData.supply[i] = Math.max(0, parseInt(val, 10) || 0);
+            solveAndRenderTransport(false);
+        }
+
+        function onTransportDemandInput(j, val) {
+            transportData.demand[j] = Math.max(0, parseInt(val, 10) || 0);
+            solveAndRenderTransport(false);
+        }
+
+        /**
+         * 通用 M×N 運輸問題精確求解器：
+         * VAM / 最小成本初始解 + 無環生成樹基底維護 + MODI (u_i + v_j) 對偶乘數與邊際機會成本 Δ_ij
+         */
+        function solveTransportationLP(supplyArr, demandArr, costMatrix) {
+            const mOrig = supplyArr.length;
+            const nOrig = demandArr.length;
+            const totalS = supplyArr.reduce((a, b) => a + b, 0);
+            const totalD = demandArr.reduce((a, b) => a + b, 0);
+
+            const supply = [...supplyArr];
+            const demand = [...demandArr];
+            const costs = costMatrix.map(r => [...r]);
 
             if (totalS > totalD) {
-                d.push(totalS - totalD);
-                for (let i = 0; i < mOrig; i++) c[i].push(0);
+                demand.push(totalS - totalD);
+                costs.forEach(r => r.push(0));
             } else if (totalD > totalS) {
-                s.push(totalD - totalS);
-                const dummyRow = new Array(nOrig).fill(0);
-                c.push(dummyRow);
+                supply.push(totalD - totalS);
+                costs.push(new Array(nOrig).fill(0));
             }
 
-            const M = s.length;
-            const N = d.length;
-            const alloc = Array.from({ length: M }, () => new Array(N).fill(0));
-            const isBasic = Array.from({ length: M }, () => new Array(N).fill(false));
+            const m = supply.length;
+            const n = demand.length;
+            const alloc = Array.from({ length: m }, () => new Array(n).fill(0));
+            const isBasic = Array.from({ length: m }, () => new Array(n).fill(false));
 
-            const remS = [...s];
-            const remD = [...d];
-            const activeRow = new Array(M).fill(true);
-            const activeCol = new Array(N).fill(true);
+            // 1. 最小成本法建立初始基本可行解
+            const remS = [...supply];
+            const remD = [...demand];
+            const rowDone = new Array(m).fill(false);
+            const colDone = new Array(n).fill(false);
+            let assignedCount = 0;
 
-            // 1. 最小成本貪婪法求初始基可行解 (共 M + N - 1 個基變數)
-            let basicCount = 0;
-            while (basicCount < M + N - 1) {
-                let bestI = -1, bestJ = -1, bestCost = Infinity;
-                for (let i = 0; i < M; i++) {
-                    if (!activeRow[i]) continue;
-                    for (let j = 0; j < N; j++) {
-                        if (!activeCol[j]) continue;
-                        if (c[i][j] < bestCost) {
-                            bestCost = c[i][j];
+            while (assignedCount < m + n - 1) {
+                let bestI = -1, bestJ = -1, minCost = Infinity;
+                for (let i = 0; i < m; i++) {
+                    if (rowDone[i]) continue;
+                    for (let j = 0; j < n; j++) {
+                        if (colDone[j]) continue;
+                        if (costs[i][j] < minCost) {
+                            minCost = costs[i][j];
                             bestI = i;
                             bestJ = j;
                         }
                     }
                 }
-                if (bestI === -1 || bestJ === -1) break;
+                if (bestI === -1) break;
 
                 const qty = Math.min(remS[bestI], remD[bestJ]);
                 alloc[bestI][bestJ] = qty;
                 isBasic[bestI][bestJ] = true;
-                basicCount++;
+                assignedCount++;
                 remS[bestI] -= qty;
                 remD[bestJ] -= qty;
 
-                if (basicCount === M + N - 1) break;
                 if (remS[bestI] === 0 && remD[bestJ] === 0) {
-                    activeRow[bestI] = false;
+                    if (rowDone.filter(x => !x).length > 1) rowDone[bestI] = true;
+                    else colDone[bestJ] = true;
                 } else if (remS[bestI] === 0) {
-                    activeRow[bestI] = false;
+                    rowDone[bestI] = true;
                 } else {
-                    activeCol[bestJ] = false;
+                    colDone[bestJ] = true;
                 }
             }
 
-            // 確保基變數正好 M + N - 1 個且連通（補零退化基變數）
-            function ensureSpanningTree() {
-                const parent = new Array(M + N).fill(0).map((_, idx) => idx);
+            // 確保基變數形成連通無環生成樹 (m + n - 1 條邊)
+            function rebuildSpanningTreeBasis() {
+                const parent = Array.from({ length: m + n }, (_, k) => k);
                 function find(x) { return parent[x] === x ? x : (parent[x] = find(parent[x])); }
-                function union(a, b) {
+                function unite(a, b) {
                     const ra = find(a), rb = find(b);
-                    if (ra === rb) return false;
-                    parent[ra] = rb;
-                    return true;
+                    if (ra !== rb) { parent[ra] = rb; return true; }
+                    return false;
                 }
 
-                for (let i = 0; i < M; i++) {
-                    for (let j = 0; j < N; j++) {
-                        if (isBasic[i][j]) isBasic[i][j] = false;
-                    }
-                }
-
-                // 優先將 alloc > 0 的格納入生成樹
-                const posCells = [];
-                const zeroCells = [];
-                for (let i = 0; i < M; i++) {
-                    for (let j = 0; j < N; j++) {
-                        if (alloc[i][j] > 0) posCells.push([i, j]);
-                        else zeroCells.push([i, j]);
-                    }
-                }
-                zeroCells.sort((a, b) => c[a[0]][a[1]] - c[b[0]][b[1]]);
-
+                const nextBasic = Array.from({ length: m }, () => new Array(n).fill(false));
                 let edges = 0;
-                for (const [i, j] of posCells) {
-                    if (union(i, M + j)) {
-                        isBasic[i][j] = true;
-                        edges++;
+
+                for (let i = 0; i < m; i++) {
+                    for (let j = 0; j < n; j++) {
+                        if (alloc[i][j] > 1e-8 && unite(i, m + j)) {
+                            nextBasic[i][j] = true;
+                            edges++;
+                        }
                     }
                 }
-                for (const [i, j] of zeroCells) {
-                    if (edges >= M + N - 1) break;
-                    if (union(i, M + j)) {
-                        isBasic[i][j] = true;
-                        edges++;
+                for (let i = 0; i < m && edges < m + n - 1; i++) {
+                    for (let j = 0; j < n && edges < m + n - 1; j++) {
+                        if (!nextBasic[i][j] && isBasic[i][j] && unite(i, m + j)) {
+                            nextBasic[i][j] = true;
+                            edges++;
+                        }
+                    }
+                }
+                for (let i = 0; i < m && edges < m + n - 1; i++) {
+                    for (let j = 0; j < n && edges < m + n - 1; j++) {
+                        if (!nextBasic[i][j] && unite(i, m + j)) {
+                            nextBasic[i][j] = true;
+                            edges++;
+                        }
+                    }
+                }
+                for (let i = 0; i < m; i++) {
+                    for (let j = 0; j < n; j++) {
+                        isBasic[i][j] = nextBasic[i][j];
                     }
                 }
             }
 
-            // 尋找閉迴路 (Stepping-Stone Closed Loop)
-            function findClosedLoop(startI, startJ) {
-                const visited = new Set();
-                function dfs(r, cIdx, lookForRow, path) {
-                    if (lookForRow) {
-                        for (let nextR = 0; nextR < M; nextR++) {
-                            if (nextR === r) continue;
-                            if (nextR === startI && cIdx === startJ && path.length >= 4) {
-                                return path;
-                            }
-                            if (isBasic[nextR][cIdx] && !visited.has(nextR + ',' + cIdx)) {
-                                visited.add(nextR + ',' + cIdx);
-                                const res = dfs(nextR, cIdx, false, [...path, [nextR, cIdx]]);
-                                if (res) return res;
-                                visited.delete(nextR + ',' + cIdx);
+            function findSteppingStoneLoop(enterR, enterC) {
+                const visR = new Array(m).fill(false);
+                const visC = new Array(n).fill(false);
+                const prev = {};
+                const q = [{ type: 'r', idx: enterR }];
+                visR[enterR] = true;
+
+                while (q.length > 0) {
+                    const cur = q.shift();
+                    if (cur.type === 'r') {
+                        const r = cur.idx;
+                        for (let c = 0; c < n; c++) {
+                            if (isBasic[r][c] && !visC[c]) {
+                                visC[c] = true;
+                                prev['c_' + c] = 'r_' + r;
+                                q.push({ type: 'c', idx: c });
                             }
                         }
                     } else {
-                        for (let nextC = 0; nextC < N; nextC++) {
-                            if (nextC === cIdx) continue;
-                            if (r === startI && nextC === startJ && path.length >= 4) {
-                                return path;
-                            }
-                            if (isBasic[r][nextC] && !visited.has(r + ',' + nextC)) {
-                                visited.add(r + ',' + nextC);
-                                const res = dfs(r, nextC, true, [...path, [r, nextC]]);
-                                if (res) return res;
-                                visited.delete(r + ',' + nextC);
+                        const c = cur.idx;
+                        if (c === enterC) break;
+                        for (let r = 0; r < m; r++) {
+                            if (isBasic[r][c] && !visR[r]) {
+                                visR[r] = true;
+                                prev['r_' + r] = 'c_' + c;
+                                q.push({ type: 'r', idx: r });
                             }
                         }
                     }
-                    return null;
                 }
-                return dfs(startI, startJ, true, [[startI, startJ]]);
+
+                const loop = [{ r: enterR, c: enterC, sign: 1 }];
+                let key = 'c_' + enterC;
+                let sign = -1;
+                while (prev[key]) {
+                    const pKey = prev[key];
+                    const [t1, i1] = key.split('_');
+                    const [t2, i2] = pKey.split('_');
+                    const r = t1 === 'r' ? parseInt(i1, 10) : parseInt(i2, 10);
+                    const c = t1 === 'c' ? parseInt(i1, 10) : parseInt(i2, 10);
+                    loop.push({ r, c, sign });
+                    sign = -sign;
+                    key = pKey;
+                }
+                return loop;
             }
 
-            // 2. MODI 對偶乘數 (u_i + v_j = c_ij) 與閉迴路迭代最佳化
-            let u = new Array(M).fill(null);
-            let v = new Array(N).fill(null);
+            let finalU = new Array(m).fill(0);
+            let finalV = new Array(n).fill(0);
 
-            for (let iter = 0; iter < 65; iter++) {
-                ensureSpanningTree();
-                u = new Array(M).fill(null);
-                v = new Array(N).fill(null);
+            // 2. MODI 最佳化迴圈
+            for (let iter = 0; iter < 140; iter++) {
+                rebuildSpanningTreeBasis();
+                const u = new Array(m).fill(null);
+                const v = new Array(n).fill(null);
                 u[0] = 0;
 
-                let progress = true;
-                while (progress) {
-                    progress = false;
-                    for (let i = 0; i < M; i++) {
-                        for (let j = 0; j < N; j++) {
-                            if (!isBasic[i][j]) continue;
-                            if (u[i] !== null && v[j] === null) {
-                                v[j] = c[i][j] - u[i];
-                                progress = true;
-                            } else if (u[i] === null && v[j] !== null) {
-                                u[i] = c[i][j] - v[j];
-                                progress = true;
+                let updated = true;
+                while (updated) {
+                    updated = false;
+                    for (let i = 0; i < m; i++) {
+                        for (let j = 0; j < n; j++) {
+                            if (isBasic[i][j]) {
+                                if (u[i] !== null && v[j] === null) {
+                                    v[j] = costs[i][j] - u[i];
+                                    updated = true;
+                                } else if (v[j] !== null && u[i] === null) {
+                                    u[i] = costs[i][j] - v[j];
+                                    updated = true;
+                                }
                             }
                         }
                     }
                 }
-                for (let i = 0; i < M; i++) if (u[i] === null) u[i] = 0;
-                for (let j = 0; j < N; j++) if (v[j] === null) v[j] = 0;
 
-                let enterI = -1, enterJ = -1, minDelta = -1e-7;
-                for (let i = 0; i < M; i++) {
-                    for (let j = 0; j < N; j++) {
-                        if (isBasic[i][j]) continue;
-                        const delta = c[i][j] - (u[i] + v[j]);
-                        if (delta < minDelta) {
-                            minDelta = delta;
-                            enterI = i;
-                            enterJ = j;
+                finalU = u.map(x => x || 0);
+                finalV = v.map(x => x || 0);
+
+                let bestR = -1, bestC = -1, minReduced = -1e-7;
+                for (let i = 0; i < m; i++) {
+                    for (let j = 0; j < n; j++) {
+                        if (!isBasic[i][j]) {
+                            const rc = costs[i][j] - finalU[i] - finalV[j];
+                            if (rc < minReduced) {
+                                minReduced = rc;
+                                bestR = i;
+                                bestC = j;
+                            }
                         }
                     }
                 }
 
-                if (enterI === -1) break; // 已達全域最佳解 (所有 Δ_ij >= 0)
+                if (bestR === -1) break;
 
-                const loop = findClosedLoop(enterI, enterJ);
-                if (!loop) break;
+                const loop = findSteppingStoneLoop(bestR, bestC);
+                if (loop.length < 4) break;
 
                 let theta = Infinity;
-                let leaveIdx = -1;
-                for (let k = 1; k < loop.length; k += 2) {
-                    const [ri, cj] = loop[k];
-                    if (alloc[ri][cj] < theta) {
-                        theta = alloc[ri][cj];
-                        leaveIdx = k;
+                let leaveNode = null;
+                for (const node of loop) {
+                    if (node.sign === -1 && alloc[node.r][node.c] < theta) {
+                        theta = alloc[node.r][node.c];
+                        leaveNode = node;
                     }
                 }
 
-                for (let k = 0; k < loop.length; k++) {
-                    const [ri, cj] = loop[k];
-                    if (k % 2 === 0) alloc[ri][cj] += theta;
-                    else alloc[ri][cj] -= theta;
+                for (const node of loop) {
+                    alloc[node.r][node.c] += node.sign * theta;
                 }
-
-                isBasic[enterI][enterJ] = true;
-                if (leaveIdx !== -1) {
-                    const [li, lj] = loop[leaveIdx];
-                    isBasic[li][lj] = false;
+                isBasic[bestR][bestC] = true;
+                if (leaveNode) {
+                    isBasic[leaveNode.r][leaveNode.c] = false;
                 }
             }
 
-            // 3. 彙整原始 M×N 矩陣的調撥量、邊際機會成本 Δ_ij 與統計指標
+            // 整理實際 M×N 矩陣與邊際機會成本 Δ_ij
             const realAlloc = Array.from({ length: mOrig }, (_, i) =>
                 Array.from({ length: nOrig }, (__, j) => Math.round(alloc[i][j]))
             );
             const reducedCosts = Array.from({ length: mOrig }, (_, i) =>
-                Array.from({ length: nOrig }, (__, j) => Math.round((c[i][j] - (u[i] + v[j])) * 100) / 100)
+                Array.from({ length: nOrig }, (__, j) => Math.round((costMatrix[i][j] - finalU[i] - finalV[j]) * 100) / 100)
             );
 
             let totalCost = 0;
             let totalShipped = 0;
             let activeRoutes = 0;
-            const rowShipped = new Array(mOrig).fill(0);
-            const colReceived = new Array(nOrig).fill(0);
-            const rowCost = new Array(mOrig).fill(0);
-            const colCost = new Array(nOrig).fill(0);
+            const sourceUsed = new Array(mOrig).fill(0);
+            const sourceCost = new Array(mOrig).fill(0);
+            const destReceived = new Array(nOrig).fill(0);
+            const destCost = new Array(nOrig).fill(0);
 
             for (let i = 0; i < mOrig; i++) {
                 for (let j = 0; j < nOrig; j++) {
                     const q = realAlloc[i][j];
                     if (q > 0) {
-                        activeRoutes++;
+                        const sub = q * costMatrix[i][j];
+                        totalCost += sub;
                         totalShipped += q;
-                        const subCost = q * costs[i][j];
-                        totalCost += subCost;
-                        rowShipped[i] += q;
-                        colReceived[j] += q;
-                        rowCost[i] += subCost;
-                        colCost[j] += subCost;
+                        activeRoutes++;
+                        sourceUsed[i] += q;
+                        sourceCost[i] += sub;
+                        destReceived[j] += q;
+                        destCost[j] += sub;
                     }
                 }
             }
 
             return {
                 alloc: realAlloc,
-                u: u.slice(0, mOrig),
-                v: v.slice(0, nOrig),
                 reducedCosts,
+                u: finalU.slice(0, mOrig),
+                v: finalV.slice(0, nOrig),
                 totalCost,
                 totalShipped,
+                activeRoutes,
                 totalS,
                 totalD,
-                activeRoutes,
-                rowShipped,
-                colReceived,
-                rowCost,
-                colCost
+                sourceUsed,
+                sourceCost,
+                destReceived,
+                destCost
             };
         }
 
-        function solveAndRenderTransport(showToast = false) {
-            const sol = solveTransportationCore(
-                transportData.costs,
-                transportData.supply,
-                transportData.demand
-            );
+        function solveAndRenderTransport(showToastFlag) {
+            const sol = solveTransportationLP(transportData.supply, transportData.demand, transportData.costs);
             transportData.solution = sol;
 
             const m = transportData.sources.length;
             const n = transportData.destinations.length;
 
-            // 更新表格右下角總計
-            const totalsCell = document.getElementById('matrix-totals-cell');
-            if (totalsCell) {
-                totalsCell.innerHTML =
-                    '<div style="color:var(--primary);">總供給: ' + sol.totalS + '</div>' +
-                    '<div style="color:var(--emerald-dark);">總需求: ' + sol.totalD + '</div>';
+            const sumCell = document.getElementById('transport-sum-cell');
+            if (sumCell) {
+                sumCell.innerHTML = '<div>總供給: <strong>' + sol.totalS + '</strong></div>' +
+                    '<div style="color:var(--emerald-dark);">總需求: <strong>' + sol.totalD + '</strong></div>';
             }
 
-            // 更新頂部 4 張 KPI 卡片
+            // 更新 KPI
             document.getElementById('trans-kpi-cost').textContent = '$' + sol.totalCost.toLocaleString();
-            const unitAvg = sol.totalShipped > 0 ? (sol.totalCost / sol.totalShipped).toFixed(2) : '0.00';
-            document.getElementById('trans-kpi-unit').textContent = '平均每箱運費 $' + unitAvg;
+            const avg = sol.totalShipped > 0 ? (sol.totalCost / sol.totalShipped).toFixed(2) : '0.00';
+            document.getElementById('trans-kpi-unit').textContent = '平均每箱運費 $' + avg;
 
             document.getElementById('trans-kpi-shipped').textContent = sol.totalShipped.toLocaleString() + ' 箱';
-            document.getElementById('trans-kpi-routes').textContent = '啟用 ' + sol.activeRoutes + ' 條最佳調撥路線 (共 ' + (m * n) + ' 條)';
+            document.getElementById('trans-kpi-routes').textContent = '啟用 ' + sol.activeRoutes + ' / ' + (m * n) + ' 條調撥路線';
 
-            const utilPct = sol.totalS > 0 ? Math.round((sol.totalShipped / sol.totalS) * 100) : 0;
-            document.getElementById('trans-kpi-util').textContent = utilPct + '%';
-            document.getElementById('trans-kpi-totals').textContent = m + ' 出貨點 × ' + n + ' 配送站 (總供給 ' + sol.totalS + ' 箱)';
+            const util = sol.totalS > 0 ? Math.round((sol.totalShipped / sol.totalS) * 100) : 0;
+            document.getElementById('trans-kpi-util').textContent = util + '%';
+            document.getElementById('trans-kpi-totals').textContent = m + ' 出貨點 × ' + n + ' 配送站 (總供給 ' + sol.totalS + ')';
 
             const statusEl = document.getElementById('trans-kpi-status');
             const statusSubEl = document.getElementById('trans-kpi-status-sub');
             const bannerEl = document.getElementById('transport-status-banner');
 
             if (sol.totalS === sol.totalD) {
-                statusEl.textContent = '⚖️ 供需完全平衡';
-                statusEl.style.color = 'var(--emerald-dark)';
-                statusSubEl.textContent = '所有廠區 100% 滿載，全數站點達標';
-                if (bannerEl) bannerEl.innerHTML = '<span class="badge badge-emerald">✓ 平衡運輸模型</span> 總供給 = 總需求 = <strong>' + sol.totalS + ' 箱</strong>';
+                statusEl.textContent = '供需完全平衡';
+                statusSubEl.textContent = '全廠區 100% 滿載，全站點 100% 滿足';
+                bannerEl.innerHTML = '<span class="badge badge-emerald">● 平衡網路</span> 總供給 (' + sol.totalS + ' 箱) = 總需求 (' + sol.totalD + ' 箱)';
             } else if (sol.totalS > sol.totalD) {
-                const surplus = sol.totalS - sol.totalD;
-                statusEl.textContent = '📦 供過於求 (+' + surplus + ' 箱)';
-                statusEl.style.color = 'var(--primary)';
-                statusSubEl.textContent = '系統自動保留 ' + surplus + ' 箱高成本產能不出貨';
-                if (bannerEl) bannerEl.innerHTML = '<span class="badge badge-indigo">📦 供過於求</span> 總供給 (' + sol.totalS + ') &gt; 總需求 (' + sol.totalD + ')，未出貨餘裕 <strong>' + surplus + ' 箱</strong>';
+                const diff = sol.totalS - sol.totalD;
+                statusEl.textContent = '供過於求 (+' + diff + '箱)';
+                statusSubEl.textContent = '優先由低運費廠區出貨，保留餘裕產能';
+                bannerEl.innerHTML = '<span class="badge badge-indigo">● 供過於求</span> 總供給超出總需求 ' + diff + ' 箱，部分廠區保有未動用產能 (Slack)';
             } else {
-                const shortage = sol.totalD - sol.totalS;
-                statusEl.textContent = '⚡ 供不應求 (-' + shortage + ' 箱)';
-                statusEl.style.color = 'var(--rose-dark)';
-                statusSubEl.textContent = '全廠區 100% 滿載，尚有 ' + shortage + ' 箱急單缺口';
-                if (bannerEl) bannerEl.innerHTML = '<span class="badge badge-rose">⚡ 供不應求</span> 總供給 (' + sol.totalS + ') &lt; 總需求 (' + sol.totalD + ')，缺口 <strong>' + shortage + ' 箱</strong>';
+                const diff = sol.totalD - sol.totalS;
+                statusEl.textContent = '供不應求 (-' + diff + '箱)';
+                statusSubEl.textContent = '所有廠區皆達 100% 滿載瓶頸 (Tight)';
+                bannerEl.innerHTML = '<span class="badge badge-amber">● 急單短缺</span> 總需求超出總供給 ' + diff + ' 箱，全數廠區均達 100% 產能上限';
             }
 
-            renderTransportBipartiteSVG();
-            renderTransportHeatmap();
+            renderTransportVisualization();
             renderTransportSolutionTable();
 
             if (activeTab === 'transport') {
                 updateLiveMathModel();
             }
-            if (showToast) {
-                notifyToast('⚡ 已完成 MODI 運輸網路最佳化求解！最低總運費 $' + sol.totalCost.toLocaleString());
+            if (showToastFlag) {
+                notifyToast('運輸網路最佳解計算完成！最低總運費 $' + sol.totalCost.toLocaleString());
             }
         }
 
-        /* 視覺化模式與篩選互動控制 */
+        /* 視覺化模式與篩選器切換 */
         function setTransportVizMode(mode) {
             transportData.vizMode = mode;
             document.getElementById('viz-mode-sankey').classList.toggle('active', mode === 'sankey');
             document.getElementById('viz-mode-heatmap').classList.toggle('active', mode === 'heatmap');
             document.getElementById('transport-sankey-wrapper').classList.toggle('hidden', mode !== 'sankey');
-            document.getElementById('sankey-filter-controls').classList.toggle('hidden', mode !== 'sankey');
             document.getElementById('transport-heatmap-wrapper').classList.toggle('hidden', mode !== 'heatmap');
+            document.getElementById('sankey-filter-controls').classList.toggle('hidden', mode !== 'sankey');
+            renderTransportVisualization();
         }
 
         function setTransportRouteFilter(filter) {
             transportData.routeFilter = filter;
             document.getElementById('route-filter-active').classList.toggle('active', filter === 'active');
             document.getElementById('route-filter-all').classList.toggle('active', filter === 'all');
-            renderTransportBipartiteSVG();
+            renderTransportVisualization();
         }
 
         function toggleTransportBadges() {
             transportData.showBadges = !transportData.showBadges;
-            const btn = document.getElementById('toggle-badge-btn');
-            if (btn) btn.textContent = transportData.showBadges ? '🏷️ 標籤：顯示' : '🏷️ 標籤：隱藏';
-            renderTransportBipartiteSVG();
+            document.getElementById('toggle-badge-btn').textContent = transportData.showBadges ? '🏷️ 標籤：顯示' : '🏷️ 標籤：隱藏';
+            renderTransportVisualization();
+        }
+
+        function toggleTransportLock(type, i, j) {
+            const cur = transportData.lockedTarget;
+            if (cur && cur.type === type && cur.i === i && cur.j === j) {
+                transportData.lockedTarget = null;
+            } else {
+                transportData.lockedTarget = { type, i, j };
+            }
+            updateLockButtonUI();
+            updateTransportInfoBadge(transportData.lockedTarget || transportData.hoverTarget);
+            renderTransportVisualization();
         }
 
         function clearTransportLock() {
-            transportData.lockedNode = null;
-            document.getElementById('clear-lock-btn').classList.add('hidden');
-            document.getElementById('transport-hover-info').textContent = '💡 點擊或移過節點/路線檢視明細';
-            renderTransportBipartiteSVG();
+            transportData.lockedTarget = null;
+            updateLockButtonUI();
+            updateTransportInfoBadge(null);
+            renderTransportVisualization();
         }
 
-        function onTransportNodeClick(type, index) {
-            const cur = transportData.lockedNode;
-            if (cur && cur.type === type && cur.index === index) {
-                clearTransportLock();
-                return;
-            }
-            transportData.lockedNode = { type, index };
-            document.getElementById('clear-lock-btn').classList.remove('hidden');
-            const name = type === 'source' ? transportData.sources[index] : transportData.destinations[index];
-            document.getElementById('transport-hover-info').textContent = '🔒 已鎖定聚焦：' + name + ' (再次點擊解除)';
-            renderTransportBipartiteSVG();
+        function updateLockButtonUI() {
+            const btn = document.getElementById('clear-lock-btn');
+            if (!btn) return;
+            if (transportData.lockedTarget) btn.classList.remove('hidden');
+            else btn.classList.add('hidden');
         }
 
-        function onTransportNodeHover(type, index) {
-            transportData.hoveredNode = { type, index };
-            const sol = transportData.solution;
-            if (!sol) return;
-            const info = document.getElementById('transport-hover-info');
-            if (type === 'source') {
-                info.textContent = '🏭 ' + transportData.sources[index] + '：出貨 ' + sol.rowShipped[index] + ' / ' + transportData.supply[index] + ' 箱 ｜ 運費小計 $' + sol.rowCost[index].toLocaleString();
+        function renderTransportVisualization() {
+            if (transportData.vizMode === 'sankey') {
+                renderTransportSankeySVG();
             } else {
-                info.textContent = '🏬 ' + transportData.destinations[index] + '：到貨 ' + sol.colReceived[index] + ' / ' + transportData.demand[index] + ' 箱 ｜ 運費小計 $' + sol.colCost[index].toLocaleString();
+                renderTransportHeatmap();
             }
-            renderTransportBipartiteSVG();
-        }
-
-        function onTransportNodeLeave() {
-            transportData.hoveredNode = null;
-            if (!transportData.lockedNode) {
-                document.getElementById('transport-hover-info').textContent = '💡 點擊或移過節點/路線檢視明細';
-            }
-            renderTransportBipartiteSVG();
-        }
-
-        function onTransportRouteHover(i, j) {
-            transportData.hoveredRoute = { i, j };
-            const sol = transportData.solution;
-            if (!sol) return;
-            const q = sol.alloc[i][j];
-            const c = transportData.costs[i][j];
-            const rc = sol.reducedCosts[i][j];
-            const info = document.getElementById('transport-hover-info');
-            if (q > 0) {
-                info.textContent = '🚚 最佳路線 ' + transportData.sources[i] + ' → ' + transportData.destinations[j] + '：配送 ' + q + ' 箱 × $' + c + ' = $' + (q * c).toLocaleString();
-            } else {
-                info.textContent = '⏸ 未啟用路線 ' + transportData.sources[i] + ' → ' + transportData.destinations[j] + '：單價 $' + c + ' (邊際機會成本 Δ = +$' + rc + '/箱)';
-            }
-            renderTransportBipartiteSVG();
-        }
-
-        function onTransportRouteLeave() {
-            transportData.hoveredRoute = null;
-            if (!transportData.lockedNode) {
-                document.getElementById('transport-hover-info').textContent = '💡 點擊或移過節點/路線檢視明細';
-            }
-            renderTransportBipartiteSVG();
         }
 
         /**
-         * 高精細 SVG 桑基流向網路圖 (Sankey Bipartite Flow Network with Anti-Collision Staggered Bezier Badges)
+         * 高質感動態自適應 SVG 雙分桑基流向網路圖 (Bipartite Sankey Flow Network)
+         * - 根據廠區與站點數量自動調整 SVG 高度，絕不擁擠
+         * - 貝茲曲線參數 t 交錯防碰撞演算法 (Anti-Collision Staggered Badges)
+         * - 左右高對比節點資訊卡（含進度條、出貨/收貨成本、滿載/缺口徽章）
          */
-        function renderTransportBipartiteSVG() {
+        function renderTransportSankeySVG() {
             const svg = document.getElementById('transport-bipartite-svg');
             const sol = transportData.solution;
             if (!svg || !sol) return;
@@ -2584,218 +2294,251 @@
             const maxNodes = Math.max(m, n);
 
             const W = 780;
-            const rowGap = Math.max(76, Math.min(106, Math.floor(380 / maxNodes)));
-            const H = Math.max(380, maxNodes * rowGap + 56);
+            const rowStep = 94;
+            const topPad = 56;
+            const H = Math.max(380, topPad + maxNodes * rowStep + 26);
             svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
 
-            const cardW = 192;
-            const cardH = 66;
-            const leftX = 16;
-            const rightX = W - cardW - 16;
-            const portLeftX = leftX + cardW;
-            const portRightX = rightX;
+            const srcCardX = 16;
+            const srcCardW = 190;
+            const srcCardH = 74;
+            const srcPortX = srcCardX + srcCardW; // 206
 
-            const srcY = [];
-            const dstY = [];
-            const srcTotalH = (m - 1) * rowGap;
-            const dstTotalH = (n - 1) * rowGap;
-            const srcStartY = (H - srcTotalH) / 2;
-            const dstStartY = (H - dstTotalH) / 2;
+            const dstCardW = 190;
+            const dstCardX = W - 16 - dstCardW;   // 574
+            const dstCardH = 74;
+            const dstPortX = dstCardX;            // 574
 
-            for (let i = 0; i < m; i++) srcY.push(srcStartY + i * rowGap);
-            for (let j = 0; j < n; j++) dstY.push(dstStartY + j * rowGap);
+            const availH = H - topPad - 20;
+            const sY = (i) => topPad + ((i + 0.5) * availH) / m;
+            const dY = (j) => topPad + ((j + 0.5) * availH) / n;
 
-            const focusNode = transportData.hoveredNode || transportData.lockedNode;
-            const focusRoute = transportData.hoveredRoute;
-            const maxFlow = Math.max(10, ...sol.alloc.flat());
+            const maxFlow = Math.max(1, ...sol.alloc.flat());
+            const activeFocus = transportData.lockedTarget || transportData.hoverTarget;
 
-            let defs = '<defs>';
-            for (let i = 0; i < m; i++) {
-                const sColor = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
-                for (let j = 0; j < n; j++) {
-                    const dColor = DEST_PALETTE[j % DEST_PALETTE.length];
-                    defs += '<linearGradient id="grad-' + i + '-' + j + '" x1="0%" y1="0%" x2="100%" y2="0%">' +
-                        '<stop offset="0%" stop-color="' + sColor + '"/>' +
-                        '<stop offset="100%" stop-color="' + dColor + '"/>' +
-                        '</linearGradient>';
-                }
-            }
-            defs += '</defs>';
-
-            let bgLayer = '';
-            let edgeLayer = '';
-            let badgeLayer = '';
-            let nodeLayer = '';
-
-            // 計算三次貝茲曲線在參數 t 的座標
-            function cubicBezierPoint(t, x0, y0, x1, y1, x2, y2, x3, y3) {
+            // 三次貝茲曲線精確座標計算函式 B(t)
+            function cubicBezierPoint(t, x0, y0, cx1, cy1, cx2, cy2, x3, y3) {
                 const u = 1 - t;
                 const tt = t * t, uu = u * u;
                 const uuu = uu * u, ttt = tt * t;
-                return {
-                    x: uuu * x0 + 3 * uu * t * x1 + 3 * u * tt * x2 + ttt * x3,
-                    y: uuu * y0 + 3 * uu * t * y1 + 3 * u * tt * y2 + ttt * y3
-                };
+                const x = uuu * x0 + 3 * uu * t * cx1 + 3 * u * tt * cx2 + ttt * x3;
+                const y = uuu * y0 + 3 * uu * t * cy1 + 3 * u * tt * cy2 + ttt * y3;
+                return { x, y };
             }
 
-            // 整理所有要繪製的路線並交錯分配 t 值避免標籤碰撞
-            const activeEdgesList = [];
+            let html = '<defs>';
+            for (let i = 0; i < m; i++) {
+                const pal = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
+                html += '<linearGradient id="srcGrad' + i + '" x1="0%" y1="0%" x2="100%" y2="0%">' +
+                    '<stop offset="0%" stop-color="' + pal.main + '" stop-opacity="0.92"/>' +
+                    '<stop offset="100%" stop-color="#10b981" stop-opacity="0.92"/>' +
+                    '</linearGradient>';
+            }
+            html += '<filter id="cardShadow" x="-8%" y="-8%" width="116%" height="120%">' +
+                '<feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="' + (isDark ? '0.45' : '0.08') + '"/>' +
+                '</filter></defs>';
+
+            // 頂部欄位標題列
+            html += '<rect x="16" y="10" width="190" height="30" rx="8" fill="' + (isDark ? '#1e293b' : '#eef2ff') + '"/>' +
+                '<text x="111" y="29" text-anchor="middle" font-size="12" font-weight="800" fill="' + (isDark ? '#a5b4fc' : '#3730a3') + '">🏭 出貨廠區 (Supply &amp; 稼動率)</text>';
+
+            html += '<text x="' + (W / 2) + '" y="28" text-anchor="middle" font-size="11.5" font-weight="700" fill="' + (isDark ? '#94a3b8' : '#64748b') + '">' +
+                '最佳物流調撥桑基網路 (總運量 ' + sol.totalShipped + ' 箱 · 總成本 $' + sol.totalCost.toLocaleString() + ')' +
+                '</text>';
+
+            html += '<rect x="' + dstCardX + '" y="10" width="190" height="30" rx="8" fill="' + (isDark ? '#1e293b' : '#ecfdf5') + '"/>' +
+                '<text x="' + (dstCardX + 95) + '" y="29" text-anchor="middle" font-size="12" font-weight="800" fill="' + (isDark ? '#6ee7b7' : '#065f46') + '">🏪 配送站點 (Demand &amp; 滿足率)</text>';
+
+            // 1. 潛在未啟用路線 (若切換為「顯示全部潛在路線」或聚焦特定節點時顯示)
             for (let i = 0; i < m; i++) {
                 for (let j = 0; j < n; j++) {
-                    const q = sol.alloc[i][j];
-                    if (q > 0) activeEdgesList.push({ i, j, q });
+                    if (sol.alloc[i][j] > 0) continue;
+
+                    const isFocused = activeFocus && (
+                        (activeFocus.type === 'src' && activeFocus.i === i) ||
+                        (activeFocus.type === 'dst' && activeFocus.j === j) ||
+                        (activeFocus.type === 'edge' && activeFocus.i === i && activeFocus.j === j)
+                    );
+
+                    if (transportData.routeFilter !== 'all' && !isFocused) continue;
+
+                    const y1 = sY(i), y2 = dY(j);
+                    const cx1 = srcPortX + 135, cy1 = y1;
+                    const cx2 = dstPortX - 135, cy2 = y2;
+                    const op = isFocused ? 0.65 : 0.25;
+
+                    html += '<g style="cursor:pointer;" onmouseenter="setTransportHover(\'edge\',' + i + ',' + j + ')" onmouseleave="clearTransportHover()">' +
+                        '<path d="M ' + srcPortX + ' ' + y1 + ' C ' + cx1 + ' ' + cy1 + ', ' + cx2 + ' ' + cy2 + ', ' + dstPortX + ' ' + y2 + '" ' +
+                        'fill="none" stroke="' + (isDark ? '#475569' : '#94a3b8') + '" stroke-width="1.4" stroke-dasharray="5 5" opacity="' + op + '"/>';
+
+                    if (isFocused) {
+                        const t = 0.26 + ((i * 3 + j * 2) % 5) * 0.11;
+                        const pt = cubicBezierPoint(t, srcPortX, y1, cx1, cy1, cx2, cy2, dstPortX, y2);
+                        const rc = sol.reducedCosts[i][j];
+                        html += '<rect x="' + (pt.x - 52) + '" y="' + (pt.y - 11) + '" width="104" height="22" rx="6" fill="' + (isDark ? '#1e293b' : '#f8fafc') + '" stroke="#94a3b8" stroke-width="1"/>' +
+                            '<text x="' + pt.x + '" y="' + (pt.y + 4) + '" text-anchor="middle" font-size="10" font-weight="700" fill="' + (isDark ? '#cbd5e1' : '#475569') + '">$' + transportData.costs[i][j] + ' (Δ=+' + rc + ')</text>';
+                    }
+                    html += '</g>';
                 }
             }
 
-            let activeRank = 0;
+            // 2. 啟用之最佳流量桑基曲線 + 流動方向動畫粒子
+            const badgeRenderQueue = [];
+
             for (let i = 0; i < m; i++) {
+                const pal = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
                 for (let j = 0; j < n; j++) {
                     const q = sol.alloc[i][j];
-                    const cost = transportData.costs[i][j];
-                    const isActive = q > 0;
+                    if (q <= 0) continue;
 
-                    if (!isActive && transportData.routeFilter === 'active' && !focusNode && !focusRoute) {
-                        continue;
-                    }
+                    const y1 = sY(i) + (j - (n - 1) / 2) * 3.5;
+                    const y2 = dY(j) + (i - (m - 1) / 2) * 3.5;
+                    const cx1 = srcPortX + 145, cy1 = y1;
+                    const cx2 = dstPortX - 145, cy2 = y2;
+
+                    const sw = 3.5 + (q / maxFlow) * 12;
 
                     let isHighlighted = true;
-                    if (focusRoute) {
-                        isHighlighted = (focusRoute.i === i && focusRoute.j === j);
-                    } else if (focusNode) {
-                        isHighlighted = (focusNode.type === 'source' && focusNode.index === i) ||
-                                        (focusNode.type === 'dest' && focusNode.index === j);
+                    if (activeFocus) {
+                        if (activeFocus.type === 'edge') isHighlighted = (activeFocus.i === i && activeFocus.j === j);
+                        else if (activeFocus.type === 'src') isHighlighted = (activeFocus.i === i);
+                        else if (activeFocus.type === 'dst') isHighlighted = (activeFocus.j === j);
                     }
+                    const op = activeFocus ? (isHighlighted ? 0.98 : 0.12) : 0.86;
 
-                    const y1 = srcY[i] + (j - (n - 1) / 2) * 3.5;
-                    const y2 = dstY[j] + (i - (m - 1) / 2) * 3.5;
-                    const cx1 = portLeftX + (portRightX - portLeftX) * 0.42;
-                    const cx2 = portLeftX + (portRightX - portLeftX) * 0.58;
-                    const pathD = 'M ' + portLeftX + ' ' + y1 + ' C ' + cx1 + ' ' + y1 + ', ' + cx2 + ' ' + y2 + ', ' + portRightX + ' ' + y2;
+                    html += '<g style="cursor:pointer;" ' +
+                        'onmouseenter="setTransportHover(\'edge\',' + i + ',' + j + ')" ' +
+                        'onmouseleave="clearTransportHover()" ' +
+                        'onclick="toggleTransportLock(\'edge\',' + i + ',' + j + ')">' +
+                        '<path d="M ' + srcPortX + ' ' + y1 + ' C ' + cx1 + ' ' + cy1 + ', ' + cx2 + ' ' + cy2 + ', ' + dstPortX + ' ' + y2 + '" ' +
+                        'fill="none" stroke="url(#srcGrad' + i + ')" stroke-width="' + sw.toFixed(1) + '" stroke-linecap="round" opacity="' + op + '"/>';
 
-                    if (isActive) {
-                        const strokeW = Math.max(4, Math.min(18, 3.5 + (q / maxFlow) * 14));
-                        const opacity = isHighlighted ? 0.88 : 0.14;
-                        const sColor = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
+                    if (isHighlighted) {
+                        html += '<path class="flow-particle-line" d="M ' + srcPortX + ' ' + y1 + ' C ' + cx1 + ' ' + cy1 + ', ' + cx2 + ' ' + cy2 + ', ' + dstPortX + ' ' + y2 + '" ' +
+                            'fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="4 14" stroke-linecap="round" opacity="' + (activeFocus ? '0.85' : '0.55') + '"/>';
+                    }
+                    html += '</g>';
 
-                        edgeLayer += '<g style="cursor:pointer;" ' +
-                            'onmouseenter="onTransportRouteHover(' + i + ',' + j + ')" ' +
-                            'onmouseleave="onTransportRouteLeave()">' +
-                            '<path d="' + pathD + '" fill="none" stroke="url(#grad-' + i + '-' + j + ')" ' +
-                            'stroke-width="' + strokeW + '" stroke-linecap="round" opacity="' + opacity + '"/>';
-
-                        if (isHighlighted) {
-                            edgeLayer += '<path d="' + pathD + '" class="flow-particle-line" fill="none" stroke="#ffffff" ' +
-                                'stroke-width="2" stroke-dasharray="4 14" stroke-linecap="round" opacity="0.75"/>';
-                        }
-                        edgeLayer += '</g>';
-
-                        // 防碰撞交錯式膠囊標籤
-                        if (transportData.showBadges && isHighlighted) {
-                            const totalAct = Math.max(1, activeEdgesList.length);
-                            const tPatterns = [0.27, 0.50, 0.73, 0.38, 0.62, 0.31, 0.68, 0.44, 0.56];
-                            const t = totalAct === 1 ? 0.5 : tPatterns[activeRank % tPatterns.length];
-                            activeRank++;
-
-                            const pt = cubicBezierPoint(t, portLeftX, y1, cx1, y1, cx2, y2, portRightX, y2);
-                            const labelText = q + '箱 · $' + (q * cost).toLocaleString();
-                            const bw = Math.max(82, labelText.length * 7.5 + 16);
-                            const bh = 22;
-
-                            badgeLayer += '<g style="cursor:pointer;" ' +
-                                'onmouseenter="onTransportRouteHover(' + i + ',' + j + ')" ' +
-                                'onmouseleave="onTransportRouteLeave()">' +
-                                '<rect x="' + (pt.x - bw / 2) + '" y="' + (pt.y - bh / 2) + '" width="' + bw + '" height="' + bh + '" rx="11" ' +
-                                'fill="' + (isDark ? '#0f172a' : '#ffffff') + '" stroke="' + sColor + '" stroke-width="1.6"/>' +
-                                '<text x="' + pt.x + '" y="' + (pt.y + 4) + '" text-anchor="middle" font-size="11" font-weight="800" ' +
-                                'fill="' + (isDark ? '#f8fafc' : '#0f172a') + '">' + labelText + '</text>' +
-                                '</g>';
-                        }
-                    } else {
-                        // 未啟用潛在路線（虛線）
-                        if (!isHighlighted && (focusNode || focusRoute)) continue;
-                        const opacity = isHighlighted && (focusNode || focusRoute) ? 0.55 : 0.22;
-                        edgeLayer += '<path d="' + pathD + '" fill="none" stroke="' + (isDark ? '#475569' : '#94a3b8') + '" ' +
-                            'stroke-width="1.3" stroke-dasharray="4 4" opacity="' + opacity + '" style="cursor:pointer;" ' +
-                            'onmouseenter="onTransportRouteHover(' + i + ',' + j + ')" ' +
-                            'onmouseleave="onTransportRouteLeave()"/>';
+                    // 計算交錯式防重疊參數 t (讓不同路線標籤均勻分布在左中右，絕不擠在正中央)
+                    if (transportData.showBadges || (activeFocus && isHighlighted)) {
+                        const staggerSlot = (i * 2 + j * 3) % 5; // 0, 1, 2, 3, 4
+                        const t = 0.24 + staggerSlot * 0.13;      // 0.24 ~ 0.76
+                        const pt = cubicBezierPoint(t, srcPortX, y1, cx1, cy1, cx2, cy2, dstPortX, y2);
+                        badgeRenderQueue.push({
+                            i, j, q,
+                            cost: transportData.costs[i][j],
+                            x: pt.x,
+                            y: pt.y,
+                            color: pal.main,
+                            isHighlighted,
+                            op
+                        });
                     }
                 }
             }
 
-            // 繪製左側出貨廠區節點資訊卡
+            // 3. 繪製防重疊路線明細膠囊標籤 (放在曲線層上方確保清晰可讀)
+            for (const b of badgeRenderQueue) {
+                if (activeFocus && !b.isHighlighted) continue;
+                const subCost = b.q * b.cost;
+                const pillW = 104;
+                const pillH = 26;
+                html += '<g style="cursor:pointer;" ' +
+                    'onmouseenter="setTransportHover(\'edge\',' + b.i + ',' + b.j + ')" ' +
+                    'onmouseleave="clearTransportHover()" ' +
+                    'onclick="toggleTransportLock(\'edge\',' + b.i + ',' + b.j + ')">' +
+                    '<rect x="' + (b.x - pillW / 2) + '" y="' + (b.y - pillH / 2) + '" width="' + pillW + '" height="' + pillH + '" rx="8" ' +
+                    'fill="' + (isDark ? '#0f172a' : '#ffffff') + '" stroke="' + b.color + '" stroke-width="1.8" filter="url(#cardShadow)"/>' +
+                    '<text x="' + b.x + '" y="' + (b.y + 4) + '" text-anchor="middle" font-size="11" font-weight="800" fill="' + (isDark ? '#f8fafc' : '#0f172a') + '">' +
+                    b.q + '箱 · @$' + b.cost + ' ($' + subCost + ')' +
+                    '</text></g>';
+            }
+
+            // 4. 繪製左側出貨廠區高質感節點卡片
             for (let i = 0; i < m; i++) {
-                const cy = srcY[i];
-                const topY = cy - cardH / 2;
-                const sColor = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
-                const shipped = sol.rowShipped[i];
+                const pal = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
+                const cy = sY(i);
+                const topY = cy - srcCardH / 2;
+                const used = sol.sourceUsed[i];
                 const cap = transportData.supply[i];
-                const pct = cap > 0 ? Math.min(100, Math.round((shipped / cap) * 100)) : 0;
-                const isTight = cap > 0 && shipped >= cap;
-                const isFocused = focusNode && focusNode.type === 'source' && focusNode.index === i;
+                const pct = cap > 0 ? Math.min(100, Math.round((used / cap) * 100)) : 0;
+                const isTight = cap > 0 && used === cap;
+                const isLocked = transportData.lockedTarget && transportData.lockedTarget.type === 'src' && transportData.lockedTarget.i === i;
 
-                nodeLayer += '<g style="cursor:pointer;" ' +
-                    'onclick="onTransportNodeClick(\'source\',' + i + ')" ' +
-                    'onmouseenter="onTransportNodeHover(\'source\',' + i + ')" ' +
-                    'onmouseleave="onTransportNodeLeave()">' +
-                    '<rect x="' + leftX + '" y="' + topY + '" width="' + cardW + '" height="' + cardH + '" rx="12" ' +
-                    'fill="' + (isDark ? '#1e293b' : '#ffffff') + '" ' +
-                    'stroke="' + (isFocused ? sColor : (isDark ? '#334155' : '#cbd5e1')) + '" ' +
-                    'stroke-width="' + (isFocused ? '2.6' : '1.4') + '"/>' +
-                    '<rect x="' + leftX + '" y="' + topY + '" width="6" height="' + cardH + '" rx="3" fill="' + sColor + '"/>' +
-                    '<text x="' + (leftX + 14) + '" y="' + (topY + 21) + '" font-size="13" font-weight="800" fill="' + (isDark ? '#f8fafc' : '#0f172a') + '">' +
-                    'S' + (i + 1) + ' ' + escapeHtml(transportData.sources[i]) + '</text>' +
-                    '<rect x="' + (leftX + cardW - 58) + '" y="' + (topY + 7) + '" width="50" height="17" rx="8.5" ' +
-                    'fill="' + (isTight ? (isDark ? 'rgba(244,63,94,0.22)' : '#fff1f2') : (isDark ? 'rgba(16,185,129,0.2)' : '#ecfdf5')) + '"/>' +
-                    '<text x="' + (leftX + cardW - 33) + '" y="' + (topY + 19) + '" text-anchor="middle" font-size="9.5" font-weight="800" ' +
-                    'fill="' + (isTight ? '#f43f5e' : '#10b981') + '">' + (isTight ? '滿載Tight' : '餘裕+' + (cap - shipped)) + '</text>' +
-                    '<text x="' + (leftX + 14) + '" y="' + (topY + 39) + '" font-size="11" font-weight="600" fill="' + (isDark ? '#94a3b8' : '#64748b') + '">' +
-                    '出貨 ' + shipped + '/' + cap + ' 箱 · $' + sol.rowCost[i].toLocaleString() + '</text>' +
+                const barW = 158;
+                const fillW = Math.round((pct / 100) * barW);
+
+                html += '<g style="cursor:pointer;" ' +
+                    'onmouseenter="setTransportHover(\'src\',' + i + ',-1)" ' +
+                    'onmouseleave="clearTransportHover()" ' +
+                    'onclick="toggleTransportLock(\'src\',' + i + ',-1)">' +
+                    '<rect x="' + srcCardX + '" y="' + topY + '" width="' + srcCardW + '" height="' + srcCardH + '" rx="12" ' +
+                    'fill="' + (isDark ? '#1e293b' : '#ffffff') + '" stroke="' + (isLocked ? '#f43f5e' : pal.main) + '" stroke-width="' + (isLocked ? '2.8' : '1.8') + '" filter="url(#cardShadow)"/>' +
+                    // 左側色條
+                    '<rect x="' + srcCardX + '" y="' + (topY + 10) + '" width="5" height="' + (srcCardH - 20) + '" rx="2.5" fill="' + pal.main + '"/>' +
+                    // 廠區標題與狀態徽章
+                    '<text x="' + (srcCardX + 14) + '" y="' + (topY + 22) + '" font-size="13" font-weight="800" fill="' + (isDark ? '#f8fafc' : '#0f172a') + '">' +
+                    escapeHtml(transportData.sources[i]) + '</text>' +
+                    '<rect x="' + (srcCardX + 122) + '" y="' + (topY + 9) + '" width="58" height="17" rx="6" fill="' + (isTight ? '#ffe4e6' : '#e0e7ff') + '"/>' +
+                    '<text x="' + (srcCardX + 151) + '" y="' + (topY + 21) + '" text-anchor="middle" font-size="9.5" font-weight="800" fill="' + (isTight ? '#be123c' : '#3730a3') + '">' +
+                    (isTight ? '滿載 Tight' : '餘裕 ' + (cap - used)) + '</text>' +
+                    // 出貨量與成本文字
+                    '<text x="' + (srcCardX + 14) + '" y="' + (topY + 42) + '" font-size="11" font-weight="600" fill="' + (isDark ? '#cbd5e1' : '#475569') + '">' +
+                    '出貨 ' + used + '/' + cap + '箱 (' + pct + '%)</text>' +
+                    '<text x="' + (srcCardX + 178) + '" y="' + (topY + 42) + '" text-anchor="end" font-size="11" font-weight="800" fill="' + pal.main + '">$' + sol.sourceCost[i].toLocaleString() + '</text>' +
                     // 進度條
-                    '<rect x="' + (leftX + 14) + '" y="' + (topY + 48) + '" width="' + (cardW - 26) + '" height="6" rx="3" fill="' + (isDark ? '#0f172a' : '#e2e8f0') + '"/>' +
-                    '<rect x="' + (leftX + 14) + '" y="' + (topY + 48) + '" width="' + Math.round(((cardW - 26) * pct) / 100) + '" height="6" rx="3" fill="' + sColor + '"/>' +
-                    '<circle cx="' + portLeftX + '" cy="' + cy + '" r="5.5" fill="' + sColor + '" stroke="#ffffff" stroke-width="2"/>' +
+                    '<rect x="' + (srcCardX + 14) + '" y="' + (topY + 53) + '" width="' + barW + '" height="7" rx="3.5" fill="' + (isDark ? '#334155' : '#e2e8f0') + '"/>' +
+                    '<rect x="' + (srcCardX + 14) + '" y="' + (topY + 53) + '" width="' + fillW + '" height="7" rx="3.5" fill="' + pal.main + '"/>' +
+                    // 連接埠圓點
+                    '<circle cx="' + srcPortX + '" cy="' + cy + '" r="5.5" fill="' + pal.main + '" stroke="#ffffff" stroke-width="2"/>' +
                     '</g>';
             }
 
-            // 繪製右側配送站點節點資訊卡
+            // 5. 繪製右側配送站點高質感節點卡片
             for (let j = 0; j < n; j++) {
-                const cy = dstY[j];
-                const topY = cy - cardH / 2;
-                const dColor = DEST_PALETTE[j % DEST_PALETTE.length];
-                const rec = sol.colReceived[j];
-                const req = transportData.demand[j];
-                const pct = req > 0 ? Math.min(100, Math.round((rec / req) * 100)) : 0;
-                const isMet = rec >= req;
-                const isFocused = focusNode && focusNode.type === 'dest' && focusNode.index === j;
+                const cy = dY(j);
+                const topY = cy - dstCardH / 2;
+                const rec = sol.destReceived[j];
+                const dem = transportData.demand[j];
+                const pct = dem > 0 ? Math.min(100, Math.round((rec / dem) * 100)) : 0;
+                const isShort = rec < dem;
+                const isLocked = transportData.lockedTarget && transportData.lockedTarget.type === 'dst' && transportData.lockedTarget.j === j;
 
-                nodeLayer += '<g style="cursor:pointer;" ' +
-                    'onclick="onTransportNodeClick(\'dest\',' + j + ')" ' +
-                    'onmouseenter="onTransportNodeHover(\'dest\',' + j + ')" ' +
-                    'onmouseleave="onTransportNodeLeave()">' +
-                    '<rect x="' + rightX + '" y="' + topY + '" width="' + cardW + '" height="' + cardH + '" rx="12" ' +
-                    'fill="' + (isDark ? '#1e293b' : '#ffffff') + '" ' +
-                    'stroke="' + (isFocused ? dColor : (isDark ? '#334155' : '#cbd5e1')) + '" ' +
-                    'stroke-width="' + (isFocused ? '2.6' : '1.4') + '"/>' +
-                    '<rect x="' + (rightX + cardW - 6) + '" y="' + topY + '" width="6" height="' + cardH + '" rx="3" fill="' + dColor + '"/>' +
-                    '<text x="' + (rightX + 12) + '" y="' + (topY + 21) + '" font-size="13" font-weight="800" fill="' + (isDark ? '#f8fafc' : '#0f172a') + '">' +
-                    'D' + (j + 1) + ' ' + escapeHtml(transportData.destinations[j]) + '</text>' +
-                    '<rect x="' + (rightX + cardW - 64) + '" y="' + (topY + 7) + '" width="52" height="17" rx="8.5" ' +
-                    'fill="' + (isMet ? (isDark ? 'rgba(16,185,129,0.2)' : '#ecfdf5') : (isDark ? 'rgba(244,63,94,0.22)' : '#fff1f2')) + '"/>' +
-                    '<text x="' + (rightX + cardW - 38) + '" y="' + (topY + 19) + '" text-anchor="middle" font-size="9.5" font-weight="800" ' +
-                    'fill="' + (isMet ? '#10b981' : '#f43f5e') + '">' + (isMet ? '100%達標' : '缺口-' + (req - rec)) + '</text>' +
-                    '<text x="' + (rightX + 12) + '" y="' + (topY + 39) + '" font-size="11" font-weight="600" fill="' + (isDark ? '#94a3b8' : '#64748b') + '">' +
-                    '到貨 ' + rec + '/' + req + ' 箱 · $' + sol.colCost[j].toLocaleString() + '</text>' +
-                    '<rect x="' + (rightX + 12) + '" y="' + (topY + 48) + '" width="' + (cardW - 26) + '" height="6" rx="3" fill="' + (isDark ? '#0f172a' : '#e2e8f0') + '"/>' +
-                    '<rect x="' + (rightX + 12) + '" y="' + (topY + 48) + '" width="' + Math.round(((cardW - 26) * pct) / 100) + '" height="6" rx="3" fill="' + dColor + '"/>' +
-                    '<circle cx="' + portRightX + '" cy="' + cy + '" r="5.5" fill="' + dColor + '" stroke="#ffffff" stroke-width="2"/>' +
+                const barW = 158;
+                const fillW = Math.round((pct / 100) * barW);
+                const accent = isShort ? '#f59e0b' : '#10b981';
+
+                html += '<g style="cursor:pointer;" ' +
+                    'onmouseenter="setTransportHover(\'dst\',-1,' + j + ')" ' +
+                    'onmouseleave="clearTransportHover()" ' +
+                    'onclick="toggleTransportLock(\'dst\',-1,' + j + ')">' +
+                    '<rect x="' + dstCardX + '" y="' + topY + '" width="' + dstCardW + '" height="' + dstCardH + '" rx="12" ' +
+                    'fill="' + (isDark ? '#1e293b' : '#ffffff') + '" stroke="' + (isLocked ? '#f43f5e' : accent) + '" stroke-width="' + (isLocked ? '2.8' : '1.8') + '" filter="url(#cardShadow)"/>' +
+                    // 右側色條
+                    '<rect x="' + (dstCardX + dstCardW - 5) + '" y="' + (topY + 10) + '" width="5" height="' + (dstCardH - 20) + '" rx="2.5" fill="' + accent + '"/>' +
+                    // 站點標題與滿足徽章
+                    '<text x="' + (dstCardX + 14) + '" y="' + (topY + 22) + '" font-size="13" font-weight="800" fill="' + (isDark ? '#f8fafc' : '#0f172a') + '">' +
+                    escapeHtml(transportData.destinations[j]) + '</text>' +
+                    '<rect x="' + (dstCardX + 118) + '" y="' + (topY + 9) + '" width="60" height="17" rx="6" fill="' + (isShort ? '#fef3c7' : '#d1fae5') + '"/>' +
+                    '<text x="' + (dstCardX + 148) + '" y="' + (topY + 21) + '" text-anchor="middle" font-size="9.5" font-weight="800" fill="' + (isShort ? '#b45309' : '#065f46') + '">' +
+                    (isShort ? '缺口 ' + (dem - rec) : '100% 達標') + '</text>' +
+                    // 收貨量與成本文字
+                    '<text x="' + (dstCardX + 14) + '" y="' + (topY + 42) + '" font-size="11" font-weight="600" fill="' + (isDark ? '#cbd5e1' : '#475569') + '">' +
+                    '到貨 ' + rec + '/' + dem + '箱 (' + pct + '%)</text>' +
+                    '<text x="' + (dstCardX + 176) + '" y="' + (topY + 42) + '" text-anchor="end" font-size="11" font-weight="800" fill="' + accent + '">$' + sol.destCost[j].toLocaleString() + '</text>' +
+                    // 進度條
+                    '<rect x="' + (dstCardX + 14) + '" y="' + (topY + 53) + '" width="' + barW + '" height="7" rx="3.5" fill="' + (isDark ? '#334155' : '#e2e8f0') + '"/>' +
+                    '<rect x="' + (dstCardX + 14) + '" y="' + (topY + 53) + '" width="' + fillW + '" height="7" rx="3.5" fill="' + accent + '"/>' +
+                    // 連接埠圓點
+                    '<circle cx="' + dstPortX + '" cy="' + cy + '" r="5.5" fill="' + accent + '" stroke="#ffffff" stroke-width="2"/>' +
                     '</g>';
             }
 
-            svg.innerHTML = defs + bgLayer + edgeLayer + badgeLayer + nodeLayer;
+            svg.innerHTML = html;
         }
 
         /**
-         * 模式 B：最佳調撥與邊際機會成本熱力圖 (Reduced Cost Heatmap)
+         * 模式 B：最佳配置與邊際機會成本 (Reduced Cost Δ_ij) 視覺化熱力圖
          */
         function renderTransportHeatmap() {
             const box = document.getElementById('transport-heatmap-grid');
@@ -2804,45 +2547,104 @@
 
             const m = transportData.sources.length;
             const n = transportData.destinations.length;
+            const maxAlloc = Math.max(1, ...sol.alloc.flat());
 
-            let html = '<table class="lp-table"><thead><tr><th>出貨 \\ 站點</th>';
+            let html = '<div class="table-responsive"><table class="lp-table" style="border-spacing:6px;border-collapse:separate;">';
+            html += '<thead><tr><th class="left">廠區 \\ 站點 (對偶乘數 v<sub>j</sub>)</th>';
             for (let j = 0; j < n; j++) {
-                html += '<th>D<sub>' + (j + 1) + '</sub> ' + escapeHtml(transportData.destinations[j]) + '<br><span style="font-size:10.5px;color:var(--primary);">v<sub>' + (j + 1) + '</sub>=' + sol.v[j] + '</span></th>';
+                html += '<th>' + escapeHtml(transportData.destinations[j]) + '<br><span style="font-size:10px;color:var(--text-muted);">v<sub>' + (j + 1) + '</sub> = ' + sol.v[j] + '</span></th>';
             }
-            html += '</tr></thead><tbody>';
+            html += '<th>廠區出貨合計</th></tr></thead><tbody>';
 
             for (let i = 0; i < m; i++) {
-                html += '<tr><td class="left" style="font-weight:800;">S<sub>' + (i + 1) + '</sub> ' + escapeHtml(transportData.sources[i]) + '<br><span style="font-size:10.5px;color:var(--primary);">u<sub>' + (i + 1) + '</sub>=' + sol.u[i] + '</span></td>';
+                const pal = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
+                html += '<tr>';
+                html += '<td class="left" style="font-weight:800;border-left:4px solid ' + pal.main + ';padding-left:10px;">' +
+                    escapeHtml(transportData.sources[i]) +
+                    '<div style="font-size:10px;color:var(--text-muted);font-weight:600;">u<sub>' + (i + 1) + '</sub> = ' + sol.u[i] + '</div></td>';
+
                 for (let j = 0; j < n; j++) {
                     const q = sol.alloc[i][j];
                     const c = transportData.costs[i][j];
                     const rc = sol.reducedCosts[i][j];
 
                     if (q > 0) {
-                        html += '<td><div class="heatmap-cell" style="background:var(--emerald-light);border:1.5px solid #10b981;">' +
-                            '<div style="font-weight:900;font-size:15px;color:var(--emerald-dark);">' + q + ' 箱</div>' +
-                            '<div style="font-size:11px;font-weight:700;">單價 $' + c + ' · 小計 $' + (q * c).toLocaleString() + '</div>' +
-                            '<div style="font-size:10px;color:var(--emerald-dark);margin-top:2px;">★ 最佳基變數 (Δ=0)</div>' +
+                        const intensity = 0.16 + (q / maxAlloc) * 0.28;
+                        html += '<td><div class="heatmap-cell" style="background:rgba(16,185,129,' + intensity.toFixed(2) + ');border:1.5px solid #10b981;">' +
+                            '<div style="font-size:15px;font-weight:900;color:var(--emerald-dark);">' + q + ' 箱</div>' +
+                            '<div style="font-size:11px;font-weight:700;color:var(--text-primary);">單價 $' + c + ' · $' + (q * c).toLocaleString() + '</div>' +
+                            '<div style="font-size:10px;color:var(--emerald-dark);font-weight:700;">啟用基變數 (Δ=0)</div>' +
                             '</div></td>';
                     } else {
-                        const isAltOpt = Math.abs(rc) < 1e-4;
-                        html += '<td><div class="heatmap-cell" style="background:' + (isAltOpt ? 'var(--amber-light)' : 'var(--bg-subtle)') + ';border:1px solid ' + (isAltOpt ? '#f59e0b' : 'var(--border-color)') + ';">' +
-                            '<div style="font-weight:700;font-size:13px;color:var(--text-muted);">0 箱 (單價 $' + c + ')</div>' +
-                            '<div style="font-size:11px;font-weight:800;color:' + (isAltOpt ? 'var(--amber-dark)' : 'var(--rose-dark)') + ';margin-top:2px;">' +
-                            (isAltOpt ? '多重最佳解候選 (Δ=0)' : '邊際成本 Δ = +$' + rc) + '</div>' +
-                            '<div style="font-size:10px;color:var(--text-muted);">需降價 ≥ $' + Math.max(0, rc) + ' 才啟用</div>' +
-                            '</div></td>';
+                        const isAlt = Math.abs(rc) < 1e-5;
+                        html += '<td><div class="heatmap-cell" style="background:var(--bg-subtle);border:1px dashed ' + (isAlt ? '#f59e0b' : 'var(--border-strong)') + ';">' +
+                            '<div style="font-size:13px;font-weight:700;color:var(--text-muted);">0 箱 (單價 $' + c + ')</div>' +
+                            '<div style="font-size:11px;font-weight:800;color:' + (isAlt ? 'var(--amber-dark)' : 'var(--rose-dark)') + ';margin-top:2px;">' +
+                            (isAlt ? '★ 替代最佳路線 (Δ=0)' : '邊際成本 Δ = +$' + rc) +
+                            '</div>' +
+                            '<div style="font-size:10px;color:var(--text-muted);">' +
+                            (isAlt ? '可與現有路線互換不增成本' : '運費需降至 $' + Math.max(0, c - rc) + ' 才划算') +
+                            '</div></div></td>';
                     }
                 }
+                html += '<td style="font-weight:800;font-family:monospace;">' + sol.sourceUsed[i] + ' / ' + transportData.supply[i] + ' 箱<br><span style="color:var(--primary);">$' + sol.sourceCost[i].toLocaleString() + '</span></td>';
                 html += '</tr>';
             }
-            html += '</tbody></table>';
+            html += '</tbody></table></div>';
             box.innerHTML = html;
         }
 
-        /**
-         * 下方區塊 3：最佳調撥決策矩陣與邊際機會成本明細表
-         */
+        function updateTransportInfoBadge(target) {
+            const info = document.getElementById('transport-hover-info');
+            const sol = transportData.solution;
+            if (!info || !sol) return;
+
+            if (!target) {
+                info.textContent = '💡 點擊或移過節點/路線檢視明細';
+                info.className = 'badge badge-indigo';
+                return;
+            }
+            const { type, i, j } = target;
+            if (type === 'edge') {
+                const q = sol.alloc[i][j];
+                const c = transportData.costs[i][j];
+                const rc = sol.reducedCosts[i][j];
+                if (q > 0) {
+                    info.textContent = transportData.sources[i] + ' → ' + transportData.destinations[j] + '：配送 ' + q + ' 箱 × $' + c + ' = $' + (q * c).toLocaleString();
+                    info.className = 'badge badge-emerald';
+                } else {
+                    info.textContent = transportData.sources[i] + ' → ' + transportData.destinations[j] + '：未啟用 (單價 $' + c + '，邊際機會成本 Δ = +$' + rc + '/箱)';
+                    info.className = 'badge badge-amber';
+                }
+            } else if (type === 'src') {
+                const used = sol.sourceUsed[i];
+                const cap = transportData.supply[i];
+                info.textContent = transportData.sources[i] + '：總出貨 ' + used + '/' + cap + ' 箱｜出貨總成本 $' + sol.sourceCost[i].toLocaleString();
+                info.className = 'badge badge-indigo';
+            } else if (type === 'dst') {
+                const rec = sol.destReceived[j];
+                const dem = transportData.demand[j];
+                info.textContent = transportData.destinations[j] + '：總到貨 ' + rec + '/' + dem + ' 箱｜到貨總成本 $' + sol.destCost[j].toLocaleString();
+                info.className = 'badge badge-emerald';
+            }
+        }
+
+        function setTransportHover(type, i, j) {
+            transportData.hoverTarget = { type, i, j };
+            if (!transportData.lockedTarget) {
+                updateTransportInfoBadge(transportData.hoverTarget);
+            }
+            renderTransportVisualization();
+        }
+
+        function clearTransportHover() {
+            transportData.hoverTarget = null;
+            if (!transportData.lockedTarget) {
+                updateTransportInfoBadge(null);
+            }
+            renderTransportVisualization();
+        }
+
         function renderTransportSolutionTable() {
             const container = document.getElementById('transport-solution-container');
             const sol = transportData.solution;
@@ -2851,78 +2653,85 @@
             const m = transportData.sources.length;
             const n = transportData.destinations.length;
 
-            let html = '<table class="lp-table"><thead><tr><th class="left">出貨廠區 \\ 配送站點</th>';
+            let html = '<table class="lp-table"><thead><tr>';
+            html += '<th class="left">發貨廠區 \\ 配送站點</th>';
             for (let j = 0; j < n; j++) {
-                html += '<th>D<sub>' + (j + 1) + '</sub> ' + escapeHtml(transportData.destinations[j]) + '</th>';
+                html += '<th>' + escapeHtml(transportData.destinations[j]) + '</th>';
             }
-            html += '<th>實際出貨 / 供給上限</th><th>廠區產能狀態</th></tr></thead><tbody>';
+            html += '<th>實際出貨 / 供給上限</th>';
+            html += '<th>廠區運費小計</th>';
+            html += '<th>產能瓶頸診斷</th>';
+            html += '</tr></thead><tbody>';
 
             for (let i = 0; i < m; i++) {
-                const shipped = sol.rowShipped[i];
+                const used = sol.sourceUsed[i];
                 const cap = transportData.supply[i];
-                const isTight = cap > 0 && shipped >= cap;
+                const isTight = cap > 0 && used === cap;
+                const pal = SOURCE_PALETTE[i % SOURCE_PALETTE.length];
 
                 html += '<tr>';
-                html += '<td class="left" style="font-weight:800;">S<sub>' + (i + 1) + '</sub> ' + escapeHtml(transportData.sources[i]) + '</td>';
-
+                html += '<td class="left" style="font-weight:800;"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:' + pal.main + ';margin-right:6px;"></span>' + escapeHtml(transportData.sources[i]) + '</td>';
                 for (let j = 0; j < n; j++) {
                     const q = sol.alloc[i][j];
                     const c = transportData.costs[i][j];
                     const rc = sol.reducedCosts[i][j];
                     if (q > 0) {
+                        const pctCost = sol.totalCost > 0 ? Math.round((q * c / sol.totalCost) * 100) : 0;
                         html += '<td><div class="alloc-box-active">' +
-                            '<div style="font-size:14px;font-weight:900;color:var(--emerald-dark);">x<sub>' + (i + 1) + (j + 1) + '</sub><sup>*</sup> = ' + q + ' 箱</div>' +
-                            '<div style="font-size:11px;color:var(--text-secondary);">@ $' + c + ' = <strong>$' + (q * c).toLocaleString() + '</strong></div>' +
+                            '<div style="font-weight:800;font-size:14px;color:var(--emerald-dark);">x<sub>' + (i + 1) + (j + 1) + '</sub><sup>*</sup> = ' + q + ' 箱</div>' +
+                            '<div style="font-size:11px;color:var(--text-secondary);">@$' + c + ' · 小計 $' + (q * c).toLocaleString() + ' (' + pctCost + '%)</div>' +
                             '</div></td>';
                     } else {
+                        const isAlt = Math.abs(rc) < 1e-5;
                         html += '<td><div class="alloc-box-zero">' +
-                            '<div style="font-size:12px;font-weight:700;">0 箱 <span style="font-size:11px;">(@$' + c + ')</span></div>' +
-                            '<div style="font-size:10.5px;color:' + (rc <= 0 ? 'var(--amber-dark)' : 'var(--text-muted)') + ';">邊際成本 Δ<sub>' + (i + 1) + (j + 1) + '</sub> = ' + (rc >= 0 ? '+' : '') + rc + '</div>' +
-                            '</div></td>';
+                            '<div style="font-weight:600;">0 箱 (@$' + c + ')</div>' +
+                            '<div style="font-size:10.5px;color:' + (isAlt ? 'var(--amber-dark)' : 'var(--text-muted)') + ';font-weight:700;">' +
+                            (isAlt ? 'Δ = 0 (多重最佳解)' : '機會成本 Δ = +$' + rc) +
+                            '</div></div></td>';
                     }
                 }
-
-                html += '<td style="font-weight:800;">' + shipped + ' / ' + cap + ' 箱<br><span style="font-size:11px;color:var(--primary);">小計 $' + sol.rowCost[i].toLocaleString() + '</span></td>';
+                html += '<td style="font-family:monospace;font-weight:700;">' + used + ' / ' + cap + ' 箱</td>';
+                html += '<td style="font-family:monospace;font-weight:800;color:var(--primary);">$' + sol.sourceCost[i].toLocaleString() + '</td>';
                 html += '<td>' + (isTight
-                    ? '<span class="badge badge-rose">● 100% 滿載瓶頸 (Tight)</span>'
-                    : '<span class="badge badge-emerald">● 剩餘產能 ' + (cap - shipped) + ' 箱</span>') + '</td>';
+                    ? '<span class="badge badge-rose">Tight (100% 滿載瓶頸)</span>'
+                    : '<span class="badge badge-muted">Slack (餘裕 ' + (cap - used) + ' 箱)</span>') + '</td>';
                 html += '</tr>';
             }
 
-            // 底部各站點到貨彙整列
-            html += '<tr style="background:var(--bg-subtle);font-weight:800;">';
-            html += '<td class="left">實際到貨 / 站點需求</td>';
+            // 底部站點到貨匯總列
+            html += '<tr style="background:var(--bg-subtle);font-weight:700;">';
+            html += '<td class="left" style="color:var(--emerald-dark);">站點實際到貨 / 需求</td>';
             for (let j = 0; j < n; j++) {
-                const rec = sol.colReceived[j];
-                const req = transportData.demand[j];
-                const isMet = rec >= req;
-                html += '<td>' +
-                    '<div>' + rec + ' / ' + req + ' 箱</div>' +
-                    '<div style="margin-top:3px;">' + (isMet
-                        ? '<span class="badge badge-emerald">✓ 100% 滿足 ($' + sol.colCost[j].toLocaleString() + ')</span>'
-                        : '<span class="badge badge-rose">缺口 -' + (req - rec) + ' 箱</span>') + '</div>' +
+                const rec = sol.destReceived[j];
+                const dem = transportData.demand[j];
+                html += '<td style="font-family:monospace;">' +
+                    '<div>' + rec + ' / ' + dem + ' 箱</div>' +
+                    '<div style="font-size:11px;color:var(--emerald-dark);">到貨成本 $' + sol.destCost[j].toLocaleString() + '</div>' +
                     '</td>';
             }
-            html += '<td colspan="2" style="color:var(--emerald-dark);font-size:14px;">★ 全網最低總運費 Z* = $' + sol.totalCost.toLocaleString() + '</td></tr>';
-            html += '</tbody></table>';
+            html += '<td style="font-family:monospace;font-weight:800;">總運量 ' + sol.totalShipped + ' 箱</td>';
+            html += '<td style="font-family:monospace;font-weight:900;color:var(--emerald-dark);font-size:14px;">$' + sol.totalCost.toLocaleString() + '</td>';
+            html += '<td><span class="badge badge-emerald">全域最佳解 ★</span></td>';
+            html += '</tr></tbody></table>';
 
             container.innerHTML = html;
         }
 
 
         /* =====================================================================
-           Tab 2: 👥 全週 7 天循環人力排班最佳化 (Workforce Scheduling ILP Engine)
+           Tab 2: 人力排班最佳化 (7-Day Cyclic Workforce Scheduling)
+           連上 5 天、連休 2 天 (x₁ ~ x₇)
            ===================================================================== */
         const DAYS_TW = ['週一', '週二', '週三', '週四', '週五', '週六', '週日'];
 
         const SHIFT_PATTERNS = [
-            { id: 'x₁', name: '班別一 (平日班)', offText: '休 週六、週日', mask: [1, 1, 1, 1, 1, 0, 0], isWeekday: true },
-            { id: 'x₂', name: '班別二', offText: '休 週日、週一', mask: [0, 1, 1, 1, 1, 1, 0], isWeekday: false },
-            { id: 'x₃', name: '班別三', offText: '休 週一、週二', mask: [0, 0, 1, 1, 1, 1, 1], isWeekday: false },
-            { id: 'x₄', name: '班別四', offText: '休 週二、週三', mask: [1, 0, 0, 1, 1, 1, 1], isWeekday: false },
-            { id: 'x₅', name: '班別五', offText: '休 週三、週四', mask: [1, 1, 0, 0, 1, 1, 1], isWeekday: false },
-            { id: 'x₆', name: '班別六', offText: '休 週四、週五', mask: [1, 1, 1, 0, 0, 1, 1], isWeekday: false },
-            { id: 'x₇', name: '班別七', offText: '休 週五、週六', mask: [1, 1, 1, 1, 0, 0, 1], isWeekday: false }
+            { code: 'x₁', title: '班別一 (週一~週五班)', offText: '連休 六、日', mask: [1, 1, 1, 1, 1, 0, 0], weekend: false },
+            { code: 'x₂', title: '班別二 (週二~週六班)', offText: '連休 日、一', mask: [0, 1, 1, 1, 1, 1, 0], weekend: true },
+            { code: 'x₃', title: '班別三 (週三~週日班)', offText: '連休 一、二', mask: [0, 0, 1, 1, 1, 1, 1], weekend: true },
+            { code: 'x₄', title: '班別四 (週四~週一班)', offText: '連休 二、三', mask: [1, 0, 0, 1, 1, 1, 1], weekend: true },
+            { code: 'x₅', title: '班別五 (週五~週二班)', offText: '連休 三、四', mask: [1, 1, 0, 0, 1, 1, 1], weekend: true },
+            { code: 'x₆', title: '班別六 (週六~週三班)', offText: '連休 四、五', mask: [1, 1, 1, 0, 0, 1, 1], weekend: true },
+            { code: 'x₇', title: '班別七 (週日~週四班)', offText: '連休 五、六', mask: [1, 1, 1, 1, 0, 0, 1], weekend: true }
         ];
 
         const workforceData = {
@@ -2935,35 +2744,33 @@
         const WORKFORCE_PRESETS = {
             retail: {
                 demands: [14, 13, 15, 16, 19, 22, 18],
-                wage1: 7500,
-                wage2: 8250,
-                toast: '已載入「連鎖門市 (週末尖峰)」排班情境'
+                w1: 7500,
+                w2: 8250,
+                toast: '已載入「連鎖門市 (週末客流尖峰)」排班需求'
             },
             factory: {
-                demands: [24, 25, 25, 24, 22, 12, 10],
-                wage1: 8000,
-                wage2: 9000,
-                toast: '已載入「製造產線 (平日尖峰)」排班情境'
+                demands: [22, 24, 24, 23, 21, 12, 10],
+                w1: 8000,
+                w2: 9000,
+                toast: '已載入「製造產線 (平日稼動尖峰)」排班需求'
             },
             logistics: {
-                demands: [20, 22, 24, 26, 28, 30, 25],
-                wage1: 8500,
-                wage2: 9500,
-                toast: '已載入「電商倉儲 (大促高需求)」排班情境'
+                demands: [20, 20, 22, 25, 28, 26, 20],
+                w1: 7800,
+                w2: 8500,
+                toast: '已載入「電商倉儲 (大促銷高需求)」排班需求'
             }
         };
 
         function loadWorkforcePreset(key) {
             const p = WORKFORCE_PRESETS[key] || WORKFORCE_PRESETS.retail;
             workforceData.demands = [...p.demands];
-            workforceData.wageWeekday = p.wage1;
-            workforceData.wageWeekend = p.wage2;
-
-            document.getElementById('wf-wage1-slider').value = p.wage1;
-            document.getElementById('wf-wage2-slider').value = p.wage2;
-            document.getElementById('wf-wage1-val').textContent = p.wage1.toLocaleString();
-            document.getElementById('wf-wage2-val').textContent = p.wage2.toLocaleString();
-
+            workforceData.wageWeekday = p.w1;
+            workforceData.wageWeekend = p.w2;
+            document.getElementById('wf-wage1-slider').value = p.w1;
+            document.getElementById('wf-wage2-slider').value = p.w2;
+            document.getElementById('wf-wage1-val').textContent = p.w1.toLocaleString();
+            document.getElementById('wf-wage2-val').textContent = p.w2.toLocaleString();
             renderWorkforceSliders();
             solveAndRenderWorkforce();
             notifyToast(p.toast);
@@ -2971,25 +2778,23 @@
 
         function renderWorkforceSliders() {
             const box = document.getElementById('workforce-sliders-box');
-            if (!box) return;
             let html = '';
             for (let d = 0; d < 7; d++) {
-                const isWeekend = d >= 5;
-                html += '<div style="display:grid;grid-template-columns:82px 1fr 64px;align-items:center;gap:10px;">' +
-                    '<span style="font-size:12.5px;font-weight:800;color:' + (isWeekend ? 'var(--rose-dark)' : 'var(--text-primary)') + ';">' +
-                    DAYS_TW[d] + ' (b<sub>' + (d + 1) + '</sub>)</span>' +
+                const isWknd = d >= 5;
+                html += '<div style="display:flex;align-items:center;gap:10px;">' +
+                    '<span style="width:46px;font-size:12.5px;font-weight:700;color:' + (isWknd ? 'var(--rose-dark)' : 'var(--text-primary)') + ';">' + DAYS_TW[d] + '</span>' +
                     '<input type="range" min="0" max="40" step="1" value="' + workforceData.demands[d] + '" ' +
-                    'oninput="onWorkforceDemandChange(' + d + ', this.value)">' +
-                    '<input type="number" min="0" max="80" class="num-input" style="width:60px;padding:4px;" value="' + workforceData.demands[d] + '" ' +
-                    'oninput="onWorkforceDemandChange(' + d + ', this.value)">' +
+                    'oninput="onWorkforceDemandChange(' + d + ',this.value)" style="flex:1;">' +
+                    '<input type="number" min="0" max="60" class="num-input" style="width:58px;padding:4px 6px;" value="' + workforceData.demands[d] + '" ' +
+                    'oninput="onWorkforceDemandChange(' + d + ',this.value)">' +
+                    '<span style="font-size:12px;color:var(--text-muted);">人</span>' +
                     '</div>';
             }
             box.innerHTML = html;
         }
 
-        function onWorkforceDemandChange(dayIdx, val) {
-            const num = Math.max(0, Math.min(80, Math.round(parseFloat(val) || 0)));
-            workforceData.demands[dayIdx] = num;
+        function onWorkforceDemandChange(d, val) {
+            workforceData.demands[d] = Math.max(0, Math.min(60, parseInt(val, 10) || 0));
             renderWorkforceSliders();
             solveAndRenderWorkforce();
         }
@@ -3005,214 +2810,755 @@
         }
 
         /**
-         * 7 天循環排班整數線性規劃 (Cyclic Staff Scheduling ILP Solver)
-         * 利用轉換變數 y_j = N - x_j (休假人數) 求精確整數最佳解
+         * 7 班別循環排班整數線性規劃求解器 (Exact Cyclic Shift ILP Solver)
          */
-        function solveWorkforceILP(demands, w1, w2) {
-            const sumD = demands.reduce((a, b) => a + b, 0);
-            const maxD = Math.max(...demands);
-            const lpLowerBound = Math.max(maxD, sumD / 5);
-            const minN = Math.ceil(lpLowerBound);
+        function solveWorkforceILP(demands, wWeekday, wWeekend) {
+            const shiftWages = SHIFT_PATTERNS.map(s => s.weekend ? wWeekend : wWeekday);
+            const sumReq = demands.reduce((a, b) => a + b, 0);
+            const lpLower = Math.max(sumReq / 5, ...demands);
 
-            // 對給定的總人數 N，以分支搜尋找出滿足 y_j + y_{j+1} <= N - b_d 且使平日班 x_1 最大化(或總薪資最低)的整數解
-            function findBestForTotalN(N) {
-                // 建立休假上限 u_d = N - demands[d]
-                // 每日休假的一對班別:
-                // 週一(0): x2, x3 休 | 週二(1): x3, x4 休 | 週三(2): x4, x5 休 | 週四(3): x5, x6 休
-                // 週五(4): x6, x7 休 | 週六(5): x7, x1 休 | 週日(6): x1, x2 休
-                const cap = demands.map(b => N - b);
-                if (cap.some(c => c < 0)) return null;
+            let bestTotalStaff = Infinity;
+            let bestCost = Infinity;
+            let bestShifts = [0, 0, 0, 0, 0, 0, 0];
 
-                let bestShifts = null;
-                let bestCost = Infinity;
+            const startN = Math.ceil(lpLower);
+            for (let targetN = startN; targetN <= startN + 6; targetN++) {
+                if (bestCost < Infinity && targetN * Math.min(wWeekday, wWeekend) >= bestCost) {
+                    break;
+                }
 
-                // 枚舉 x1 (平日班人數: 0..N) 與 x2 (0..N-x1)
-                for (let x1 = N; x1 >= 0; x1--) {
-                    const maxX7FromSat = cap[5] - x1;
-                    const maxX2FromSun = cap[6] - x1;
-                    if (maxX7FromSat < 0 || maxX2FromSun < 0) continue;
+                const cap = demands.map(b => targetN - b);
+                if (cap.some(c => c < 0)) continue;
 
-                    for (let x2 = 0; x2 <= Math.min(N - x1, maxX2FromSun); x2++) {
-                        const maxX3 = cap[0] - x2;
-                        if (maxX3 < 0) continue;
+                const rToShift = [2, 3, 4, 5, 6, 0, 1];
+                const rWage = rToShift.map(idx => shiftWages[idx]);
+                const r = new Array(7).fill(0);
+                const maxR0 = Math.min(cap[0], cap[1]);
 
-                        // 為了讓 x1+..+x7 = N 且滿足相鄰上限，使用緊湊邊界搜尋 x3..x7
-                        const remAfter12 = N - x1 - x2;
-                        for (let x3 = 0; x3 <= Math.min(remAfter12, maxX3); x3++) {
-                            const maxX4 = cap[1] - x3;
-                            if (maxX4 < 0) continue;
-                            const remAfter3 = remAfter12 - x3;
-
-                            for (let x4 = 0; x4 <= Math.min(remAfter3, maxX4); x4++) {
-                                const maxX5 = cap[2] - x4;
-                                if (maxX5 < 0) continue;
-                                const remAfter4 = remAfter3 - x4;
-
-                                // x5 + x6 + x7 = remAfter4
-                                // 且 x5 + x6 <= cap[3] => x7 >= remAfter4 - cap[3]
-                                // 且 x6 + x7 <= cap[4] => x5 >= remAfter4 - cap[4]
-                                const minX5 = Math.max(0, remAfter4 - cap[4]);
-                                const upperX5 = Math.min(remAfter4, maxX5);
-                                if (minX5 > upperX5) continue;
-
-                                for (let x5 = minX5; x5 <= upperX5; x5++) {
-                                    const maxX6 = cap[3] - x5;
-                                    const remAfter5 = remAfter4 - x5;
-                                    // x6 + x7 = remAfter5, x7 <= maxX7FromSat => x6 >= remAfter5 - maxX7FromSat
-                                    const minX6 = Math.max(0, remAfter5 - maxX7FromSat);
-                                    const upperX6 = Math.min(remAfter5, maxX6);
-                                    if (minX6 > upperX6) continue;
-
-                                    const x6 = minX6;
-                                    const x7 = remAfter5 - x6;
-                                    if (x6 + x7 <= cap[4] && x7 <= maxX7FromSat) {
-                                        const cost = x1 * w1 + (N - x1) * w2;
-                                        if (cost < bestCost) {
-                                            bestCost = cost;
-                                            bestShifts = [x1, x2, x3, x4, x5, x6, x7];
-                                        }
-                                        break;
-                                    }
-                                }
+                function search(idx, sumSoFar, costSoFar) {
+                    if (sumSoFar > targetN) return;
+                    if (idx === 7) {
+                        if (sumSoFar === targetN && r[6] + r[0] <= cap[0]) {
+                            if (targetN < bestTotalStaff || (targetN === bestTotalStaff && costSoFar < bestCost)) {
+                                bestTotalStaff = targetN;
+                                bestCost = costSoFar;
+                                const cand = new Array(7).fill(0);
+                                for (let k = 0; k < 7; k++) cand[rToShift[k]] = r[k];
+                                bestShifts = cand;
                             }
                         }
+                        return;
+                    }
+
+                    let hi = cap[idx] - r[idx - 1];
+                    if (idx < 6) hi = Math.min(hi, cap[idx + 1]);
+                    else hi = Math.min(hi, cap[0] - r[0]);
+                    hi = Math.min(hi, targetN - sumSoFar);
+
+                    for (let v = hi; v >= 0; v--) {
+                        r[idx] = v;
+                        search(idx + 1, sumSoFar + v, costSoFar + v * rWage[idx]);
                     }
                 }
-                return bestShifts ? { shifts: bestShifts, totalCost: bestCost, totalStaff: N } : null;
+
+                for (let v0 = 0; v0 <= maxR0; v0++) {
+                    r[0] = v0;
+                    search(1, v0, v0 * rWage[0]);
+                }
+
+                if (bestTotalStaff < Infinity) break;
             }
 
-            let result = null;
-            for (let N = minN; N <= minN + 15; N++) {
-                result = findBestForTotalN(N);
-                if (result) break;
-            }
-
-            if (!result) {
-                result = { shifts: [0, 0, 0, 0, 0, 0, 0], totalCost: 0, totalStaff: 0 };
-            }
-
-            const dailyActual = new Array(7).fill(0);
+            const actualDaily = new Array(7).fill(0);
             for (let d = 0; d < 7; d++) {
                 for (let s = 0; s < 7; s++) {
-                    if (SHIFT_PATTERNS[s].mask[d] === 1) {
-                        dailyActual[d] += result.shifts[s];
-                    }
+                    actualDaily[d] += SHIFT_PATTERNS[s].mask[d] * bestShifts[s];
                 }
             }
-            const dailySlack = dailyActual.map((act, d) => act - demands[d]);
+            const dailySlack = actualDaily.map((act, d) => act - demands[d]);
+            const totalSlack = dailySlack.reduce((a, b) => a + b, 0);
 
             return {
-                shifts: result.shifts,
-                totalStaff: result.totalStaff,
-                totalCost: result.totalCost,
-                lpLowerBound,
-                dailyActual,
-                dailySlack
+                shifts: bestShifts,
+                shiftWages,
+                totalStaff: bestTotalStaff === Infinity ? 0 : bestTotalStaff,
+                totalCost: bestCost === Infinity ? 0 : bestCost,
+                lpLower,
+                actualDaily,
+                dailySlack,
+                totalSlack
             };
         }
 
         function solveAndRenderWorkforce() {
-            const sol = solveWorkforceILP(
-                workforceData.demands,
-                workforceData.wageWeekday,
-                workforceData.wageWeekend
-            );
+            const sol = solveWorkforceILP(workforceData.demands, workforceData.wageWeekday, workforceData.wageWeekend);
             workforceData.solution = sol;
 
-            // KPI 卡片更新
             document.getElementById('wf-kpi-staff').textContent = sol.totalStaff + ' 人';
-            document.getElementById('wf-kpi-lplower').textContent = 'LP 連續下界：' + sol.lpLowerBound.toFixed(1) + ' 人';
+            document.getElementById('wf-kpi-lplower').textContent = 'LP 連續鬆弛下界：' + sol.lpLower.toFixed(1) + ' 人';
 
             document.getElementById('wf-kpi-cost').textContent = '$' + sol.totalCost.toLocaleString();
-            const avgWage = sol.totalStaff > 0 ? Math.round(sol.totalCost / sol.totalStaff) : 0;
-            document.getElementById('wf-kpi-avg').textContent = '平均每人週薪 $' + avgWage.toLocaleString();
+            const avg = sol.totalStaff > 0 ? Math.round(sol.totalCost / sol.totalStaff) : 0;
+            document.getElementById('wf-kpi-avg').textContent = '平均每人週薪 $' + avg.toLocaleString();
 
-            const tightCount = sol.dailySlack.filter(s => s === 0).length;
-            let peakDayIdx = 0;
-            workforceData.demands.forEach((v, idx) => {
-                if (v > workforceData.demands[peakDayIdx]) peakDayIdx = idx;
-            });
-            document.getElementById('wf-kpi-tight').textContent = tightCount + ' 天';
-            document.getElementById('wf-kpi-peak').textContent = '最高需求日：' + DAYS_TW[peakDayIdx] + ' (' + workforceData.demands[peakDayIdx] + '人)';
-
-            const totalReqManDays = workforceData.demands.reduce((a, b) => a + b, 0);
-            const totalActManDays = sol.dailyActual.reduce((a, b) => a + b, 0);
-            const effPct = totalActManDays > 0 ? Math.round((totalReqManDays / totalActManDays) * 100) : 100;
-            const totalSlack = sol.dailySlack.reduce((a, b) => a + b, 0);
-            document.getElementById('wf-kpi-eff').textContent = effPct + '%';
-            document.getElementById('wf-kpi-slack').textContent = '全週多餘人力 (Slack)：' + totalSlack + ' 人日';
-
-            // 繪製雙長條對比圖
-            const chartBox = document.getElementById('workforce-bar-chart');
-            const maxBarVal = Math.max(10, ...sol.dailyActual, ...workforceData.demands);
-            let barHtml = '';
-            for (let d = 0; d < 7; d++) {
-                const req = workforceData.demands[d];
-                const act = sol.dailyActual[d];
-                const reqH = Math.round((req / maxBarVal) * 165);
-                const actH = Math.round((act / maxBarVal) * 165);
-
-                barHtml += '<div class="bar-day-col">' +
-                    '<div class="bar-pair">' +
-                    '<div class="bar-pillar" style="height:' + reqH + 'px;background:#4f46e5;" title="' + DAYS_TW[d] + ' 最低需求: ' + req + '人">' +
-                    '<span class="bar-val-label" style="color:var(--primary);">' + req + '</span></div>' +
-                    '<div class="bar-pillar" style="height:' + actH + 'px;background:#10b981;" title="' + DAYS_TW[d] + ' 實際排班: ' + act + '人">' +
-                    '<span class="bar-val-label" style="color:var(--emerald-dark);">' + act + '</span></div>' +
-                    '</div>' +
-                    '<div style="margin-top:8px;font-size:12px;font-weight:800;">' + DAYS_TW[d] + '</div>' +
-                    '</div>';
+            const tightDays = sol.dailySlack.filter(s => s === 0).length;
+            let peakD = 0;
+            for (let d = 1; d < 7; d++) {
+                if (workforceData.demands[d] > workforceData.demands[peakD]) peakD = d;
             }
-            chartBox.innerHTML = barHtml;
+            document.getElementById('wf-kpi-tight').textContent = tightDays + ' 天 (無多餘人力)';
+            document.getElementById('wf-kpi-peak').textContent = '最高需求尖峰：' + DAYS_TW[peakD] + ' (' + workforceData.demands[peakD] + '人)';
 
-            // 繪製每日 Tight / Slack 狀態小卡
-            const cardsBox = document.getElementById('workforce-daily-cards');
-            let cardsHtml = '';
-            for (let d = 0; d < 7; d++) {
-                const slack = sol.dailySlack[d];
-                const isTight = slack === 0;
-                cardsHtml += '<div style="padding:8px 6px;border-radius:10px;text-align:center;background:' + (isTight ? 'var(--rose-light)' : 'var(--emerald-light)') + ';border:1px solid ' + (isTight ? 'rgba(244,63,94,0.3)' : 'rgba(16,185,129,0.3)') + ';">' +
-                    '<div style="font-size:11px;font-weight:800;">' + DAYS_TW[d] + '</div>' +
-                    '<div style="font-size:11.5px;font-weight:900;color:' + (isTight ? 'var(--rose-dark)' : 'var(--emerald-dark)') + ';margin-top:2px;">' +
-                    (isTight ? 'Tight 剛好' : 'Slack +' + slack) + '</div>' +
-                    '</div>';
-            }
-            cardsBox.innerHTML = cardsHtml;
+            const reqManDays = workforceData.demands.reduce((a, b) => a + b, 0);
+            const supManDays = sol.totalStaff * 5;
+            const eff = supManDays > 0 ? Math.round((reqManDays / supManDays) * 100) : 100;
+            document.getElementById('wf-kpi-eff').textContent = eff + '%';
+            document.getElementById('wf-kpi-slack').textContent = '全週多餘人力 (Slack)：' + sol.totalSlack + ' 人日';
 
-            // 繪製下方 7 種循環班別明細表
-            const tbody = document.getElementById('workforce-table-body');
-            let tableHtml = '';
-            for (let s = 0; s < 7; s++) {
-                const pat = SHIFT_PATTERNS[s];
-                const count = sol.shifts[s];
-                const wage = pat.isWeekday ? workforceData.wageWeekday : workforceData.wageWeekend;
-                const sub = count * wage;
-
-                tableHtml += '<tr style="' + (count > 0 ? 'background:rgba(16,185,129,0.04);' : '') + '">';
-                tableHtml += '<td class="left"><div style="font-weight:800;">' + pat.id + ' · ' + pat.name + '</div>' +
-                    '<div style="font-size:11px;color:var(--text-muted);">' + pat.offText + '</div></td>';
-
-                for (let d = 0; d < 7; d++) {
-                    const on = pat.mask[d] === 1;
-                    tableHtml += '<td>' + (on
-                        ? '<span class="badge badge-emerald">上 (' + count + ')</span>'
-                        : '<span class="badge badge-muted">休</span>') + '</td>';
-                }
-
-                tableHtml += '<td class="right" style="font-family:monospace;font-weight:700;">$' + wage.toLocaleString() + '</td>';
-                tableHtml += '<td><span class="badge ' + (count > 0 ? 'badge-indigo' : 'badge-muted') + '" style="font-size:13px;padding:4px 12px;">' +
-                    pat.id + '<sup>*</sup> = ' + count + ' 人</span></td>';
-                tableHtml += '<td class="right" style="font-family:monospace;font-weight:800;">$' + sub.toLocaleString() + '</td>';
-                tableHtml += '</tr>';
-            }
-            tbody.innerHTML = tableHtml;
+            renderWorkforceChart();
+            renderWorkforceTable();
 
             if (activeTab === 'workforce') {
                 updateLiveMathModel();
             }
         }
 
+        function renderWorkforceChart() {
+            const chartEl = document.getElementById('workforce-bar-chart');
+            const cardsEl = document.getElementById('workforce-daily-cards');
+            const sol = workforceData.solution;
+            if (!chartEl || !sol) return;
+
+            const maxV = Math.max(10, ...sol.actualDaily, ...workforceData.demands);
+            let chartHtml = '';
+            let cardsHtml = '';
+
+            for (let d = 0; d < 7; d++) {
+                const req = workforceData.demands[d];
+                const act = sol.actualDaily[d];
+                const slack = sol.dailySlack[d];
+                const isTight = slack === 0;
+
+                const hReq = Math.max(8, Math.round((req / maxV) * 165));
+                const hAct = Math.max(8, Math.round((act / maxV) * 165));
+
+                chartHtml += '<div class="bar-day-col">' +
+                    '<div style="margin-bottom:8px;">' +
+                    (isTight
+                        ? '<span class="badge badge-rose" style="font-size:10px;padding:2px 6px;">Tight</span>'
+                        : '<span class="badge badge-emerald" style="font-size:10px;padding:2px 6px;">+' + slack + '</span>') +
+                    '</div>' +
+                    '<div class="bar-pair">' +
+                    '<div class="bar-pillar" style="height:' + hReq + 'px;background:#4f46e5;">' +
+                    '<span class="bar-val-label" style="color:var(--primary);">' + req + '</span>' +
+                    '</div>' +
+                    '<div class="bar-pillar" style="height:' + hAct + 'px;background:#10b981;">' +
+                    '<span class="bar-val-label" style="color:var(--emerald-dark);">' + act + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div style="margin-top:8px;font-size:12px;font-weight:700;color:' + (d >= 5 ? 'var(--rose-dark)' : 'var(--text-primary)') + ';">' + DAYS_TW[d] + '</div>' +
+                    '</div>';
+
+                cardsHtml += '<div style="padding:8px 6px;border-radius:10px;text-align:center;border:1px solid var(--border-color);background:' + (isTight ? 'var(--rose-light)' : 'var(--bg-subtle)') + ';">' +
+                    '<div style="font-size:12px;font-weight:700;">' + DAYS_TW[d] + '</div>' +
+                    '<div style="font-size:11px;color:var(--text-muted);">需 ' + req + ' / 排 ' + act + '</div>' +
+                    '<div style="font-size:11px;font-weight:700;color:' + (isTight ? 'var(--rose-dark)' : 'var(--emerald-dark)') + ';">' +
+                    (isTight ? '剛好滿足' : '多餘 +' + slack + '人') +
+                    '</div></div>';
+            }
+
+            chartEl.innerHTML = chartHtml;
+            cardsEl.innerHTML = cardsHtml;
+        }
+
+        function renderWorkforceTable() {
+            const tbody = document.getElementById('workforce-table-body');
+            const sol = workforceData.solution;
+            if (!tbody || !sol) return;
+
+            let html = '';
+            for (let s = 0; s < 7; s++) {
+                const pat = SHIFT_PATTERNS[s];
+                const cnt = sol.shifts[s];
+                const wage = sol.shiftWages[s];
+                const sub = cnt * wage;
+
+                html += '<tr style="opacity:' + (cnt > 0 ? '1' : '0.55') + ';">';
+                html += '<td class="left">' +
+                    '<div style="font-weight:700;color:var(--text-primary);">' + pat.code + ' · ' + pat.title + '</div>' +
+                    '<div style="font-size:11px;color:var(--text-muted);">' + pat.offText + '</div>' +
+                    '</td>';
+
+                for (let d = 0; d < 7; d++) {
+                    const on = pat.mask[d] === 1;
+                    html += '<td>' + (on
+                        ? '<span class="badge badge-emerald">上</span>'
+                        : '<span class="badge badge-muted">休</span>') + '</td>';
+                }
+
+                html += '<td class="right" style="font-family:monospace;">$' + wage.toLocaleString() + '</td>';
+                html += '<td><span class="badge ' + (cnt > 0 ? 'badge-indigo' : 'badge-muted') + '" style="font-size:12px;padding:4px 12px;">' + cnt + ' 人</span></td>';
+                html += '<td class="right" style="font-family:monospace;font-weight:700;">$' + sub.toLocaleString() + '</td>';
+                html += '</tr>';
+            }
+            tbody.innerHTML = html;
+        }
+
+
         /* =====================================================================
-           Tab 3: 2D 圖解線性規劃 (Interactive 2D Graphical LP Engine)
+           Tab 3: 2D 圖解線性規劃 (2D Graphical LP Sandbox)
            ===================================================================== */
-        const CONSTRAINT_COLORS = [
-// ... existing code ... -->
+        const grapherData = {
+            goal: 'max',
+            c1: 50,
+            c2: 40,
+            isoPct: 100,
+            constraints: [
+                { name: '組裝工時限制', a1: 2, a2: 1, b: 50, color: '#4f46e5' },
+                { name: '核心原料限制', a1: 1, a2: 2, b: 50, color: '#10b981' },
+                { name: '設備產能限制', a1: 1, a2: 1, b: 35, color: '#f59e0b' }
+            ],
+            result: null
+        };
+
+        const GRAPHER_PRESETS = {
+            production: {
+                goal: 'max', c1: 50, c2: 40,
+                constraints: [
+                    { name: '組裝工時限制', a1: 2, a2: 1, b: 50, color: '#4f46e5' },
+                    { name: '核心原料限制', a1: 1, a2: 2, b: 50, color: '#10b981' },
+                    { name: '設備產能限制', a1: 1, a2: 1, b: 35, color: '#f59e0b' }
+                ],
+                toast: '已載入「雙產品生產組合」範例：最佳端點 (20, 15)，Z* = 1,600'
+            },
+            cargo: {
+                goal: 'max', c1: 60, c2: 75,
+                constraints: [
+                    { name: '貨艙載重上限', a1: 3, a2: 2, b: 60, color: '#4f46e5' },
+                    { name: '貨艙容積上限', a1: 1, a2: 3, b: 55, color: '#10b981' },
+                    { name: '吊裝作業工時', a1: 2, a2: 2, b: 48, color: '#f59e0b' }
+                ],
+                toast: '已載入「貨櫃裝載收益最佳化」範例'
+            },
+            blend: {
+                goal: 'max', c1: 35, c2: 65,
+                constraints: [
+                    { name: '反應爐工時限制', a1: 1, a2: 2, b: 46, color: '#4f46e5' },
+                    { name: '精煉原料配額', a1: 2, a2: 1, b: 44, color: '#10b981' },
+                    { name: '包裝產線上限', a1: 1, a2: 1, b: 28, color: '#f59e0b' }
+                ],
+                toast: '已載入「高純度原料調配」範例'
+            }
+        };
+
+        function loadGrapherPreset(key) {
+            const p = GRAPHER_PRESETS[key] || GRAPHER_PRESETS.production;
+            grapherData.goal = p.goal;
+            grapherData.c1 = p.c1;
+            grapherData.c2 = p.c2;
+            grapherData.isoPct = 100;
+            grapherData.constraints = p.constraints.map(c => ({ ...c }));
+
+            document.getElementById('slider-c1').value = p.c1;
+            document.getElementById('slider-c2').value = p.c2;
+            document.getElementById('slider-iso').value = 100;
+            setGrapherGoal(p.goal, false);
+            renderGrapherConstraintsControls();
+            solveAndDrawGrapher();
+            notifyToast(p.toast);
+        }
+
+        function setGrapherGoal(g, redraw = true) {
+            grapherData.goal = g;
+            const bMax = document.getElementById('btn-goal-max');
+            const bMin = document.getElementById('btn-goal-min');
+            if (g === 'max') {
+                bMax.style.background = 'var(--primary)';
+                bMax.style.color = '#ffffff';
+                bMin.style.background = 'transparent';
+                bMin.style.color = 'var(--text-secondary)';
+            } else {
+                bMin.style.background = 'var(--primary)';
+                bMin.style.color = '#ffffff';
+                bMax.style.background = 'transparent';
+                bMax.style.color = 'var(--text-secondary)';
+            }
+            if (redraw) solveAndDrawGrapher();
+        }
+
+        function renderGrapherConstraintsControls() {
+            const box = document.getElementById('grapher-constraints-box');
+            let html = '';
+            grapherData.constraints.forEach((c, idx) => {
+                html += '<div style="padding:12px;border-radius:12px;background:var(--bg-subtle);border:1px solid var(--border-color);">' +
+                    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
+                    '<span style="font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:6px;">' +
+                    '<span style="width:10px;height:10px;border-radius:50%;background:' + c.color + ';display:inline-block;"></span>' +
+                    '(' + (idx + 1) + ') ' + c.name +
+                    '</span>' +
+                    '<span style="font-family:monospace;font-size:12.5px;font-weight:800;color:var(--text-primary);">' +
+                    c.a1 + 'x₁ + ' + c.a2 + 'x₂ ≤ ' + c.b +
+                    '</span></div>' +
+                    '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;font-size:11px;color:var(--text-muted);">' +
+                    '<div><div>x₁ 係數 (' + c.a1 + ')</div>' +
+                    '<input type="range" min="0.5" max="5" step="0.5" value="' + c.a1 + '" oninput="onConstraintSlider(' + idx + ',\'a1\',this.value)"></div>' +
+                    '<div><div>x₂ 係數 (' + c.a2 + ')</div>' +
+                    '<input type="range" min="0.5" max="5" step="0.5" value="' + c.a2 + '" oninput="onConstraintSlider(' + idx + ',\'a2\',this.value)"></div>' +
+                    '<div><div>上限 b (' + c.b + ')</div>' +
+                    '<input type="range" min="15" max="90" step="5" value="' + c.b + '" oninput="onConstraintSlider(' + idx + ',\'b\',this.value)"></div>' +
+                    '</div></div>';
+            });
+            box.innerHTML = html;
+        }
+
+        function onConstraintSlider(idx, field, val) {
+            grapherData.constraints[idx][field] = parseFloat(val);
+            renderGrapherConstraintsControls();
+            solveAndDrawGrapher();
+        }
+
+        function onGrapherParamChange() {
+            grapherData.c1 = parseFloat(document.getElementById('slider-c1').value);
+            grapherData.c2 = parseFloat(document.getElementById('slider-c2').value);
+            document.getElementById('label-c1').textContent = grapherData.c1;
+            document.getElementById('label-c2').textContent = grapherData.c2;
+            solveAndDrawGrapher();
+        }
+
+        function onIsoLineSlide() {
+            grapherData.isoPct = parseFloat(document.getElementById('slider-iso').value);
+            solveAndDrawGrapher();
+        }
+
+        function snapIsoLine() {
+            grapherData.isoPct = 100;
+            document.getElementById('slider-iso').value = 100;
+            solveAndDrawGrapher();
+        }
+
+        function solve2DGraphicalLP() {
+            const cons = grapherData.constraints;
+            const lines = [
+                { a1: 1, a2: 0, b: 0 },
+                { a1: 0, a2: 1, b: 0 },
+                ...cons.map(c => ({ a1: c.a1, a2: c.a2, b: c.b }))
+            ];
+
+            const pts = [];
+            for (let i = 0; i < lines.length; i++) {
+                for (let j = i + 1; j < lines.length; j++) {
+                    const L1 = lines[i], L2 = lines[j];
+                    const det = L1.a1 * L2.a2 - L2.a1 * L1.a2;
+                    if (Math.abs(det) < 1e-9) continue;
+                    const x = (L1.b * L2.a2 - L2.b * L1.a2) / det;
+                    const y = (L1.a1 * L2.b - L2.a1 * L1.b) / det;
+                    pts.push({ x, y });
+                }
+            }
+
+            const vertices = [];
+            for (const p of pts) {
+                if (p.x < -1e-6 || p.y < -1e-6) continue;
+                let feasible = true;
+                for (const c of cons) {
+                    if (c.a1 * p.x + c.a2 * p.y > c.b + 1e-5) {
+                        feasible = false;
+                        break;
+                    }
+                }
+                if (!feasible) continue;
+                const cx = Math.max(0, p.x);
+                const cy = Math.max(0, p.y);
+                if (!vertices.some(v => Math.hypot(v.x - cx, v.y - cy) < 1e-4)) {
+                    vertices.push({ x: cx, y: cy });
+                }
+            }
+
+            if (vertices.length > 2) {
+                const mx = vertices.reduce((s, v) => s + v.x, 0) / vertices.length;
+                const my = vertices.reduce((s, v) => s + v.y, 0) / vertices.length;
+                vertices.sort((a, b) => Math.atan2(a.y - my, a.x - mx) - Math.atan2(b.y - my, b.x - mx));
+            }
+
+            let optVertex = vertices[0] || { x: 0, y: 0, z: 0 };
+            let optZ = grapherData.goal === 'max' ? -Infinity : Infinity;
+
+            vertices.forEach(v => {
+                v.z = grapherData.c1 * v.x + grapherData.c2 * v.y;
+                if (grapherData.goal === 'max') {
+                    if (v.z > optZ) { optZ = v.z; optVertex = v; }
+                } else {
+                    if (v.z < optZ) { optZ = v.z; optVertex = v; }
+                }
+            });
+
+            return { vertices, optVertex, optZ };
+        }
+
+        function solveAndDrawGrapher() {
+            const res = solve2DGraphicalLP();
+            grapherData.result = res;
+
+            const gStr = grapherData.goal === 'max' ? 'Max Z' : 'Min Z';
+            document.getElementById('grapher-formula-banner').textContent =
+                gStr + ' = ' + grapherData.c1 + ' x₁ + ' + grapherData.c2 + ' x₂';
+
+            document.getElementById('grapher-kpi-z').textContent = Math.round(res.optZ).toLocaleString();
+            const fmt = (n) => n.toFixed(1).replace(/\.0$/, '');
+            document.getElementById('grapher-kpi-xy').textContent =
+                '(' + fmt(res.optVertex.x) + ', ' + fmt(res.optVertex.y) + ')';
+            document.getElementById('grapher-kpi-vertices').textContent = res.vertices.length + ' 個端點';
+
+            draw2DCanvas(res);
+            renderGrapherAnalysisTables(res);
+
+            if (activeTab === 'grapher') {
+                updateLiveMathModel();
+            }
+        }
+
+        function draw2DCanvas(res) {
+            const canvas = document.getElementById('lp-2d-canvas');
+            if (!canvas) return;
+            const rect = canvas.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            const W = rect.width || 620;
+            const H = rect.height || 390;
+
+            canvas.width = W * dpr;
+            canvas.height = H * dpr;
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+            ctx.clearRect(0, 0, W, H);
+
+            const isDark = document.body.classList.contains('dark-mode');
+
+            let maxAxis = 45;
+            grapherData.constraints.forEach(c => {
+                if (c.a1 > 0) maxAxis = Math.max(maxAxis, c.b / c.a1);
+                if (c.a2 > 0) maxAxis = Math.max(maxAxis, c.b / c.a2);
+            });
+            maxAxis = Math.ceil((maxAxis * 1.12) / 10) * 10;
+
+            const padL = 46, padR = 24, padT = 22, padB = 40;
+            const plotW = W - padL - padR;
+            const plotH = H - padT - padB;
+
+            const toX = (x) => padL + (x / maxAxis) * plotW;
+            const toY = (y) => padT + plotH - (y / maxAxis) * plotH;
+
+            canvas.onmousemove = (e) => {
+                const r = canvas.getBoundingClientRect();
+                const lx = Math.max(0, ((e.clientX - r.left - padL) / plotW) * maxAxis);
+                const ly = Math.max(0, ((padT + plotH - (e.clientY - r.top)) / plotH) * maxAxis);
+                const lz = grapherData.c1 * lx + grapherData.c2 * ly;
+                document.getElementById('canvas-hover-pill').textContent =
+                    '座標: (' + lx.toFixed(1) + ', ' + ly.toFixed(1) + ') | Z = ' + Math.round(lz);
+            };
+
+            // 1. 座標網格
+            ctx.strokeStyle = isDark ? '#334155' : '#e2e8f0';
+            ctx.lineWidth = 1;
+            ctx.fillStyle = isDark ? '#94a3b8' : '#64748b';
+            ctx.font = '11px sans-serif';
+            const step = maxAxis <= 50 ? 5 : 10;
+            for (let v = 0; v <= maxAxis; v += step) {
+                const cx = toX(v), cy = toY(v);
+                ctx.beginPath(); ctx.moveTo(cx, padT); ctx.lineTo(cx, padT + plotH); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(padL, cy); ctx.lineTo(padL + plotW, cy); ctx.stroke();
+
+                ctx.textAlign = 'center';
+                ctx.fillText(v, cx, padT + plotH + 15);
+                ctx.textAlign = 'right';
+                ctx.fillText(v, padL - 7, cy + 4);
+            }
+
+            // 2. 可行域多邊形著色
+            if (res.vertices.length >= 3) {
+                ctx.beginPath();
+                res.vertices.forEach((v, i) => {
+                    if (i === 0) ctx.moveTo(toX(v.x), toY(v.y));
+                    else ctx.lineTo(toX(v.x), toY(v.y));
+                });
+                ctx.closePath();
+                ctx.fillStyle = isDark ? 'rgba(99, 102, 241, 0.25)' : 'rgba(79, 70, 229, 0.16)';
+                ctx.fill();
+                ctx.strokeStyle = '#6366f1';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            // 3. 三條資源限制式直線
+            grapherData.constraints.forEach((c, idx) => {
+                ctx.save();
+                ctx.strokeStyle = c.color;
+                ctx.lineWidth = 2.2;
+                const xInt = c.b / c.a1;
+                const yInt = c.b / c.a2;
+                ctx.beginPath();
+                ctx.moveTo(toX(0), toY(yInt));
+                ctx.lineTo(toX(xInt), toY(0));
+                ctx.stroke();
+
+                const lx = Math.min(maxAxis * 0.7, xInt * 0.48);
+                const ly = (c.b - c.a1 * lx) / c.a2;
+                if (ly >= 0 && ly <= maxAxis) {
+                    ctx.fillStyle = c.color;
+                    ctx.font = 'bold 11px sans-serif';
+                    ctx.fillText('(' + (idx + 1) + ') ' + c.name, toX(lx) + 6, toY(ly) - 5);
+                }
+                ctx.restore();
+            });
+
+            // 4. 等利潤虛線 (Iso-profit Line)
+            const refZ = Math.max(res.optZ, 100) * (grapherData.isoPct / 100);
+            if (refZ > 0) {
+                ctx.save();
+                ctx.strokeStyle = '#f43f5e';
+                ctx.lineWidth = 2.4;
+                ctx.setLineDash([7, 5]);
+                ctx.beginPath();
+                ctx.moveTo(toX(0), toY(refZ / grapherData.c2));
+                ctx.lineTo(toX(refZ / grapherData.c1), toY(0));
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            // 5. 座標軸
+            ctx.strokeStyle = isDark ? '#cbd5e1' : '#0f172a';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padL, padT);
+            ctx.lineTo(padL, padT + plotH);
+            ctx.lineTo(padL + plotW, padT + plotH);
+            ctx.stroke();
+
+            ctx.fillStyle = isDark ? '#f8fafc' : '#0f172a';
+            ctx.font = 'bold 12px sans-serif';
+            ctx.textAlign = 'right';
+            ctx.fillText('決策變數 x₁ →', padL + plotW, padT + plotH + 33);
+
+            // 6. 標示所有可行域頂點與最佳解端點
+            const fmt = (n) => n.toFixed(1).replace(/\.0$/, '');
+            res.vertices.forEach(v => {
+                const isOpt = Math.hypot(v.x - res.optVertex.x, v.y - res.optVertex.y) < 1e-3;
+                const cx = toX(v.x), cy = toY(v.y);
+
+                if (isOpt) {
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, 11, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(16, 185, 129, 0.3)';
+                    ctx.fill();
+                }
+
+                ctx.beginPath();
+                ctx.arc(cx, cy, isOpt ? 6.5 : 4.5, 0, Math.PI * 2);
+                ctx.fillStyle = isOpt ? '#10b981' : (isDark ? '#f8fafc' : '#1e1b4b');
+                ctx.fill();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                const label = '(' + fmt(v.x) + ', ' + fmt(v.y) + ')';
+                ctx.font = isOpt ? 'bold 12px sans-serif' : '600 11px sans-serif';
+                ctx.fillStyle = isOpt ? '#10b981' : (isDark ? '#cbd5e1' : '#334155');
+                ctx.textAlign = 'left';
+                ctx.fillText(isOpt ? '★ 最佳端點 ' + label : label, cx + 8, cy - 6);
+            });
+        }
+
+        function renderGrapherAnalysisTables(res) {
+            const tbody = document.getElementById('grapher-vertices-tbody');
+            const fmt = (n) => n.toFixed(1).replace(/\.0$/, '');
+            let html = '';
+
+            res.vertices.forEach((v, idx) => {
+                const isOpt = Math.hypot(v.x - res.optVertex.x, v.y - res.optVertex.y) < 1e-3;
+                html += '<tr style="' + (isOpt ? 'background:var(--emerald-light);font-weight:700;' : '') + '">' +
+                    '<td class="left">P<sub>' + (idx + 1) + '</sub></td>' +
+                    '<td style="font-family:monospace;">(' + fmt(v.x) + ', ' + fmt(v.y) + ')</td>' +
+                    '<td class="right" style="font-family:monospace;">' + Math.round(v.z).toLocaleString() + '</td>' +
+                    '<td>' + (isOpt
+                        ? '<span class="badge badge-emerald">最佳端點 ★</span>'
+                        : '<span class="badge badge-muted">可行端點</span>') + '</td>' +
+                    '</tr>';
+            });
+            tbody.innerHTML = html;
+
+            const slackBox = document.getElementById('grapher-slack-bars');
+            const opt = res.optVertex;
+            let sHtml = '';
+            grapherData.constraints.forEach(c => {
+                const used = c.a1 * opt.x + c.a2 * opt.y;
+                const slack = Math.max(0, c.b - used);
+                const pct = c.b > 0 ? Math.min(100, Math.round((used / c.b) * 100)) : 0;
+                const isTight = slack < 1e-3;
+
+                sHtml += '<div style="padding:10px 12px;border-radius:10px;background:var(--bg-subtle);border:1px solid var(--border-color);">' +
+                    '<div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:5px;">' +
+                    '<span style="font-weight:700;">' + c.name + '</span>' +
+                    (isTight
+                        ? '<span class="badge badge-rose">Tight (Slack = 0)</span>'
+                        : '<span class="badge badge-muted">Slack 餘裕 ' + slack.toFixed(1) + '</span>') +
+                    '</div>' +
+                    '<div style="width:100%;height:7px;background:var(--border-color);border-radius:999px;overflow:hidden;margin-bottom:4px;">' +
+                    '<div style="width:' + pct + '%;height:100%;background:' + c.color + ';border-radius:999px;"></div>' +
+                    '</div>' +
+                    '<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);font-family:monospace;">' +
+                    '<span>耗用: ' + used.toFixed(1) + ' / 上限 ' + c.b + '</span>' +
+                    '<span>利用率 ' + pct + '%</span>' +
+                    '</div></div>';
+            });
+            slackBox.innerHTML = sHtml;
+        }
+
+
+        /* =====================================================================
+           底部共用：即時數學模型與最佳解自動生成區 (動態支援任意 M×N 節點名稱)
+           ===================================================================== */
+        function updateLiveMathModel() {
+            const badge = document.getElementById('math-active-badge');
+            const objBox = document.getElementById('math-obj-content');
+            const conBox = document.getElementById('math-con-content');
+            const varBox = document.getElementById('math-var-content');
+            const optBox = document.getElementById('math-opt-content');
+
+            if (activeTab === 'transport') {
+                const m = transportData.sources.length;
+                const n = transportData.destinations.length;
+                badge.textContent = '模組一：' + m + '×' + n + ' 運輸網路最佳化 LP 模型';
+
+                const terms = [];
+                for (let i = 0; i < m; i++) {
+                    for (let j = 0; j < n; j++) {
+                        terms.push(transportData.costs[i][j] + '·x' + (i + 1) + (j + 1));
+                    }
+                }
+                objBox.textContent = 'Minimize Z = ∑ᵢ₌₁..' + m + ' ∑ⱼ₌₁..' + n + ' cᵢⱼ xᵢⱼ\n           = ' + terms.join(' + ');
+
+                const lines = [];
+                lines.push('<div style="color:#a5b4fc;font-weight:700;">// (1) 各出貨廠區供給上限限制式 (Supply Constraints, i = 1..' + m + '):</div>');
+                for (let i = 0; i < m; i++) {
+                    const rTerms = [];
+                    for (let j = 0; j < n; j++) rTerms.push('x<sub>' + (i + 1) + (j + 1) + '</sub>');
+                    lines.push('<div>' + rTerms.join(' + ') + ' ≤ ' + transportData.supply[i] + '   <span style="color:#94a3b8;">(' + escapeHtml(transportData.sources[i]) + ')</span></div>');
+                }
+                lines.push('<div style="color:#6ee7b7;font-weight:700;margin-top:6px;">// (2) 各配送站點需求滿足限制式 (Demand Constraints, j = 1..' + n + '):</div>');
+                const sol = transportData.solution;
+                const op = (sol && sol.totalS < sol.totalD) ? '≤' : '≥';
+                for (let j = 0; j < n; j++) {
+                    const cTerms = [];
+                    for (let i = 0; i < m; i++) cTerms.push('x<sub>' + (i + 1) + (j + 1) + '</sub>');
+                    lines.push('<div>' + cTerms.join(' + ') + ' ' + op + ' ' + transportData.demand[j] + '   <span style="color:#94a3b8;">(' + escapeHtml(transportData.destinations[j]) + ')</span></div>');
+                }
+                conBox.innerHTML = lines.join('');
+
+                varBox.innerHTML = '<div>• <strong>x<sub>ij</sub> ≥ 0</strong> ，其中 i ∈ {1, ..., ' + m + '}，j ∈ {1, ..., ' + n + '}</div>' +
+                    '<div style="font-size:12px;color:#94a3b8;margin-top:4px;">x<sub>ij</sub> 代表由第 i 個出貨點配送至第 j 個配送站的貨物箱數（共 ' + (m * n) + ' 個決策變數）。</div>';
+
+                if (sol) {
+                    const activeList = [];
+                    for (let i = 0; i < m; i++) {
+                        for (let j = 0; j < n; j++) {
+                            if (sol.alloc[i][j] > 0) {
+                                activeList.push('x<sub>' + (i + 1) + (j + 1) + '</sub><sup>*</sup> = ' + sol.alloc[i][j] + ' (' + escapeHtml(transportData.sources[i]) + '→' + escapeHtml(transportData.destinations[j]) + ')');
+                            }
+                        }
+                    }
+                    optBox.innerHTML = '<div style="font-weight:800;color:#34d399;">★ 最低總運輸成本 Z* = $' + sol.totalCost.toLocaleString() + ' ｜ 總運量 = ' + sol.totalShipped + ' 箱</div>' +
+                        '<div style="margin-top:4px;font-size:12px;">' + activeList.join(' ， ') + '</div>';
+                }
+            } else if (activeTab === 'workforce') {
+                badge.textContent = '模組二：全週循環人力排班 ILP 模型';
+                const w1 = workforceData.wageWeekday;
+                const w2 = workforceData.wageWeekend;
+
+                objBox.textContent = 'Minimize Z = ' + w1 + '·x₁ + ' + w2 + '·(x₂ + x₃ + x₄ + x₅ + x₆ + x₇)\n' +
+                    '(同時最小化總聘僱人數 N = x₁ + x₂ + x₃ + x₄ + x₅ + x₆ + x₇)';
+
+                const sol = workforceData.solution;
+                const lines = [];
+                lines.push('<div style="color:#a5b4fc;font-weight:700;">// 週一至週日每日最低出勤人數限制式 (Daily Coverage Constraints):</div>');
+                for (let d = 0; d < 7; d++) {
+                    const activeShifts = [];
+                    for (let s = 0; s < 7; s++) {
+                        if (SHIFT_PATTERNS[s].mask[d] === 1) activeShifts.push('x<sub>' + (s + 1) + '</sub>');
+                    }
+                    const slack = sol ? sol.dailySlack[d] : 0;
+                    const tag = slack === 0
+                        ? '<span style="color:#fb7185;font-weight:700;">[Tight 剛好滿足]</span>'
+                        : '<span style="color:#34d399;">[Slack +' + slack + ']</span>';
+                    lines.push('<div>' + activeShifts.join(' + ') + ' ≥ ' + workforceData.demands[d] + '   <span style="color:#94a3b8;">(' + DAYS_TW[d] + ')</span> ' + tag + '</div>');
+                }
+                conBox.innerHTML = lines.join('');
+
+                varBox.innerHTML = '<div>• <strong>x<sub>j</sub> ≥ 0 且 x<sub>j</sub> 為整數 (Integer)</strong> ，j = 1, 2, ..., 7</div>' +
+                    '<div style="font-size:12px;color:#94a3b8;margin-top:4px;">x<sub>j</sub> 代表指派至第 j 種「連上 5 天、連休 2 天」循環班別之全職員工人數。</div>';
+
+                if (sol) {
+                    const vec = sol.shifts.map((v, i) => 'x<sub>' + (i + 1) + '</sub><sup>*</sup> = ' + v).join(', ');
+                    optBox.innerHTML = '<div style="font-weight:800;color:#34d399;">★ 最少總人數 N* = ' + sol.totalStaff + ' 人 ｜ 最低每週總薪資 Z* = $' + sol.totalCost.toLocaleString() + '</div>' +
+                        '<div style="margin-top:4px;font-size:12px;">最佳班別人數向量：(' + vec + ')</div>';
+                }
+            } else {
+                badge.textContent = '模組三：2D 圖解線性規劃標準模型';
+                const g = grapherData.goal === 'max' ? 'Maximize' : 'Minimize';
+                objBox.textContent = g + ' Z = ' + grapherData.c1 + '·x₁ + ' + grapherData.c2 + '·x₂';
+
+                const lines = [];
+                grapherData.constraints.forEach((c, idx) => {
+                    lines.push('<div>(' + (idx + 1) + ') ' + c.a1 + '·x<sub>1</sub> + ' + c.a2 + '·x<sub>2</sub> ≤ ' + c.b + '   <span style="color:#94a3b8;">(' + c.name + ')</span></div>');
+                });
+                conBox.innerHTML = lines.join('');
+
+                varBox.innerHTML = '<div>• <strong>x<sub>1</sub> ≥ 0 , x<sub>2</sub> ≥ 0</strong></div>' +
+                    '<div style="font-size:12px;color:#94a3b8;margin-top:4px;">二維非負連續決策變數，可行域為 3 條資源限制線與座標軸圍成之凸多邊形。</div>';
+
+                const res = grapherData.result;
+                if (res && res.optVertex) {
+                    optBox.innerHTML = '<div style="font-weight:800;color:#34d399;">★ 最佳目標函數值 Z* = ' + Math.round(res.optZ).toLocaleString() + '</div>' +
+                        '<div style="margin-top:4px;font-size:12px;">最佳端點決策座標：(x<sub>1</sub><sup>*</sup>, x<sub>2</sub><sup>*</sup>) = (' + res.optVertex.x.toFixed(2) + ', ' + res.optVertex.y.toFixed(2) + ')</div>';
+                }
+            }
+        }
+
+        function copyMathFormulation() {
+            const obj = document.getElementById('math-obj-content').innerText;
+            const con = document.getElementById('math-con-content').innerText;
+            const vars = document.getElementById('math-var-content').innerText;
+            const opt = document.getElementById('math-opt-content').innerText;
+            const text = '【線性規劃數學模型】\n' + obj + '\n\nSubject to:\n' + con + '\n\nVariables:\n' + vars + '\n\nOptimal Solution:\n' + opt;
+
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+            notifyToast('📋 已將完整線性規劃數學模型複製到剪貼簿！');
+        }
+
+        /* =====================================================================
+           啟動與視窗縮放事件
+           ===================================================================== */
+        window.addEventListener('resize', () => {
+            if (activeTab === 'grapher') {
+                solveAndDrawGrapher();
+            }
+        });
+
+        window.onload = function () {
+            renderTransportInputMatrix();
+            solveAndRenderTransport(false);
+
+            renderWorkforceSliders();
+            solveAndRenderWorkforce();
+
+            renderGrapherConstraintsControls();
+            solveAndDrawGrapher();
+
+            updateLiveMathModel();
+        };
+    </script>
+</body>
+</html>
